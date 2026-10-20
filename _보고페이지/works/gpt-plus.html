@@ -1,0 +1,765 @@
+<!--
+제목: 마감 늑대와 빈칸 있는 집
+현대적 주제: 끝없는 추가 요청과 생산성 경쟁, 함께 조절하는 일과 휴식.
+장면: 0초 세 형제와 축제 / 7초 첫째의 꽉 찬 집 / 16초 둘째의 기계 /
+25초 셋째의 빈칸 / 33초 마감 늑대와 첫 피신 / 43초 기계 과적과 두 번째 피신 /
+53초 빈칸의 한계와 함께 멈춤 / 60초 장식 생략 합의 / 65초 기계 재사용과 분담 /
+70초 휴식 확보 / 75초 필수 일 완료 / 78초 마감을 일정에 넣기 / 79.5초 결말. 총 84초.
+메시지: 좋은 집에는, 함께 숨 쉴 빈칸이 있다.
+-->
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#FAF6EE">
+<title>마감 늑대와 빈칸 있는 집</title>
+<style>
+  :root{color-scheme:light;--paper:#faf6ee;--ink:#26213e;--purple:#8c74c9;--muted:#696477}
+  *{box-sizing:border-box}
+  body{margin:0;background:#eae5df;color:var(--ink);font-family:"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif}
+  main{width:min(1120px,calc(100% - 32px));margin:24px auto 32px}
+  .masthead{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:0 2px 12px;font-size:13px;letter-spacing:.06em}
+  .masthead p{margin:0}.masthead span{color:var(--muted);letter-spacing:0}
+  .player{border:1px solid #cfc7c6;border-radius:12px;background:var(--paper);overflow:clip;box-shadow:0 12px 40px #26213e0a}
+  .screen{width:100%;aspect-ratio:16/9;background:var(--paper)}
+  svg{display:block;width:100%;height:100%;font-family:inherit}
+  svg text{fill:var(--ink);stroke:none;paint-order:stroke fill}
+  svg .line{stroke:#26213e;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  svg .prop{font-size:36px;font-weight:700;text-anchor:middle;letter-spacing:-1px}
+  svg .small-prop{font-size:24px;font-weight:700;text-anchor:middle}
+  svg .decoration{font-size:25px}
+  .caption{display:grid;place-items:center;min-height:96px;padding:17px 30px;background:var(--ink);color:#fffaf2}
+  .caption p{max-width:41em;margin:0;font-size:22px;line-height:1.55;text-align:center;word-break:keep-all;overflow-wrap:anywhere}
+  .controls{display:grid;grid-template-columns:140px minmax(0,1fr) auto;align-items:center;gap:24px;padding:20px 24px}
+  button{display:flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:10px 16px;border:0;border-radius:6px;background:var(--ink);color:white;font-family:inherit;font-size:16px;font-weight:700;line-height:1.5;cursor:pointer;white-space:nowrap}
+  button:hover{background:#44375e}button:active{transform:translateY(1px)}
+  #button-icon{font-size:15px;width:16px;text-align:center}
+  input[type=range]{display:block;width:100%;min-width:0;height:44px;margin:0;accent-color:#7254af;cursor:pointer}
+  input[type=range]:disabled{opacity:.45;cursor:default}
+  button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #7254af;outline-offset:4px}
+  .time{font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;color:#696477}
+  .time strong{color:var(--ink);font-weight:600}
+  .below{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-top:14px;color:var(--muted);font-size:13px;line-height:1.6}
+  .below p{margin:0}details{max-width:760px;margin-top:20px;font-size:16px;line-height:1.85}
+  .mobile-intro{display:none}
+  @media(max-width:600px){#cover .cover-copy{display:none}#cover .cover-title{font-size:88px}.mobile-intro{display:block;margin:12px 0 0;font-size:14px;line-height:1.7;word-break:keep-all}.masthead{flex-wrap:wrap}}
+  summary{width:fit-content;cursor:pointer;font-size:14px;font-weight:700;color:#5c4a7f;padding:6px 0}
+  #transcript{padding:4px 0 8px}#transcript p{margin:.65em 0;word-break:keep-all;overflow-wrap:anywhere}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+  @media(min-height:850px) and (min-width:800px){main{width:min(1120px,calc(100% - 32px),calc((100svh - 244px)*16/9))}}
+  @media(max-width:600px){main{width:calc(100% - 24px);margin:14px auto 24px}.masthead{font-size:11px;letter-spacing:0;padding-bottom:9px}.caption{padding:16px 18px;min-height:112px}.caption p{font-size:17px;line-height:1.6}.controls{grid-template-columns:minmax(122px,1fr) auto;gap:8px 16px;padding:16px 18px 10px}.controls button{justify-self:start;min-width:122px}.controls input{grid-column:1/-1;grid-row:2}.time{grid-column:2;grid-row:1;font-size:12px}.below{display:block;font-size:12px}.below .keyboard{display:none}svg .decoration{display:none}}
+</style>
+</head>
+<body>
+<main>
+  <header class="masthead"><p>동화, 오늘의 이야기</p><span>소리 없이 감상하는 84초</span></header>
+  <section class="player" aria-label="마감 늑대와 빈칸 있는 집 모션그래픽">
+    <div class="screen">
+      <svg id="film" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="film-title film-desc">
+        <title id="film-title">마감 늑대와 빈칸 있는 집</title>
+        <desc id="film-desc">축제를 준비하는 세 돼지 형제. 부탁을 모두 받는 첫째와 기계로 더 빨리 일하는 둘째에게 종이로 된 마감 늑대가 찾아온다. 셋째의 집에 모인 형제들은 불필요한 일을 줄이고, 필수 일을 나누고, 함께 쉴 시간을 지킨다.</desc>
+        <defs>
+          <pattern id="ground-dashes" width="68" height="30" patternUnits="userSpaceOnUse"><path d="M12 15h12" fill="none" stroke="#d2c8c8" stroke-width="2" stroke-linecap="round"/></pattern>
+          <g id="paper" class="line"><path d="M-30-22H18L30-10V22H-30Z" fill="#fffdf7"/><path d="M18-22v12h12" fill="#e7e0f4"/><path d="M-19-5h28M-19 6h18" fill="none" stroke="#a29ba8" stroke-width="2"/></g>
+          <g id="checked-paper"><use href="#paper"/><path d="m-12 0 9 9 18-19" fill="none" stroke="#6d599a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></g>
+          <g id="pig-face" class="line"><path d="M-36-37-46-76-11-57M12-57 40-77 39-33" fill="#efb6b1"/><path d="m-37-53-3-10 11 8m49 0 13-10-1 12" fill="none" stroke="#d38f92" stroke-width="2"/><path d="M-48-29C-49-59-25-66 0-65S48-51 48-24 26 15 0 15-48-2-48-29Z" fill="#f3c6bb"/><ellipse cx="4" cy="-11" rx="24" ry="17" fill="#eaa3a5"/><path d="M-4-13v6m15-6v6" stroke-width="4"/><path d="M-33-16h5m52 0h6" stroke="#de9898" stroke-width="3"/></g>
+          <g id="clock-face" class="line"><circle r="31" fill="#fffdf7"/><path d="M0-22v4m22 4-4 2M22 15l-4-2M0 22v-4m-22-4 4-2m-4-26 4 2" fill="none" stroke-width="2"/><circle r="3" fill="#26213e"/></g>
+        </defs>
+        <g aria-hidden="true">
+          <rect width="1280" height="720" fill="#faf6ee"/>
+          <g id="story" display="none">
+            <g id="world">
+              <path d="M-1500 594H4500V930H-1500Z" fill="#e7e0dc"/>
+              <path d="M-1500 594H4500" fill="none" stroke="#c2b8bd" stroke-width="3"/>
+              <rect x="-1500" y="610" width="6000" height="220" fill="url(#ground-dashes)"/>
+              <g id="street-furniture"></g>
+              <g id="intro-banner"><path d="M1090 215q340 35 680 0" fill="none" stroke="#26213e" stroke-width="3"/><path d="M1150 222v54l40-14 40 14v-48m100 6v54l40-14 40 14v-54m100-4v54l40-14 40 14v-61" fill="#e7e0f4" stroke="#26213e" stroke-width="3"/><text x="1430" y="180" text-anchor="middle" font-size="72" font-weight="800">우리들의 축제</text></g>
+              <g id="houses"></g>
+              <g id="deadline" transform="translate(1430 290)"><rect x="-122" y="-42" width="244" height="84" rx="3" fill="#fffdf7" stroke="#26213e" stroke-width="3"/><path d="M100-42v22h22" fill="#e7e0f4" stroke="#26213e" stroke-width="2"/><text class="prop" y="13">오늘까지</text><g transform="translate(174 0)"><use href="#clock-face"/><path id="deadline-hand" d="M0 0V-18" stroke="#26213e" stroke-width="3" stroke-linecap="round"/></g></g>
+              <g id="wolf"></g>
+              <g id="wind"></g>
+              <g id="travelling-cards"></g>
+              <g id="solution"></g>
+              <g id="characters"></g>
+              <g id="foreground"></g>
+            </g>
+            <g id="ending" opacity="0"><text x="640" y="134" text-anchor="middle" font-size="53" font-weight="700">좋은 집에는,</text><text x="640" y="207" text-anchor="middle" font-size="58" font-weight="800">함께 숨 쉴 빈칸이 있다.</text><path d="M452 239h376" stroke="#8c74c9" stroke-width="5" stroke-linecap="round"/></g>
+          </g>
+          <g id="cover">
+            <path d="M76 92h66" stroke="#8c74c9" stroke-width="5" stroke-linecap="round"/>
+            <text class="cover-copy" x="78" y="148" font-size="29" font-weight="600">아기 돼지 삼형제, 다시 쓰는 이야기</text>
+            <text class="cover-title" x="76" y="263" font-size="78" font-weight="800" letter-spacing="-4">마감 늑대와</text>
+            <text class="cover-title" x="76" y="361" font-size="78" font-weight="800" letter-spacing="-4">빈칸 있는 집</text>
+            <text class="cover-copy" x="80" y="426" font-size="27" fill="#696477">할 일은 많아지고, 하루는 그대로라면?</text>
+            <g transform="translate(80 514)" class="line cover-copy"><rect width="84" height="65" rx="3" fill="#f2ab57"/><rect x="112" width="84" height="65" rx="3" fill="#5d86d9"/><rect x="224" width="84" height="65" rx="3" fill="#8c74c9"/><rect x="336" width="138" height="65" rx="3" fill="none" stroke-dasharray="7 8"/><path d="M25 24h34m-34 16h23m89-16h34m-34 16h23m89-16h34m-34 16h23" fill="none" stroke="#fffaf2"/></g>
+            <path d="M774 420V601H1198V420" fill="#e7e0f4" stroke="#8c74c9" stroke-width="3"/>
+            <path d="M774 400v-32h32m360 0h32v32" fill="none" stroke="#8c74c9" stroke-width="3"/>
+            <g id="cover-wolf"></g><g id="cover-pigs"></g>
+            <text x="80" y="653" font-size="23" class="decoration">일의 양도, 쉬는 시간도. 함께 정하는 이야기.</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="caption"><p id="caption" aria-live="polite" aria-atomic="true">84초 · 소리 없이 감상하는 이야기</p></div>
+    <div class="controls" role="group" aria-label="영상 재생 제어">
+      <button id="play" type="button" aria-label="재생"><span id="button-icon" aria-hidden="true">▶</span><span id="button-label">재생</span></button>
+      <input id="seek" type="range" min="0" max="84" step="0.1" value="0" disabled aria-label="재생 위치" aria-valuetext="0초 / 전체 1분 24초">
+      <div class="time" aria-hidden="true"><strong id="elapsed">00:00</strong> / 01:24</div>
+    </div>
+    <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+  </section>
+  <div class="below"><p>마감 늑대와 빈칸 있는 집</p><p class="keyboard">Space 재생·정지 · 방향키로 재생 위치 이동</p></div>
+  <p class="mobile-intro">아기 돼지 삼형제, 다시 쓰는 이야기.<br>할 일은 많아지고, 하루는 그대로라면?<br>일의 양도, 쉬는 시간도 함께 정하는 이야기.</p>
+  <details><summary>이야기 글로 읽기</summary><div id="transcript"></div></details>
+</main>
+<script>
+(() => {
+  'use strict';
+  const DURATION = 84;
+  const NS = 'http://www.w3.org/2000/svg';
+  const C = {ink:'#26213e',paper:'#faf6ee',orange:'#f2ab57',blue:'#5d86d9',purple:'#8c74c9',rest:'#e7e0f4',red:'#bd493f',pink:'#f3c6bb'};
+  const cues = [
+    [0,3.5,'세 형제는 함께 축제를 준비하기로 했다.'],
+    [3.5,7,'오늘까지! 각자 준비방을 맡았다.'],
+    [7,11.5,'첫째는 손이 빨랐다.'],
+    [11.5,16,'그래서 부탁을 하나도 거절하지 않았다.'],
+    [16,20.5,'둘째는 일을 대신하는 기계를 만들었다.'],
+    [20.5,25,'그런데, 빨라진 만큼 더 많은 일을 받았다.'],
+    [25,29,'셋째는 일정에 빈칸을 남겼다.'],
+    [29,33,'형들은 그 시간이 아깝다고 생각했다.'],
+    [33,36.5,'그날 오후, 마감 늑대가 불어왔다.'],
+    [36.5,40,'첫째의 할 일이 준비방을 덮쳤다.'],
+    [40,43,'첫째는 둘째에게 달려갔다.'],
+    [43,46.5,'기계는 빨랐지만, 할 일은 더 빨리 쌓였다.'],
+    [46.5,50,'막힌 기계 앞에서, 두 형제는 지쳐 갔다.'],
+    [50,53,'둘은 셋째의 준비방으로 피했다.'],
+    [53,56.5,'하지만 셋째의 빈칸도 모두 채울 순 없었다.'],
+    [56.5,60,'“우리, 먼저 할 일을 줄이자.”'],
+    [60,65,'첫째는 형제들과 불필요한 장식을 덜어 냈다.'],
+    [65,70,'둘째는 남은 일을 나누는 일정표를 만들었다.'],
+    [70,75,'셋째는 모두가 쉴 시간을 지켰다.'],
+    [75,78,'쉬고 나서, 나눈 일을 하나씩 마쳤다.'],
+    [78,79.5,'마감도 함께 정한 일정 안에 두었다.'],
+    [79.5,84,'좋은 집에는, 함께 숨 쉴 빈칸이 있다.']
+  ];
+  const byId = id => document.getElementById(id);
+  const ui = {play:byId('play'),icon:byId('button-icon'),label:byId('button-label'),seek:byId('seek'),elapsed:byId('elapsed'),caption:byId('caption'),status:byId('status')};
+  const dom = {world:byId('world'),story:byId('story'),cover:byId('cover'),deadline:byId('deadline'),hand:byId('deadline-hand'),banner:byId('intro-banner'),ending:byId('ending')};
+  function el(tag, attrs={}, parent, text) {
+    const node=document.createElementNS(NS,tag);
+    for(const [key,value] of Object.entries(attrs)) node.setAttribute(key,String(value));
+    if(text!==undefined) node.textContent=text;
+    if(parent) parent.appendChild(node);
+    return node;
+  }
+  function group(parent, attrs={}) {return el('g',attrs,parent);}
+  const attr=(node,key,value)=>node.setAttribute(key,String(value));
+  const show=(node,visible)=>attr(node,'display',visible?'inline':'none');
+  const opacity=(node,value)=>attr(node,'opacity',value);
+  const move=(node,x,y,scale=1,angle=0)=>attr(node,'transform',`translate(${x} ${y}) rotate(${angle}) scale(${scale})`);
+  const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+  const lerp=(a,b,p)=>a+(b-a)*p;
+  const smooth=p=>{p=clamp(p);return p*p*(3-2*p);};
+  const progress=(t,a,b)=>smooth((t-a)/(b-a));
+  function paper(parent,x,y,scale=1,angle=0,checked=false) {
+    const node=group(parent);el('use',{href:checked?'#checked-paper':'#paper'},node);move(node,x,y,scale,angle);return node;
+  }
+  function text(parent,x,y,value,size=36,more={}) {return el('text',{x,y,'font-size':size,'font-weight':700,'text-anchor':'middle',...more},parent,value);}
+  function path(parent,d,attrs={}) {return el('path',{d,...attrs},parent);}
+
+  // Reusable heads, independently posed arms and feet; all drawing stays inline.
+  function makePig(parent,kind) {
+    const colors=[C.orange,C.blue,C.purple], root=group(parent), shadow=el('ellipse',{cx:0,cy:3,rx:46,ry:8,fill:C.ink,opacity:.09},root);
+    const pose=group(root), legs=group(pose,{'class':'line'});
+    const leftLeg=path(legs,'M-21-24v23h-15',{fill:'none','stroke-width':9}), rightLeg=path(legs,'M21-24v23h15',{fill:'none','stroke-width':9});
+    const torso=group(pose,{'class':'line'});
+    path(torso,'M38-46q31-14 21-29-13-8-15 4 1 10 15 5',{fill:'none',stroke:'#d19394','stroke-width':4});
+    path(torso,'M-31-83Q0-100 31-83L41-29Q0-16-41-29Z',{fill:colors[kind]});
+    if(kind===0) path(torso,'m-9-74-9 19h11l-5 16 23-24H0l8-11',{fill:'#fff8e9',stroke:'none'});
+    if(kind===1) {path(torso,'M-20-88v44H20v-44',{fill:'#88a6e7'});el('rect',{x:8,y:-53,width:23,height:22,rx:2,fill:'#dce5f7'},torso);path(torso,'M17-53v-10',{stroke:C.ink,'stroke-width':4});}
+    if(kind===2) {path(torso,'M0-89v60',{fill:'none'});path(torso,'M8-58h22a11 11 0 0 1-22 0',{fill:'#b5a4dc'});}
+    const leftArm=group(pose,{'class':'line'}),rightArm=group(pose,{'class':'line'});
+    function arm(g,x) {const stroke=path(g,`M${x}-76q${x<0?-14:14} 17 ${x<0?-12:12} 34`,{fill:'none',stroke:colors[kind],'stroke-width':16});const hand=el('circle',{cx:x+(x<0?-12:12),cy:-40,r:9,fill:C.pink,'stroke-width':2},g);return {stroke,hand};}
+    const leftLimb=arm(leftArm,-33),rightLimb=arm(rightArm,33);
+    const head=group(pose);el('use',{href:'#pig-face',transform:'translate(0 -104)'},head);
+    const eyes=group(head,{'class':'line'});path(eyes,'M-20-135v5m40-5v5',{'stroke-width':5});
+    const brows=path(eyes,'M-27-147h12m29 0h12',{fill:'none','stroke-width':3});
+    const mouth=path(eyes,'M-8-84q8 7 16 0',{fill:'none','stroke-width':3});
+    if(kind===0) {path(head,'M-45-158q15-29 60-15l21 22-79 1Z',{fill:C.orange,stroke:C.ink,'stroke-width':3,'stroke-linejoin':'round'});path(head,'M-47-153h-18q-4-12 21-12',{fill:C.orange,stroke:C.ink,'stroke-width':3});}
+    if(kind===1) {el('circle',{cx:-20,cy:-133,r:15,fill:'none',stroke:C.ink,'stroke-width':3},head);el('circle',{cx:20,cy:-133,r:15,fill:'none',stroke:C.ink,'stroke-width':3},head);path(head,'M-5-133H5m-49-5h9m70 0h9',{fill:'none',stroke:C.ink,'stroke-width':3});}
+    if(kind===2) {el('circle',{cx:27,cy:-42,r:10,fill:'#fffdf7',stroke:C.ink,'stroke-width':2},torso);path(torso,'M27-42v-6m0 6 4 2',{fill:'none','stroke-width':2});}
+    return {root,pose,shadow,leftLeg,rightLeg,leftArm,rightArm,leftLimb,rightLimb,head,brows,mouth};
+  }
+  function posePig(p,x,y,opts={}) {
+    const {run=0,phase=0,left=0,right=0,worried=false,nod=0,look=0,sit=0,scale=1,reduced=false}=opts;
+    const gait=reduced?0:Math.sin(phase)*run;
+    move(p.root,x,y,scale);
+    attr(p.shadow,'cy',595-y);
+    move(p.pose,0,-Math.abs(gait)*4,1,run&&!reduced?8:0);
+    attr(p.leftLeg,'d',`M-21-24l${lerp(gait*19,-10,sit)} ${lerp(24,5,sit)}l${-sit*4} ${sit*10}h-15`);
+    attr(p.rightLeg,'d',`M21-24l${lerp(-gait*19,10,sit)} ${lerp(24,5,sit)}l${sit*4} ${sit*10}h15`);
+    attr(p.leftArm,'transform',`rotate(${left-gait*36} -33 -76)`);
+    attr(p.rightArm,'transform',`rotate(${right+gait*36} 33 -76)`);
+    [p.leftLimb,p.rightLimb].forEach((limb,i)=>{const x=i?33:-33;attr(limb.stroke,'d',`M${x}-76q${i?14:-14} 17 ${i?12:-12} 34`);attr(limb.hand,'cx',i?45:-45);attr(limb.hand,'cy',-40);});
+    attr(p.head,'transform',`translate(${look*8} ${nod}) rotate(${(worried?-5:0)+look*9} 0 -120)`);
+    attr(p.brows,'d',worried?'M-28-149l14 4m1 0 14-4':'M-27-147h12m29 0h12');
+    attr(p.mouth,'d',worried?'M-10-80q10-10 20 0':'M-8-84q8 7 16 0');
+  }
+  function reach(p,side,x,y) {
+    const left=side==='left',limb=left?p.leftLimb:p.rightLimb,shoulder=left?-33:33;
+    attr(left?p.leftArm:p.rightArm,'transform','');
+    attr(limb.stroke,'d',`M${shoulder}-76Q${(shoulder+x)/2+(left?-8:8)} ${(-76+y)/2+8} ${x} ${y}`);
+    attr(limb.hand,'cx',x);attr(limb.hand,'cy',y);
+  }
+  function makeWolf(parent) {
+    const root=group(parent,{'class':'line'}),body=group(root);
+    const outline=path(body,'M-179 30-155-37-123-65-135-140-68-104-25-119 6-77 69-71 103-43 179-33 231-8 199 24 128 37 100 89 65 75 12 104-43 89-66 104-121 70-160 72Z',{fill:C.ink});
+    path(body,'M19-74 50-157 96-82 105-42',{fill:C.ink});
+    path(body,'m-116-119 35 26-34 15m163-55-13 52 34-7',{fill:C.red,stroke:'none'});
+    path(body,'M110-17 178-8 153 10 112 12',{fill:'#fffaf2',stroke:'none'});
+    path(body,'m155-12 8 13 10-11m9 4 8 11 9-8',{fill:C.ink,stroke:'none'});
+    path(body,'m210-18 21 10-19 13',{fill:C.ink});
+    path(body,'m75-53 22 8-20 7',{fill:C.red,stroke:'none'});
+    const cards=[];
+    for(let i=0;i<14;i++) {const x=-144+(i%5)*48,y=-48+Math.floor(i/5)*44;cards.push(paper(body,x,y,.73,[-17,9,-5,16,-13][i%5]));}
+    const sign=group(body);el('rect',{x:-114,y:-27,width:171,height:55,rx:2,fill:'#fffdf7'},sign);text(sign,-28,11,'오늘까지',29,{fill:C.red});
+    return {root,body,cards,outline};
+  }
+
+  const coverWolf=makeWolf(byId('cover-wolf'));move(coverWolf.root,1005,282,.73,-5);
+  [0,1,2].forEach((kind)=>{const p=makePig(byId('cover-pigs'),kind);posePig(p,850+kind*125,592,{scale:.83,left:kind===0?50:0,right:kind===2?-40:0});});
+
+  const houseColors=[C.orange,C.blue,C.purple];
+  const houses=[];
+  for(let i=0;i<3;i++) {
+    const c=430+i*1000,root=group(byId('houses'),{transform:`translate(${c} 570)`});
+    el('ellipse',{cx:0,cy:18,rx:272,ry:15,fill:C.ink,opacity:.06},root);
+    const structure=group(root,{'class':'line'});
+    const wall=group(structure);
+    const back=el('rect',{x:-235,y:-300,width:470,height:300,rx:5,fill:'#fffaf1'},wall);
+    const pillars=[group(wall),group(wall)];
+    path(pillars[0],'M-235-300h42V0h-42Z',{fill:houseColors[i],opacity:.3});
+    path(pillars[1],'M193-300h42V0h-42Z',{fill:houseColors[i],opacity:.3});
+    path(wall,'M-193-300V0m386-300V0',{fill:'none',stroke:houseColors[i],'stroke-width':2,'stroke-dasharray':'7 7'});
+    const interior=group(structure);
+    const door=group(wall,{transform:'translate(153 0)'});
+    path(door,'M-39 0V-142a39 39 0 0 1 78 0V0',{fill:'#e7e0dc'});
+    path(door,'M-32-2v-133q33-22 64 0V-2',{fill:houseColors[i],opacity:.45});
+    el('circle',{cx:19,cy:-69,r:4,fill:C.ink},door);
+    const roof=group(structure);
+    path(roof,'M-257-297 0-389 257-297Z',{fill:houseColors[i]});
+    path(roof,'M0-389 0-297H257Z',{fill:'#fffaf2',opacity:.23,stroke:'none'});
+    path(roof,'M-257-297H257',{fill:'none'});
+    text(roof,0,-320,['다 맡을게','더 빠르게','비워 둘게'][i],42);
+    const num=group(roof);el('circle',{cx:-180,cy:-319,r:20,fill:'#fffaf2','stroke-width':2},num);text(num,-180,-311,String(i+1),24);
+    const h={c,root,structure,wall,back,pillars,roof,interior,door,cards:[]};
+    if(i===0) {
+      // Folded noticeboard: useful work is visible before the extra requests arrive.
+      const sign=group(interior);h.sign=sign;el('rect',{x:-151,y:-255,width:248,height:61,rx:3,fill:'#fffdf7'},sign);text(sign,-27,-214,'축제 안내',42);
+      h.noticeStrokes=path(sign,'M-124-179H70m-194 11H25',{fill:'none',stroke:houseColors[i],'stroke-width':6});
+      h.complete=path(sign,'m63-236 10 11 20-24',{fill:'none',stroke:C.purple,'stroke-width':5});
+      for(let j=0;j<12;j++) h.cards.push(paper(interior,-150+(j%4)*76,-135+Math.floor(j/4)*48,1,[-5,3,-2,5][j%4]));
+      h.requestTag=group(interior);el('rect',{x:-253,y:-267,width:90,height:53,rx:3,fill:'#fffdf7',stroke:C.red,'stroke-width':3},h.requestTag);text(h.requestTag,-208,-229,'추가',36,{fill:C.red});
+      h.sag=path(roof,'M-150-296q150 10 300 0',{fill:'none',stroke:C.ink,'stroke-width':2});
+    }
+    if(i===1) {
+      const machine=group(interior,{id:'shared-machine-source'});h.machine=machine;
+      el('rect',{x:-160,y:-224,width:149,height:118,rx:8,fill:'#a9bfe9'},machine);
+      path(machine,'M-160-224h149l-25-29h-98Z',{fill:C.blue});
+      el('rect',{x:-139,y:-205,width:107,height:22,rx:4,fill:C.ink},machine);
+      text(machine,-85,-154,'처리',30);
+      const gear=group(machine);h.gear=gear;
+      path(gear,'M-10-22h20v9l8 4 8-5 10 17-8 5v9l8 5-10 17-8-5-8 4v9h-20v-9l-8-4-8 5-10-17 8-5v-9l-8-5 10-17 8 5 8-4Z',{fill:'#fffaf1','stroke-width':2});el('circle',{r:9,cy:7,fill:C.blue,'stroke-width':2},gear);
+      const rail=path(machine,'M-7-137H144v47H-7Z',{fill:'#d3dded'});h.rail=rail;
+      h.belt=path(machine,'M-4-115H138',{fill:'none',stroke:C.ink,'stroke-width':3});
+      path(machine,'M17-137v47m34-47v47m34-47v47m34-47v47',{fill:'none',stroke:C.blue,'stroke-width':2});
+      const lever=group(machine);h.lever=lever;path(lever,'M-128-22v-58',{fill:'none','stroke-width':5});el('circle',{cx:-128,cy:-80,r:9,fill:C.red},lever);
+      path(machine,'M104-64v53h88v-53',{fill:'#d3dded'});
+      for(let j=0;j<8;j++) h.cards.push(paper(machine,-90+j*6,-246-j*4,.82,(j%2?4:-4)));
+      h.output=[];for(let j=0;j<8;j++) h.output.push(paper(machine,148,-29-j*11,.8,j%2?3:-3));
+      h.jam=group(machine);path(h.jam,'M-1-149l20 22 20-28 27 23 17-26 22 22',{fill:'none',stroke:C.red,'stroke-width':6});
+    }
+    if(i===2) {
+      h.schedule=group(interior);el('rect',{x:-171,y:-257,width:293,height:181,rx:5,fill:'#fffdf7'},h.schedule);
+      h.slots=[];
+      for(let j=0;j<6;j++) {
+        const x=-158+(j%3)*91,y=-242+Math.floor(j/3)*79;
+        const slot=el('rect',{x,y,width:79,height:64,rx:4,fill:j<4?'#f1ece5':C.rest,stroke:j<4?'#d4cbd0':C.purple,'stroke-width':2},h.schedule);h.slots.push(slot);
+        h.cards.push(paper(h.schedule,x+40,y+32,.87));
+      }
+      h.restTag=text(h.schedule,-27,-115,'쉼',36,{fill:'#665094'});
+    }
+    houses.push(h);
+  }
+
+  // Same street, no replacement backdrops between scenes.
+  const furniture=byId('street-furniture');
+  for(const x of [860,1860]) {const g=group(furniture,{transform:`translate(${x} 570)`,opacity:.55});path(g,'M-30 0h60l-6-55h-48Z',{fill:'#d9d0c3',stroke:C.ink,'stroke-width':2});path(g,'M0-55q-47-40-20-67 34 0 20 67m1 0q40-57 54-28-8 31-54 28',{fill:'#b4b9aa',stroke:C.ink,'stroke-width':2});}
+  const benches=[group(houses[2].root,{'class':'line'}),group(byId('solution'),{'class':'line'})];
+  benches.forEach(g=>{el('rect',{x:-186,y:0,width:372,height:19,rx:6,fill:'#c6b4e0'},g);path(g,'M-163 19v36m326-36v36',{fill:'none','stroke-width':5});});
+  const pigModels=[0,1,2].map(i=>makePig(byId('characters'),i));
+  const wolf=makeWolf(byId('wolf'));
+  const windGroup=byId('wind');
+  const windLines=[];
+  for(let i=0;i<3;i++) windLines.push(path(windGroup,`M0 ${i*32}q65 -24 150 0t170 0`,{fill:'none',stroke:'#b9aab9','stroke-width':3,'stroke-linecap':'round'}));
+  const windCards=[];for(let i=0;i<18;i++) windCards.push(paper(windGroup,0,0,.7));
+  const travelling=byId('travelling-cards');
+  const handCard=paper(byId('foreground'),0,0,1);
+  const conveyorCards=[];for(let i=0;i<7;i++) conveyorCards.push(paper(travelling,0,0,.75));
+  const overload=[];for(let i=0;i<13;i++) overload.push(paper(travelling,0,0,1.05));
+
+  const solution=byId('solution'),foreground=byId('foreground');
+  const shared=group(solution,{'class':'line'});
+  el('rect',{x:-285,y:-275,width:570,height:320,rx:7,fill:'#fffdf7'},shared);
+  text(shared,-75,-228,'함께 정한 일정',36);
+  // The deadline has its own reserved space, outside the work and rest labels.
+  el('rect',{x:116,y:-263,width:150,height:66,rx:4,fill:'#faf6ee',stroke:'#d1c8d9'},shared);
+  path(shared,'M-267-185H267',{fill:'none',stroke:'#d1c8d9','stroke-width':2});
+  const laneColors=[C.blue,C.orange,C.purple],laneNames=['안내판','무대','리허설'];
+  const lanes=[];
+  for(let i=0;i<3;i++) {
+    const x=-183+i*183,g=group(shared);
+    el('rect',{x:x-85,y:-165,width:170,height:118,rx:5,fill:'#faf6ee',stroke:laneColors[i],'stroke-width':3},g);
+    el('circle',{cx:x,cy:-143,r:9,fill:laneColors[i],stroke:'none'},g);
+    text(g,x,-71,laneNames[i],40);lanes.push(g);
+  }
+  const restOutline=el('rect',{x:-267,y:-30,width:534,height:57,rx:5,fill:C.rest,stroke:C.purple,'stroke-width':2},shared);
+  text(shared,-65,9,'함께 쉬는 시간',30,{fill:'#665094'});
+  const sharedTimer=group(foreground,{'class':'line'});
+  el('circle',{r:17,fill:'#fffdf7'},sharedTimer);
+  const timerHand=path(sharedTimer,'M0 0v-10m0 10 6 4',{fill:'none','stroke-width':3});
+  const laneChecks=[];
+  for(let i=0;i<3;i++) laneChecks.push(path(shared,`M${-215+i*183}-119l12 13 24-29`,{fill:'none',stroke:C.purple,'stroke-width':5,'stroke-linecap':'round','stroke-linejoin':'round'}));
+  // A scaled instance of the original machine keeps the same gear and conveyor.
+  const reusedMachine=group(solution);
+  el('use',{href:'#shared-machine-source',transform:'translate(2050 470) scale(.45)'},reusedMachine);
+  const branchRails=group(solution,{'class':'line'});
+  for(let i=0;i<3;i++) path(branchRails,`M2117 452Q2180 310 ${2265+i*165} 273`,{fill:'none',stroke:laneColors[i],'stroke-width':4});
+  const agreed=group(foreground,{'class':'line'});
+  el('rect',{x:-165,y:-36,width:330,height:72,rx:5,fill:'#fffdf7'},agreed);
+  text(agreed,0,13,'이번엔 생략',43,{fill:C.red});
+  const discardBox=group(solution,{'class':'line'});
+  path(discardBox,'M-75-45H75l-10 70H-65Z',{fill:'#e8d6bf'});
+  path(discardBox,'M-75-45-96-65h64l-5 20m112 0 21-20H32l5 20',{fill:'#f5e9d6'});text(discardBox,0,8,'장식',34);
+  const selectedCards=[paper(foreground,0,0,1.6,-9),paper(foreground,0,0,1.6,8)];
+  selectedCards.forEach((g,i)=>text(g,0,9,['별 장식','리본'][i],21,{fill:C.red}));
+  const dividedCards=[0,1,2].map((i)=>{const g=paper(foreground,0,0,1);text(g,0,8,laneNames[i],18,{fill:laneColors[i]});return g;});
+  const pinned=group(foreground,{'class':'line'});
+  el('rect',{x:-37,y:-25,width:74,height:50,rx:4,fill:C.rest,stroke:C.purple,'stroke-width':4},pinned);text(pinned,0,13,'쉼',40,{fill:'#665094'});
+  const finalCard=group(foreground,{'class':'line'});
+  el('rect',{x:-68,y:-30,width:136,height:60,rx:3,fill:'#fffdf7'},finalCard);text(finalCard,0,10,'오늘까지',28,{fill:C.red});
+  const stage=group(foreground,{'class':'line'});
+  path(stage,'M-89 0H89V-25H-89Z',{fill:'#d2c3e5'});path(stage,'M-65-25V-90H65v65',{fill:'#f6e6d1'});
+  const curtain=path(stage,'M-65-90q65 50 130 0',{fill:C.orange});path(stage,'M-2-68v33m-7 0H7',{fill:'none'});
+  const notice=group(foreground,{'class':'line'});
+  el('rect',{x:-75,y:-65,width:150,height:75,rx:3,fill:'#fffdf7'},notice);text(notice,0,-20,'안내',38);
+  path(notice,'M-54 10v31m108-31v31',{fill:'none','stroke-width':4});
+  const noticeFinish=path(notice,'M-48-6H27',{fill:'none',stroke:C.blue,'stroke-width':5});
+  const rehearsal=group(foreground,{'class':'line'});
+  el('rect',{x:-74,y:-28,width:148,height:56,rx:3,fill:'#fffdf7'},rehearsal);text(rehearsal,0,11,'리허설',34);
+  const finishedMarks=[notice,stage,rehearsal].map((g,i)=>path(g,i===1?'M45-57l12 12 22-26':'M40-53l11 12 22-25',{fill:'none',stroke:C.purple,'stroke-width':5,'stroke-linecap':'round'}));
+  // Side flags leave the entire schedule and its completion marks unobstructed.
+  const finaleBunting=group(solution,{'class':'line'});
+  for(const side of [-1,1]) {
+    path(finaleBunting,`M${side*360} 250v130`,{fill:'none','stroke-width':2});
+    for(let i=0;i<3;i++) path(finaleBunting,`M${side*360} ${260+i*36}l${side*44} 15 ${-side*44} 15Z`,{fill:houseColors[i],'stroke-width':2});
+  }
+  const introRooms=group(solution,{'class':'line'});
+  for(let i=0;i<3;i++) {
+    const x=1180+i*250;
+    path(introRooms,`M${x-92} 365v-63l92-40 92 40v63Z`,{fill:houseColors[i],opacity:.3});
+    text(introRooms,x,344,String(i+1),45);
+  }
+  const lastRestCard=paper(foreground,0,0,1.05);
+  const restStop=group(foreground,{'class':'line'});
+  el('rect',{x:-85,y:-31,width:170,height:62,rx:4,fill:C.rest,stroke:C.purple},restStop);text(restStop,0,12,'잠깐!',43);
+  const media=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const narrow=window.matchMedia('(max-width:600px)');
+  // Keyframes interpolate world coordinates, never the state left by the previous frame.
+  const cameraKeys=[
+    [0,1430,350,1.02],[4,1430,350,1.02],[6.8,430,350,1.13],
+    [16,430,350,1.13],[17.2,1430,350,1.13],[25,1430,350,1.13],
+    [26.2,2430,350,1.13],[33,2430,350,1.13],[35.2,350,350,1.04],
+    [39.8,350,350,1.04],[43,1370,350,1.04],[49.4,1370,350,1.04],
+    [53,2370,350,1.04],[59,2370,350,1.04],[60,2430,350,1.04],
+    [75,2430,350,1.04],[77,2430,350,1.04],[79.5,2430,260,.89],[84,2430,260,.89]
+  ];
+  function cameraAt(t,reduced) {
+    let camera;
+    if(reduced) {
+      camera=t<7?[1430,350,1.02]:t<16?[430,350,1.13]:t<25?[1430,350,1.13]:t<33?[2430,350,1.13]:t<40?[350,350,1.04]:t<50?[1370,350,1.04]:t<79.5?[2430,350,1.04]:[2430,260,.89];
+    } else {
+      let a=cameraKeys[0],b=a;
+      for(let i=1;i<cameraKeys.length;i++){b=cameraKeys[i];if(t<=b[0])break;a=b;}
+      const p=b[0]===a[0]?1:progress(t,a[0],b[0]);
+      camera=[lerp(a[1],b[1],p),lerp(a[2],b[2],p),lerp(a[3],b[3],p)];
+    }
+    if(narrow.matches) {
+      // Uniform zoom only: close choices, wider travel, then a legible joint board.
+      const close=(t>=7&&t<33)||(t>=60&&t<77);
+      camera[2]=Math.max(camera[2],close?1.5:t<4?1.25:t>=79.5?.98:1.2);
+      if(t>=60&&t<77)camera[1]=390;
+    }
+    return camera;
+  }
+  const event=(t,a,b,reduced)=>reduced?(t>=b?1:0):progress(t,a,b);
+  function render(t,reduced=media.matches) {
+    const [cx,cy,z]=cameraAt(t,reduced);
+    attr(dom.world,'transform',`translate(640 360) scale(${z}) translate(${-cx} ${-cy})`);
+    const endP=event(t,79.5,81,reduced);
+    opacity(dom.ending,endP);
+    const intro=1-event(t,4,6.5,reduced);
+    opacity(dom.banner,intro);move(dom.banner,0,-60);
+    show(introRooms,t<5);opacity(introRooms,1-event(t,4,5,reduced));
+    move(dom.deadline,1430,245,1.25);opacity(dom.deadline,1-event(t,5,6.8,reduced));
+    attr(dom.hand,'transform',`rotate(${t<75?0:90*event(t,75,76,reduced)})`);
+
+    // Houses unfold from their floor hinges; the first later folds under a real load.
+    houses.forEach((h,i)=>{
+      const construction=i===0?event(t,7,9,reduced):i===1?event(t,17.2,19,reduced):event(t,26.2,27.5,reduced);
+      const opening=construction;
+      const collapse=i===0?event(t,38.05,39.5,reduced):0;
+      const thirdPressure=i===2?event(t,55.2,56.7,reduced)*(1-event(t,60.5,65,reduced)):0;
+      const sag=i===0?.045*event(t,14.8,15.8,reduced):thirdPressure*.12;
+      attr(h.structure,'transform','');
+      const wallOpen=event(t,[7,17.2,26.2][i],[8.2,18.2,27.1][i],reduced);
+      attr(h.wall,'transform',`rotate(${(1-wallOpen)*-82} 0 0)`);
+      opacity(h.back,1-collapse);
+      attr(h.pillars[0],'transform',`rotate(${collapse*78} -193 0)`);
+      attr(h.pillars[1],'transform',`rotate(${-collapse*78} 193 0)`);
+      opacity(h.interior,wallOpen*(1-event(t,38.3,39.1,reduced)*(i===0?1:0))*(i===2?1-event(t,58.8,59.6,reduced):1));
+      attr(h.roof,'transform',`translate(0 ${(1-opening)*-110+sag*300+collapse*280}) rotate(${(1-opening)*-12+collapse*12+thirdPressure*4} 0 -297)`);
+      opacity(h.roof,opening);
+      const finalFade=event(t,77,79.5,reduced);
+      const built=t>=[7,17.2,26.2][i];
+      opacity(h.root,built?(i===2?(1-event(t,63.7,65,reduced))*(1-finalFade):1):0);
+      // Door opens only in response to arriving or leaving brothers.
+      let doorOpen=0;
+      if(i===0)doorOpen=event(t,39.2,39.9,reduced);
+      if(i===1)doorOpen=event(t,41.2,41.7,reduced)*(1-event(t,43,43.5,reduced));
+      if(i===2)doorOpen=event(t,51,51.5,reduced)*(1-event(t,53.2,53.7,reduced));
+      attr(h.door,'transform',`translate(153 0) scale(${1-.85*doorOpen} 1)`);
+    });
+    const h1=houses[0],h2=houses[1],h3=houses[2];
+    opacity(h1.complete,event(t,10.4,11,reduced));
+    attr(h1.noticeStrokes,'stroke-dasharray',`${event(t,9,10.4,reduced)*360} 360`);
+    h1.cards.forEach((node,i)=>show(node,t>=12.56+(i%6)*.56+(i>=6?.08:0)));
+    show(h1.requestTag,t>=12);
+    const task=clamp(Math.floor((t-12)/.56),0,5), taskStart=12+task*.56;
+    const catchP=event(t,taskStart+.12,taskStart+.42,reduced);
+    const takeCard=t>=12&&t<15.36;
+    show(handCard,takeCard);
+    const armAngle=-115*catchP*Math.PI/180;
+    const handX=343+12*Math.cos(armAngle)-36*Math.sin(armAngle),handY=516+12*Math.sin(armAngle)+36*Math.cos(armAngle);
+    const incoming=event(t,taskStart,taskStart+.12,reduced),release=event(t,taskStart+.42,taskStart+.56,reduced);
+    const cardX=lerp(lerp(620,handX,incoming),280+(task%4)*76,release);
+    const cardY=lerp(lerp(435,handY,incoming),435+Math.floor(task/4)*48,release);
+    move(handCard,cardX,cardY,1,-8+catchP*8);
+    opacity(h2.machine,event(t,17.2,20,reduced));
+    const jam=event(t,46.6,48.6,reduced),reusing=t>=65;
+    const machineTime=reusing?47.6+(t-65)*.22:Math.min(t,47.6);
+    attr(h2.gear,'transform',`translate(-85 -122) rotate(${reduced?0:(machineTime-20)*85} 0 7) scale(.55)`);
+    const leverAngle=t<20?-25*event(t,19,20,reduced):t<47?lerp(-25,12,event(t,20,20.7,reduced)):reusing?-25:lerp(12,-15,event(t,47,48,reduced));
+    attr(h2.lever,'transform',`rotate(${leverAngle} -128 -22)`);
+    attr(h2.belt,'d',`M-4-115Q67 ${-115+(reusing?0:jam)*33} 138-115`);
+    show(h2.jam,t>=47&&t<65);
+    h2.cards.forEach((node,i)=>show(node,t>=23+i*.22&&t<43));
+    const normalDone=clamp(Math.floor((t-20)/1.5),0,3);
+    const crisisDone=clamp(Math.floor((Math.min(t,47.6)-43)/1.35),0,3);
+    h2.output.forEach((node,i)=>show(node,!reusing&&i<normalDone+crisisDone));
+    conveyorCards.forEach((node,i)=>{
+      const crisis=t>=43,reuse=t>=65&&t<70;
+      const start=crisis?43+i*1.35:20+i*1.5,duration=crisis?1.35:1.5;
+      const arrival=crisis?43+i*.48:start;
+      const sample=crisis?Math.min(t,47.6):t;
+      const active=i<(crisis?7:3)&&t>=arrival&&sample<start+duration&&((t>=20&&t<25)||(t>=43&&t<49));
+      show(node,active&&!reuse);
+      const p=reduced?1:clamp((sample-start)/duration);
+      let x,y;
+      if(p<.25){x=1345;y=lerp(289-(crisis&&p===0?Math.max(0,i-crisisDone)*8:0),372,p/.25);}
+      else if(p<.42){x=1345;y=lerp(372,435,(p-.25)/.17);}
+      else if(p<.8){x=lerp(1345,1578,(p-.42)/.38);y=435;}
+      else{x=1578;y=lerp(435,541,(p-.8)/.2);}
+      // Paper vanishes inside the input slot, then emerges on the conveyor.
+      opacity(node,p>.25&&p<.42?0:1);
+      move(node,x,y,.74,0);
+    });
+    h3.cards.forEach((node,i)=>show(node,i<4&&t>=26.6+i*.48&&t<59.6));
+    show(lastRestCard,t>=55.2&&t<57.2);
+    const restHit=event(t,55.2,56.2,reduced);
+    move(lastRestCard,lerp(2590,2494,restHit),lerp(300,439,restHit),1.05);
+    show(restStop,t>=56.2&&t<59.6);move(restStop,2540,321);
+    attr(h3.slots[5],'stroke-width',t>=56.2&&t<59.6?6:2);
+    opacity(h3.restTag,event(t,29,29.7,reduced));
+    move(benches[0],0,-10,1);opacity(benches[0],event(t,29.5,30.8,reduced)*(1-event(t,59,60,reduced)));
+
+    // Wolf gathers from the very same folded-paper vocabulary.
+    let wx=70,wy=357,ws=.76;
+    if(t>=39.8&&t<43){wx=lerp(70,1070,event(t,39.8,43,reduced));}
+    else if(t>=43&&t<49.4)wx=1070;
+    else if(t>=49.4&&t<53)wx=lerp(1070,2070,event(t,49.4,53,reduced));
+    else if(t>=53)wx=2070;
+    const breath=event(t,35.5,36.4,reduced)-event(t,36.4,37.3,reduced);
+    wx-=breath*45;
+    if(t>=60) {ws=lerp(.76,.55,event(t,63.2,65,reduced));ws=lerp(ws,.35,event(t,68,70,reduced));ws=lerp(ws,.19,event(t,73,75,reduced));}
+    const fold=event(t,78,79.5,reduced);
+    move(wolf.root,lerp(wx,2602,event(t,78.6,79.5,reduced)),lerp(wy,173,event(t,78.6,79.5,reduced)),ws);
+    const outlinePoints=[[-179,30],[-155,-37],[-123,-65],[-135,-140],[-68,-104],[-25,-119],[6,-77],[69,-71],[103,-43],[179,-33],[231,-8],[199,24],[128,37],[100,89],[65,75],[12,104],[-43,89],[-66,104],[-121,70],[-160,72]];
+    const foldShape=event(t,78,78.6,reduced);
+    attr(wolf.outline,'d',outlinePoints.map(([x,y],i)=>`${i?'L':'M'}${lerp(x,clamp(x,-120,120),foldShape)} ${lerp(y,clamp(y,-55,55),foldShape)}`).join(' ')+'Z');
+    opacity(wolf.body,1-event(t,78.4,78.8,reduced));
+    show(wolf.root,t>=33&&t<79.5);
+    wolf.cards.forEach((node,i)=>{
+      const assembly=event(t,33+i*.1,34+i*.1,reduced), detached=event(t,63.2+(i%3)*5,64.4+(i%3)*5,reduced);
+      const x=-144+(i%5)*48,y=-48+Math.floor(i/5)*44;
+      move(node,x-(1-assembly)*(180+i*11)+detached*(i%2?110:-90),y-(1-assembly)*(90+i*5)+detached*210,.73,[-17,9,-5,16,-13][i%5]+(1-assembly)*38);
+      opacity(node,assembly*(1-detached));
+    });
+    // Hide the solid silhouette until enough folded cards have assembled.
+    opacity(wolf.body,event(t,33.5,35.2,reduced)*(1-event(t,78.4,78.8,reduced)));
+    const gust=t>=37&&t<39.7?event(t,37,37.7,reduced)*(1-event(t,39,39.7,reduced)):t>=44&&t<47?event(t,44,44.6,reduced)*(1-event(t,46.3,47,reduced)):t>=54&&t<56.8?event(t,54,54.5,reduced)*(1-event(t,56.2,56.8,reduced)):0;
+    show(windGroup,gust>0);opacity(windGroup,gust*.65);
+    const gustStart=t<43?37:t<53?44:54;
+    const target=t<43?430:t<53?1430:2430;
+    move(windGroup,target-205,333);
+    windLines.forEach((line,i)=>opacity(line,reduced?0:1-i*.15));
+    windCards.forEach((node,i)=>{
+      show(node,i<5);
+      const p=reduced?(i/18):((t-gustStart)*.68+i*.071)%1;
+      move(node,lerp(-60,405,p),-20+(i%5)*29-Math.sin(p*Math.PI)*50,.7,(i%2?1:-1)*(12+p*20));
+    });
+    overload.forEach((node,i)=>{
+      let enabled=false,x=0,y=0;
+      if(t>=37.4&&t<43){enabled=t>=37.4+i*.075;x=430-180+(i%6)*67;y=274-Math.floor(i/6)*36+event(t,38.05,39.5,reduced)*183;}
+      if(t>=47.2&&t<53){enabled=i<5&&t>=47.2+i*.13;x=1430+34+(i%4)*33;y=448-Math.floor(i/4)*37;}
+      if(t>=55&&t<59.6){enabled=i<6&&t>=55+i*.2;x=2430-140+(i%3)*64;y=337+Math.floor(i/3)*37;}
+      show(node,enabled);
+      move(node,x,y,1.03,((i*7)%19)-9);
+      opacity(node,t>=60?1-event(t,61+i*.13,62.8+i*.13,reduced):1);
+    });
+
+    // Travel passes through a doorway; gait follows travelled distance and eases to rest.
+    let p1x=310,p2x=1200,p3x=2665,p1y=592,p2y=592,p3y=592;
+    const options=[{},{},{}];
+    function walk(index,from,to,a,b) {
+      const p=event(t,a,b,reduced),x=lerp(from,to,p);
+      options[index].run=reduced?0:Math.sin(p*Math.PI);
+      options[index].phase=(x-from)*Math.PI/45;
+      return x;
+    }
+    if(t<7) {
+      p1x=walk(0,1280,310,4,6.8);p2x=walk(1,1430,1200,4,6.8);p3x=walk(2,1580,2665,4,6.8);
+      if(t<4)options.forEach((o,i)=>{o.left=i?0:60;o.right=i===2?-60:0;});
+    }
+    if(t>=8.8&&t<11.5)p1x=t<10.6?walk(0,310,430,8.8,9.2):walk(0,430,310,10.6,11.5);
+    if(reduced&&t<7){p1x=1280;p2x=1430;p3x=1580;}
+    if(t>=9&&t<11.5) {
+      const draw=event(t,9,10.4,reduced);
+      options[0].right=-75;
+      // The first stroke is drawn by the same hand, before the completion tick.
+      options[0].draw=draw;
+    }
+    if(takeCard){options[0].left=12;options[0].right=-115*catchP;}
+    if(t>=19&&t<20.5)options[1].right=-50*event(t,19,19.7,reduced);
+    if(t>=29&&t<31.5)options[2].left=70;
+    if(t>=31&&t<33) {
+      // Bring the brothers into this shot so their reaction can actually be seen.
+      p1x=2180;p2x=2310;options[0].scale=.72;options[1].scale=.72;
+      options[0].look=1;options[1].look=1;
+      options[0].nod=reduced?0:-4*Math.sin((t-31)*Math.PI);
+      options[1].nod=reduced?0:-4*Math.sin((t-31)*Math.PI);
+      options[0].left=-35;options[1].right=35;
+    }
+    if(t>=35.5&&t<60)options[0].worried=true;
+    if(t>=45&&t<60)options[1].worried=true;
+    if(t>=55.5&&t<60)options[2].worried=true;
+    if(t>=39.8&&t<43) {
+      p1x=t<42.2?walk(0,310,1583,39.8,42.2):walk(0,1583,1500,42.2,43);
+      options[1].right=-55;options[1].look=1;
+    } else if(t>=43&&t<49.4)p1x=1500;
+    if(t>=49.4&&t<53) {
+      p1x=t<51.8?walk(0,1500,2583,49.4,51.8):walk(0,2583,2490,51.8,53);
+      p2x=t<52.3?walk(1,1200,2583,49.8,52.3):walk(1,2583,2310,52.3,53);
+      options[2].left=55;options[2].look=-1;
+    }
+    if(t>=53){p1x=2490;p2x=2310;p3x=2665;}
+    if(t>=55.2&&t<57.2)options[2].left=55;
+    if(t>=57&&t<60) {
+      options[0].look=-1;options[1].look=1;options[2].look=-1;
+      options.forEach(o=>{o.left=5;o.right=-5;});
+    }
+    if(t>=60) {
+      p1x=walk(0,2490,2430,60,61);p2x=walk(1,2310,2265,60,61);p3x=walk(2,2665,2595,60,61);
+      const agreeing=t>=61.4&&t<62.3?Math.sin(event(t,61.4,62.3,reduced)*Math.PI*2)*8:0;
+      options.forEach((o,i)=>{o.nod=reduced?0:agreeing;o.look=t<63?(i===1?1:i===2?-1:0):0;});
+      const sit=event(t,73,74.2,reduced)*(1-event(t,74.8,75.2,reduced))+event(t,78,79.2,reduced);
+      options.forEach(o=>{o.sit=sit;});
+      p1y=lerp(592,604,sit);p2y=p1y;p3y=p1y;
+      // Small final actions complete the actual props before their check marks appear.
+      if(t>=75&&t<77.8) {
+        p1x=walk(0,2430,2350,75,75.4);
+        p2x=walk(1,2265,2220,75,75.4);
+        p3x=walk(2,2595,2640,75,75.4);
+      }
+      if(t>=77.8) {
+        p1x=walk(0,2350,2430,77.8,78.5);p2x=walk(1,2220,2265,77.8,78.5);p3x=walk(2,2640,2595,77.8,78.5);
+      }
+    }
+    if(reduced&&t>=40&&t<50)p1x=1500;
+    if(reduced&&t>=50&&t<53){p1x=2490;p2x=2310;p3x=2665;}
+    [[p1x,p1y],[p2x,p2y],[p3x,p3y]].forEach((pos,i)=>posePig(pigModels[i],...pos,{...options[i],reduced}));
+    if(options[0].draw!==undefined)reach(pigModels[0],'right',lerp(306,500,options[0].draw)-p1x,391-p1y);
+    if(t>=19&&t<20.7){const a=leverAngle*Math.PI/180;reach(pigModels[1],'right',1302+58*Math.sin(a)-p2x,548-58*Math.cos(a)-p2y);}
+    if(t>=55.2&&t<57.2)reach(pigModels[2],'left',2535-p3x,451-p3y);
+
+    // Present -> hold -> nod -> agree -> pack. The board appears only at division.
+    show(shared,t>=65);move(shared,2430,380,.9);
+    show(reusedMachine,t>=65&&t<78);show(branchRails,t>=65&&t<70);
+    show(agreed,t>=62.3&&t<64.8);move(agreed,2430,306);
+    show(discardBox,t>=60);move(discardBox,2080,550);
+    selectedCards.forEach((node,i)=>{
+      show(node,t>=60&&t<64.9);
+      const reveal=event(t,60,61,reduced),pack=event(t,63.1+i*.25,64.1+i*.25,reduced);
+      const x=lerp(lerp(2494,2330+i*200,reveal),2080+(i?15:-15),pack);
+      const y=lerp(lerp(439,518,reveal),501+i*4,pack);
+      move(node,x,y,lerp(1.5,.8,pack),lerp(i?8:-9,i?8:-8,pack));
+      if(t<63.1+i*.25)reach(pigModels[0],i?'right':'left',x+(i?-30:30)-p1x,y+15-p1y);
+    });
+    dividedCards.forEach((node,i)=>{
+      const start=65+i*.95,done=start+2.15;
+      show(node,t>=59.6&&t<done);
+      const take=event(t,start,start+.55,reduced),through=event(t,start+.55,start+1.15,reduced),deliver=event(t,start+1.15,done,reduced);
+      const queue=event(t,64.4,65,reduced);
+      let x=lerp(lerp(2312+i*91,2012,queue),2012,take),y=lerp(lerp(360,300-i*45,queue),378,take);
+      if(t>=start+.55){
+        if(through<.3){x=2012;y=lerp(378,418,through/.3);}
+        else if(through<.85){x=lerp(2012,2117,(through-.3)/.55);y=418;}
+        else{x=2117;y=lerp(418,452,(through-.85)/.15);}
+      }
+      if(t>=start+1.15){x=lerp(2117,2265+i*165,deliver);y=lerp(452,273,deliver)-Math.sin(deliver*Math.PI)*35;}
+      move(node,x,y,1.05);opacity(node,t>=start+.55&&t<start+.75?0:1);
+      if(t>=start&&t<start+.55&&Math.abs(x-p2x)<125)reach(pigModels[1],'left',x+20-p2x,y+12-p2y);
+    });
+    lanes.forEach((lane,i)=>opacity(lane,event(t,67.15+i*.95,67.4+i*.95,reduced)));
+    const pin=event(t,70,71.2,reduced),pinX=lerp(2540,2628,pin),pinY=lerp(518,378.2,pin);
+    show(pinned,t>=70);move(pinned,pinX,pinY,.8);
+    if(t>=70&&t<71.6)reach(pigModels[2],'left',pinX+26-p3x,pinY+12-p3y);
+    const timer=event(t,71.6,72.5,reduced),timerX=lerp(2595,2542.5,timer),timerY=lerp(550,378.2,timer);
+    show(sharedTimer,t>=71.6);move(sharedTimer,timerX,timerY,.9);
+    if(t>=71.6&&t<72.7)reach(pigModels[2],'right',timerX-p3x,timerY+10-p3y);
+    attr(restOutline,'stroke-width',t>=71.2?4:2);
+    attr(timerHand,'transform',`rotate(${90*event(t,75,76,reduced)})`);
+    move(benches[1],2430,580);show(benches[1],t>=72.8);
+    laneChecks.forEach((check,i)=>opacity(check,event(t,76+i*.5,76.3+i*.5,reduced)));
+    show(finalCard,t>=78.4);
+    move(finalCard,lerp(2070,2602,event(t,78.6,79.5,reduced)),lerp(357,173,event(t,78.6,79.5,reduced)),lerp(.3,.9,fold));
+    opacity(finalCard,event(t,78.4,78.8,reduced));
+    const finish=t>=75,settle=event(t,77.8,79.2,reduced);
+    [notice,stage,rehearsal].forEach(node=>show(node,finish));
+    move(notice,lerp(2160,2120,settle),lerp(570,440,settle),.8);
+    move(stage,lerp(2430,2790,settle),lerp(592,558,settle),.85);
+    move(rehearsal,lerp(2730,2790,settle),lerp(475,398,settle),.85);
+    const blueWork=event(t,75.4,76,reduced),orangeWork=event(t,75.9,76.5,reduced),purpleWork=event(t,76.4,77,reduced);
+    attr(noticeFinish,'stroke-dasharray',`${blueWork*75} 75`);
+    attr(curtain,'d',`M-65-90q65 ${lerp(50,14,orangeWork)} 130 0`);
+    if(t>=75.4&&t<76.15)reach(pigModels[1],'left',lerp(2122,2182,blueWork)-p2x,565-p2y);
+    if(t>=75.9&&t<76.65)reach(pigModels[0],'right',lerp(2375,2430,orangeWork)-p1x,lerp(537,525,orangeWork)-p1y);
+    if(t>=76.4&&t<77.15)reach(pigModels[2],'right',2700-p3x,lerp(520,475,purpleWork)-p3y);
+    finishedMarks.forEach((node,i)=>opacity(node,event(t,76+i*.5,76.3+i*.5,reduced)));
+    show(finaleBunting,t>=79);opacity(finaleBunting,event(t,79,79.5,reduced));
+    const current=cues.find(c=>t>=c[0]&&t<c[1])||cues[cues.length-1];
+    if(ui.caption.textContent!==current[2])ui.caption.textContent=current[2];
+    updateTime(t);
+  }
+
+  // Native controls and a single clock. RAF schedules draws, never counts elapsed time.
+  let state='ready',storedTime=0,origin=0,raf=0,seeking=false,resumeAfterSeek=false;
+  const clock=()=>clamp(storedTime+(state==='playing'?(performance.now()-origin)/1000:0),0,DURATION);
+  const cancelFrame=()=>{if(raf){cancelAnimationFrame(raf);raf=0;}};
+  function updateTime(t) {
+    const whole=Math.floor(t),formatted=`${String(Math.floor(whole/60)).padStart(2,'0')}:${String(whole%60).padStart(2,'0')}`;
+    if(ui.elapsed.textContent!==formatted)ui.elapsed.textContent=formatted;
+    if(!seeking)ui.seek.value=String(t);
+    const spoken=`${Math.floor(t/60)}분 ${Math.floor(t%60)}초 / 전체 1분 24초`;
+    if(ui.seek.getAttribute('aria-valuetext')!==spoken)attr(ui.seek,'aria-valuetext',spoken);
+  }
+  function updateButton() {
+    const label=state==='ready'?'재생':state==='playing'?'일시정지':state==='ended'?'다시 보기':'계속 보기';
+    if(ui.label.textContent!==label)ui.label.textContent=label;
+    ui.icon.textContent=state==='playing'?'Ⅱ':state==='ended'?'↻':'▶';
+    attr(ui.play,'aria-label',label);
+    ui.seek.disabled=state==='ready';
+  }
+  function finish() {
+    cancelFrame();storedTime=DURATION;state='ended';render(DURATION);updateButton();
+    ui.status.textContent='이야기가 끝났습니다. 다시 보기 버튼으로 처음부터 재생할 수 있습니다.';
+  }
+  function frame() {
+    raf=0;if(state!=='playing')return;
+    const t=clock();render(t);
+    if(t>=DURATION){finish();return;}
+    raf=requestAnimationFrame(frame);
+  }
+  function play() {
+    cancelFrame();
+    if(state==='ready'||state==='ended')storedTime=0;
+    show(dom.cover,false);show(dom.story,true);
+    state='playing';origin=performance.now();ui.status.textContent='재생 중';updateButton();render(storedTime);
+    raf=requestAnimationFrame(frame);
+  }
+  function pause() {
+    if(state!=='playing')return;
+    storedTime=clock();cancelFrame();
+    if(storedTime>=DURATION){finish();return;}
+    state='paused';render(storedTime);updateButton();ui.status.textContent='일시정지';
+  }
+  function toggle() {if(state==='playing')pause();else play();}
+  function beginSeek() {
+    if(seeking||state==='ready')return;
+    resumeAfterSeek=state==='playing';pause();seeking=true;
+  }
+  function seekToInput() {
+    if(state==='ready')return;
+    const requested=Number(ui.seek.value);
+    if(!seeking)beginSeek();
+    storedTime=clamp(requested,0,DURATION);
+    state=storedTime===DURATION?'ended':'paused';
+    render(storedTime);updateButton();
+  }
+  function endSeek() {
+    if(!seeking)return;
+    seeking=false;
+    const resume=resumeAfterSeek;resumeAfterSeek=false;
+    if(storedTime>=DURATION)finish();
+    else if(resume)play();
+    else {render(storedTime);updateButton();}
+  }
+  ui.play.addEventListener('click',toggle);
+  ui.seek.addEventListener('pointerdown',beginSeek);
+  ui.seek.addEventListener('input',seekToInput);
+  ui.seek.addEventListener('change',endSeek);
+  window.addEventListener('pointerup',endSeek);
+  window.addEventListener('pointercancel',endSeek);
+  ui.seek.addEventListener('blur',endSeek);
+  ui.seek.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End','PageUp','PageDown'].includes(e.key))beginSeek();});
+  ui.seek.addEventListener('keyup',e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End','PageUp','PageDown'].includes(e.key))endSeek();});
+  document.addEventListener('keydown',e=>{
+    const target=e.target;
+    if(e.code!=='Space'||e.repeat||e.altKey||e.ctrlKey||e.metaKey)return;
+    if(target instanceof Element&&target.closest('button,input,select,textarea,a,summary,[contenteditable="true"]'))return;
+    e.preventDefault();toggle();
+  });
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){resumeAfterSeek=false;endSeek();pause();}
+  });
+  const motionChanged=()=>{if(state!=='ready')render(clock());};
+  if(media.addEventListener)media.addEventListener('change',motionChanged);else media.addListener(motionChanged);
+  if(narrow.addEventListener)narrow.addEventListener('change',motionChanged);else narrow.addListener(motionChanged);
+  const transcript=byId('transcript');
+  cues.forEach(c=>{const p=document.createElement('p');p.textContent=c[2];transcript.appendChild(p);});
+  updateButton();
+})();
+</script>
+</body>
+</html>
