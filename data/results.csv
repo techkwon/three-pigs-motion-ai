@@ -1,0 +1,41 @@
+﻿round,work_key,work_name,blind_tag,judge,story,flow,visual,motion,tech,total,rank_in_round,license
+1,opus,Opus 단독,B,sonnet,17,16,15,18,15,81,1,CC BY 4.0
+1,gpt,GPT 단독,A,sonnet,15,15,17,11,16,74,2,CC BY 4.0
+1,opus,Opus 단독,B,codex,17,16,16,18,16,83,2,CC BY 4.0
+1,gpt,GPT 단독,A,codex,18,17,18,13,19,85,1,CC BY 4.0
+1,opus,Opus 단독,B,argon,18,18,18,19,16,89,1,CC BY 4.0
+1,gpt,GPT 단독,A,argon,19,16,16,13,18,82,2,CC BY 4.0
+1,opus,Opus 단독,B,average,17.3,16.7,16.3,18.3,15.7,84.3,1,CC BY 4.0
+1,gpt,GPT 단독,A,average,17.3,16,17,12.3,17.7,80.3,2,CC BY 4.0
+2,collab,협업,Y,sonnet,18,18,18,19,19,92,1,CC BY 4.0
+2,gpt,GPT 단독,X,sonnet,16,14,17,10,16,73,3,CC BY 4.0
+2,opus,Opus 단독,Z,sonnet,17,16,15,15,14,77,2,CC BY 4.0
+2,collab,협업,Y,codex,19,18,17,19,19,92,1,CC BY 4.0
+2,gpt,GPT 단독,X,codex,18,15,18,11,17,79,2,CC BY 4.0
+2,opus,Opus 단독,Z,codex,16,14,14,16,13,73,3,CC BY 4.0
+2,collab,협업,Y,argon,19,19,19,19,20,96,1,CC BY 4.0
+2,gpt,GPT 단독,X,argon,15,14,15,11,16,71,2,CC BY 4.0
+2,opus,Opus 단독,Z,argon,16,13,14,14,12,69,3,CC BY 4.0
+2,collab,협업,Y,average,18.7,18.3,18,19,19.3,93.3,1,CC BY 4.0
+2,gpt,GPT 단독,X,average,16.3,14.3,16.7,10.7,16.3,74.3,2,CC BY 4.0
+2,opus,Opus 단독,Z,average,16.3,14.3,14.3,15,13,73,3,CC BY 4.0
+3,opusp,Opus 솔로플러스,R,sonnet,19,17,17,19,18,90,1,CC BY 4.0
+3,collab,협업,V,sonnet,16,17,16,17,18,84,2,CC BY 4.0
+3,gptp,GPT 솔로플러스,T,sonnet,17,15,14,15,17,78,3,CC BY 4.0
+3,opus,Opus 단독,P,sonnet,16,15,16,16,14,77,4,CC BY 4.0
+3,gpt,GPT 단독,M,sonnet,15,14,16,10,15,70,5,CC BY 4.0
+3,opusp,Opus 솔로플러스,R,codex,19,18,19,19,19,94,1,CC BY 4.0
+3,collab,협업,V,codex,18,19,17,19,19,92,2,CC BY 4.0
+3,gptp,GPT 솔로플러스,T,codex,19,17,16,18,19,89,3,CC BY 4.0
+3,opus,Opus 단독,P,codex,16,14,15,17,13,75,5,CC BY 4.0
+3,gpt,GPT 단독,M,codex,18,14,17,12,17,78,4,CC BY 4.0
+3,opusp,Opus 솔로플러스,R,argon,20,18,18,19,19,94,2,CC BY 4.0
+3,collab,협업,V,argon,18,19,19,20,20,96,1,CC BY 4.0
+3,gptp,GPT 솔로플러스,T,argon,17,15,11,12,15,70,3,CC BY 4.0
+3,opus,Opus 단독,P,argon,15,14,14,13,10,66,4,CC BY 4.0
+3,gpt,GPT 단독,M,argon,14,11,13,9,15,62,5,CC BY 4.0
+3,opusp,Opus 솔로플러스,R,average,19.3,17.7,18,19,18.7,92.7,1,CC BY 4.0
+3,collab,협업,V,average,17.3,18.3,17.3,18.7,19,90.7,2,CC BY 4.0
+3,gptp,GPT 솔로플러스,T,average,17.7,15.7,13.7,15,17,79,3,CC BY 4.0
+3,opus,Opus 단독,P,average,15.7,14.3,15,15.3,12.3,72.7,4,CC BY 4.0
+3,gpt,GPT 단독,M,average,15.7,13,15.3,10.3,15.7,70,5,CC BY 4.0

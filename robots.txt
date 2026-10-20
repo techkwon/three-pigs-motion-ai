@@ -1,0 +1,39 @@
+# 검색 로봇과 AI 크롤러 모두 허용합니다.
+# 참고: GitHub Pages 프로젝트 사이트에서는 크롤러가 도메인 맨 위(techkwon.github.io/robots.txt)를 먼저 읽습니다.
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://techkwon.github.io/three-pigs-motion-ai/sitemap.xml

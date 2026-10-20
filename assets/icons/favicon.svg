@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .bg { fill: #f5efe3; } .wall { fill: #c4532d; } .line { fill: none; stroke: #1f1b26; stroke-width: 3.6; stroke-linejoin: round; stroke-linecap: round; }
+    .door { fill: #fffaf1; } .nose { fill: #f2a0b5; } .dot { fill: #1f1b26; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #1b1f2c; } .wall { fill: #e57a52; } .line { stroke: #f2ede3; } .door { fill: #1b1f2c; } .dot { fill: #1b1f2c; }
+    }
+  </style>
+  <rect class="bg" width="64" height="64" rx="14"/>
+  <path class="wall" d="M12 31 32 13l20 18v21H12z"/>
+  <path class="line" d="M10 32 32 12l22 20"/>
+  <rect class="door" x="27" y="38" width="10" height="14" rx="2"/>
+  <ellipse class="nose" cx="32" cy="28" rx="6" ry="4.4"/>
+  <circle class="dot" cx="29.8" cy="28" r="1.25"/><circle class="dot" cx="34.2" cy="28" r="1.25"/>
+</svg>

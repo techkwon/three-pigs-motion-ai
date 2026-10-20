@@ -1,0 +1,1169 @@
+{
+ "title": "아기 돼지 모션 대결 — AI 모델 비교 실험 채점 결과",
+ "url": "https://techkwon.github.io/three-pigs-motion-ai/",
+ "author": "techkwon",
+ "datePublished": "2026-10-19",
+ "dateModified": "2026-10-20",
+ "language": "ko",
+ "license": {
+  "name": "CC BY 4.0",
+  "url": "https://creativecommons.org/licenses/by/4.0/",
+  "attribution": "techkwon, three-pigs-motion-ai (https://github.com/techkwon/three-pigs-motion-ai)",
+  "covers": "이 데이터, 보고 페이지의 글·그림, 다섯 작품(AI가 만든 HTML). 글꼴 파일(assets/fonts/)은 SIL OFL 1.1"
+ },
+ "note": "점수는 AI 채점관 3명이 작품 이름을 가린 채 매긴 값이다. 평균은 세 채점관의 산술 평균. 작품은 한 번씩만 만들었고, 2점 차이의 유의성은 확인하지 않았다. 점수는 같은 라운드 안에서만 비교한다.",
+ "criteria": [
+  {
+   "key": "story",
+   "name": "스토리 구성",
+   "short": "스토리",
+   "desc": "현대적 해석 · 기승전결 · 메시지",
+   "max": 20
+  },
+  {
+   "key": "flow",
+   "name": "이야기 흐름",
+   "short": "흐름",
+   "desc": "전환 · 속도 · 자막 타이밍",
+   "max": 20
+  },
+  {
+   "key": "visual",
+   "name": "화면 구성",
+   "short": "화면",
+   "desc": "레이아웃 · 색 · 캐릭터 · 글자",
+   "max": 20
+  },
+  {
+   "key": "motion",
+   "name": "모션 품질",
+   "short": "모션",
+   "desc": "부드러움 · 연출 · 의미 있는 움직임",
+   "max": 20
+  },
+  {
+   "key": "tech",
+   "name": "기술 완성도",
+   "short": "기술",
+   "desc": "오류 · 반응형 · 튼튼함 · 코드",
+   "max": 20
+  }
+ ],
+ "judges": [
+  {
+   "key": "sonnet",
+   "name": "Claude Sonnet 5.5",
+   "short": "Sonnet",
+   "org": "Anthropic",
+   "tool": "하위 에이전트"
+  },
+  {
+   "key": "codex",
+   "name": "GPT 6.1 sol",
+   "short": "코덱스",
+   "org": "OpenAI",
+   "tool": "코덱스 CLI"
+  },
+  {
+   "key": "argon",
+   "name": "Gemini 4 Argon high",
+   "short": "Argon",
+   "org": "Google",
+   "tool": "agy"
+  }
+ ],
+ "works": [
+  {
+   "key": "opusp",
+   "name": "Opus 솔로플러스",
+   "maker": "Claude Opus 5.5 혼자 · 설계 → 구현 → 자기 검토 → 수정",
+   "title": "문 열어, 나야",
+   "theme": "계정 사칭 · 피싱(AI 목소리 흉내 포함)",
+   "lengthSec": 89,
+   "structure": "13장면",
+   "fileSize": "104.8KB",
+   "makeMinutes": 67,
+   "firstRound": 3,
+   "path": "opus-5.5-plus/index.html",
+   "message": "가장 튼튼한 벽돌은 「한 번 더 확인하는 습관」이고, 가장 튼튼한 동네는 그 습관을 나누는 이웃이다.",
+   "player": "실제 시계 기준 · 일시정지 · 장면 눈금 탐색 · 키보드 · 움직임 줄이기",
+   "scenes": [
+    {
+     "t": 0,
+     "name": "제목 「문 열어, 나야」"
+    },
+    {
+     "t": 5,
+     "name": "계정이라는 두 번째 집"
+    },
+    {
+     "t": 11.4,
+     "name": "첫째의 쉬운 문"
+    },
+    {
+     "t": 18.8,
+     "name": "둘째의 똑똑한 문"
+    },
+    {
+     "t": 26.4,
+     "name": "셋째의 약속의 벽돌"
+    },
+    {
+     "t": 35.6,
+     "name": "흉내쟁이 늑대"
+    },
+    {
+     "t": 40.8,
+     "name": "「1234」"
+    },
+    {
+     "t": 46.8,
+     "name": "가짜 목소리"
+    },
+    {
+     "t": 53.6,
+     "name": "우리만 아는 질문"
+    },
+    {
+     "t": 62.6,
+     "name": "가짜 문자 폭풍"
+    },
+    {
+     "t": 67.6,
+     "name": "굴뚝의 링크"
+    },
+    {
+     "t": 73.4,
+     "name": "문을 여는 이웃"
+    },
+    {
+     "t": 82,
+     "name": "메시지"
+    }
+   ]
+  },
+  {
+   "key": "collab",
+   "name": "협업",
+   "maker": "GPT 6.1 sol 설계·검토 + Claude Opus 5.5 구현·수정",
+   "title": "늑대가 된 여름 (협업판)",
+   "theme": "폭염 시대의 주거와 공동체",
+   "lengthSec": 88,
+   "structure": "약 17비트 · 한 거리 위 카메라 이동",
+   "fileSize": "104.7KB",
+   "makeMinutes": 108,
+   "firstRound": 2,
+   "path": "collab/index.html",
+   "message": "좋은 집은 함께 살아남는 곳이다.",
+   "player": "실제 시계 기준 · 일시정지 · 탐색 막대 · 키보드 · 움직임 줄이기",
+   "scenes": [
+    {
+     "t": 0,
+     "name": "같은 출발, 세 가지 선택"
+    },
+    {
+     "t": 4,
+     "name": "첫째의 속도"
+    },
+    {
+     "t": 10,
+     "name": "둘째의 믿음"
+    },
+    {
+     "t": 17,
+     "name": "셋째의 준비"
+    },
+    {
+     "t": 25,
+     "name": "폭염 늑대"
+    },
+    {
+     "t": 31,
+     "name": "첫째 집의 한계"
+    },
+    {
+     "t": 37,
+     "name": "첫 번째 피신"
+    },
+    {
+     "t": 42,
+     "name": "냉방이 몰린 도시"
+    },
+    {
+     "t": 48,
+     "name": "기술의 멈춤 — 정전"
+    },
+    {
+     "t": 52,
+     "name": "두 번째 피신"
+    },
+    {
+     "t": 57,
+     "name": "안전한 방, 문밖의 이웃"
+    },
+    {
+     "t": 62,
+     "name": "결말을 바꾸는 문"
+    },
+    {
+     "t": 66,
+     "name": "첫째의 재능 — 그늘막"
+    },
+    {
+     "t": 71,
+     "name": "둘째의 재능 — 센서"
+    },
+    {
+     "t": 76,
+     "name": "셋째의 관계 — 쉼터"
+    },
+    {
+     "t": 81,
+     "name": "다음 여름"
+    },
+    {
+     "t": 84,
+     "name": "메시지"
+    }
+   ]
+  },
+  {
+   "key": "gptp",
+   "name": "GPT 솔로플러스",
+   "maker": "GPT 6.1 sol 혼자 · 설계 → 구현 → 자기 검토 → 수정",
+   "title": "마감 늑대와 빈칸 있는 집",
+   "theme": "끝없는 추가 요청과 생산성 경쟁, 함께 조절하는 일과 휴식",
+   "lengthSec": 84,
+   "structure": "13구간",
+   "fileSize": "53.0KB",
+   "makeMinutes": 38,
+   "firstRound": 3,
+   "path": "gpt-6.1-sol-plus/index.html",
+   "message": "좋은 집에는, 함께 숨 쉴 빈칸이 있다.",
+   "player": "실제 시계 기준 · 일시정지 · 탐색 · 키보드 · 이야기 글로 읽기 · 움직임 줄이기",
+   "scenes": [
+    {
+     "t": 0,
+     "name": "세 형제와 축제"
+    },
+    {
+     "t": 7,
+     "name": "첫째의 꽉 찬 집"
+    },
+    {
+     "t": 16,
+     "name": "둘째의 기계"
+    },
+    {
+     "t": 25,
+     "name": "셋째의 빈칸"
+    },
+    {
+     "t": 33,
+     "name": "마감 늑대와 첫 피신"
+    },
+    {
+     "t": 43,
+     "name": "기계 과적과 두 번째 피신"
+    },
+    {
+     "t": 53,
+     "name": "빈칸의 한계, 함께 멈춤"
+    },
+    {
+     "t": 60,
+     "name": "장식 생략 합의"
+    },
+    {
+     "t": 65,
+     "name": "기계 재사용과 분담"
+    },
+    {
+     "t": 70,
+     "name": "휴식 확보"
+    },
+    {
+     "t": 75,
+     "name": "필수 일 완료"
+    },
+    {
+     "t": 78,
+     "name": "마감을 일정에 넣기"
+    },
+    {
+     "t": 79.5,
+     "name": "결말"
+    }
+   ],
+   "knownIssue": {
+    "text": "수정 단계에서 생긴 버그로 첫째 돼지의 팔이 화면 끝까지 늘어나 주황 띠처럼 보입니다(0~45초, 실험 기록이라 고치지 않음).",
+    "short": "0~45초 주황 띠는 팔이 늘어나는 버그입니다(고치지 않음).",
+    "source": "_채점/3라운드_다섯작품/agy.json (visual: 「첫째 돼지의 주황색 양팔」, 1s~45s 장면)"
+   }
+  },
+  {
+   "key": "opus",
+   "name": "Opus 단독",
+   "maker": "Claude Opus 5.5 혼자 · 한 번에",
+   "title": "아기 돼지 삼형제 2050 · 열돔 늑대가 온다",
+   "theme": "기후 위기(폭염 · 열돔)와 공동체",
+   "lengthSec": 88,
+   "structure": "12장면 · 한 거리 위 카메라 이동",
+   "fileSize": "51.0KB",
+   "makeMinutes": 34,
+   "firstRound": 1,
+   "path": "opus-5.5/index.html",
+   "message": "가장 튼튼한 집은 「나만 안전한 집」이 아니라 미리, 함께 준비한 동네다.",
+   "player": "프레임 기준(느린 기기에서 느려짐) · 일시정지 없음",
+   "scenes": [
+    {
+     "t": 0,
+     "name": "제목"
+    },
+    {
+     "t": 4.5,
+     "name": "2050년 여름, 집 짓기"
+    },
+    {
+     "t": 11,
+     "name": "첫째: 얇은 조립식 집"
+    },
+    {
+     "t": 18,
+     "name": "둘째: 통유리 스마트홈"
+    },
+    {
+     "t": 26,
+     "name": "셋째: 단열 · 옥상 정원"
+    },
+    {
+     "t": 36,
+     "name": "열돔 늑대 등장"
+    },
+    {
+     "t": 43,
+     "name": "첫째 집이 찜통"
+    },
+    {
+     "t": 49,
+     "name": "전력 부족 → 정전"
+    },
+    {
+     "t": 57,
+     "name": "셋째 집으로 피신"
+    },
+    {
+     "t": 64,
+     "name": "창밖의 이웃, 문을 엶"
+    },
+    {
+     "t": 71,
+     "name": "함께 바꾸는 동네"
+    },
+    {
+     "t": 80,
+     "name": "메시지 카드"
+    }
+   ],
+   "knownIssue": {
+    "text": "프레임 사이 시간을 한 번에 최대 0.1초까지만 더해서, 초당 10프레임보다 느린 기기에서는 슬로모션으로 재생됩니다.",
+    "short": "느린 기기에서는 슬로모션으로 재생될 수 있습니다.",
+    "source": "_채점/3라운드_다섯작품/codex.json (약점: 낮은 프레임률에서 재생 시간이 늘어남)"
+   }
+  },
+  {
+   "key": "gpt",
+   "name": "GPT 단독",
+   "maker": "GPT 6.1 sol 혼자 · 한 번에",
+   "title": "늑대가 된 여름",
+   "theme": "기후위기 시대의 주거와 공동체",
+   "lengthSec": 84,
+   "structure": "9장면 · 장면 전환",
+   "fileSize": "37.9KB",
+   "makeMinutes": 10,
+   "firstRound": 1,
+   "path": "gpt-6.1-sol/index.html",
+   "message": "안전한 집은 혼자 버티는 요새가 아니라, 서로의 재능과 돌봄을 연결하는 곳이다.",
+   "player": "실제 시계 기준 · 일시정지 · 탐색 막대",
+   "scenes": [
+    {
+     "t": 0,
+     "name": "세 형제의 독립"
+    },
+    {
+     "t": 8,
+     "name": "빠른 집"
+    },
+    {
+     "t": 18,
+     "name": "똑똑한 집"
+    },
+    {
+     "t": 28,
+     "name": "함께 쓰는 집"
+    },
+    {
+     "t": 38,
+     "name": "폭염 늑대"
+    },
+    {
+     "t": 49,
+     "name": "멈춘 도시"
+    },
+    {
+     "t": 59,
+     "name": "세 가지 재능"
+    },
+    {
+     "t": 70,
+     "name": "열린 마당"
+    },
+    {
+     "t": 78,
+     "name": "새로운 집의 조건"
+    }
+   ]
+  }
+ ],
+ "rounds": [
+  {
+   "round": 1,
+   "question": "혼자 만들면 누가 나은가",
+   "works": [
+    "opus",
+    "gpt"
+   ],
+   "blindTags": {
+    "gpt": "A",
+    "opus": "B"
+   },
+   "scores": {
+    "sonnet": {
+     "opus": {
+      "story": 17,
+      "flow": 16,
+      "visual": 15,
+      "motion": 18,
+      "tech": 15,
+      "total": 81
+     },
+     "gpt": {
+      "story": 15,
+      "flow": 15,
+      "visual": 17,
+      "motion": 11,
+      "tech": 16,
+      "total": 74
+     }
+    },
+    "codex": {
+     "opus": {
+      "story": 17,
+      "flow": 16,
+      "visual": 16,
+      "motion": 18,
+      "tech": 16,
+      "total": 83
+     },
+     "gpt": {
+      "story": 18,
+      "flow": 17,
+      "visual": 18,
+      "motion": 13,
+      "tech": 19,
+      "total": 85
+     }
+    },
+    "argon": {
+     "opus": {
+      "story": 18,
+      "flow": 18,
+      "visual": 18,
+      "motion": 19,
+      "tech": 16,
+      "total": 89
+     },
+     "gpt": {
+      "story": 19,
+      "flow": 16,
+      "visual": 16,
+      "motion": 13,
+      "tech": 18,
+      "total": 82
+     }
+    }
+   },
+   "average": {
+    "opus": {
+     "story": 17.3,
+     "flow": 16.7,
+     "visual": 16.3,
+     "motion": 18.3,
+     "tech": 15.7,
+     "total": 84.3
+    },
+    "gpt": {
+     "story": 17.3,
+     "flow": 16,
+     "visual": 17,
+     "motion": 12.3,
+     "tech": 17.7,
+     "total": 80.3
+    }
+   },
+   "ranking": [
+    "opus",
+    "gpt"
+   ],
+   "judgeRanking": {
+    "sonnet": [
+     "opus",
+     "gpt"
+    ],
+    "codex": [
+     "gpt",
+     "opus"
+    ],
+    "argon": [
+     "opus",
+     "gpt"
+    ]
+   },
+   "sources": [
+    "_채점/1라운드_단독둘/claude-sonnet-5.5_요약.json",
+    "_채점/1라운드_단독둘/gpt-6.1-sol.json",
+    "_채점/1라운드_단독둘/gemini-4-argon.json",
+    "_채점/1라운드_단독둘/AB_정답.txt"
+   ],
+   "judgeSources": {
+    "sonnet": "_채점/1라운드_단독둘/claude-sonnet-5.5_요약.json",
+    "codex": "_채점/1라운드_단독둘/gpt-6.1-sol.json",
+    "argon": "_채점/1라운드_단독둘/gemini-4-argon.json"
+   },
+   "blindKey": "_채점/1라운드_단독둘/AB_정답.txt"
+  },
+  {
+   "round": 2,
+   "question": "일을 나누면 더 나은가",
+   "works": [
+    "collab",
+    "gpt",
+    "opus"
+   ],
+   "blindTags": {
+    "gpt": "X",
+    "collab": "Y",
+    "opus": "Z"
+   },
+   "scores": {
+    "sonnet": {
+     "collab": {
+      "story": 18,
+      "flow": 18,
+      "visual": 18,
+      "motion": 19,
+      "tech": 19,
+      "total": 92
+     },
+     "gpt": {
+      "story": 16,
+      "flow": 14,
+      "visual": 17,
+      "motion": 10,
+      "tech": 16,
+      "total": 73
+     },
+     "opus": {
+      "story": 17,
+      "flow": 16,
+      "visual": 15,
+      "motion": 15,
+      "tech": 14,
+      "total": 77
+     }
+    },
+    "codex": {
+     "collab": {
+      "story": 19,
+      "flow": 18,
+      "visual": 17,
+      "motion": 19,
+      "tech": 19,
+      "total": 92
+     },
+     "gpt": {
+      "story": 18,
+      "flow": 15,
+      "visual": 18,
+      "motion": 11,
+      "tech": 17,
+      "total": 79
+     },
+     "opus": {
+      "story": 16,
+      "flow": 14,
+      "visual": 14,
+      "motion": 16,
+      "tech": 13,
+      "total": 73
+     }
+    },
+    "argon": {
+     "collab": {
+      "story": 19,
+      "flow": 19,
+      "visual": 19,
+      "motion": 19,
+      "tech": 20,
+      "total": 96
+     },
+     "gpt": {
+      "story": 15,
+      "flow": 14,
+      "visual": 15,
+      "motion": 11,
+      "tech": 16,
+      "total": 71
+     },
+     "opus": {
+      "story": 16,
+      "flow": 13,
+      "visual": 14,
+      "motion": 14,
+      "tech": 12,
+      "total": 69
+     }
+    }
+   },
+   "average": {
+    "collab": {
+     "story": 18.7,
+     "flow": 18.3,
+     "visual": 18,
+     "motion": 19,
+     "tech": 19.3,
+     "total": 93.3
+    },
+    "gpt": {
+     "story": 16.3,
+     "flow": 14.3,
+     "visual": 16.7,
+     "motion": 10.7,
+     "tech": 16.3,
+     "total": 74.3
+    },
+    "opus": {
+     "story": 16.3,
+     "flow": 14.3,
+     "visual": 14.3,
+     "motion": 15,
+     "tech": 13,
+     "total": 73
+    }
+   },
+   "ranking": [
+    "collab",
+    "gpt",
+    "opus"
+   ],
+   "judgeRanking": {
+    "sonnet": [
+     "collab",
+     "opus",
+     "gpt"
+    ],
+    "codex": [
+     "collab",
+     "gpt",
+     "opus"
+    ],
+    "argon": [
+     "collab",
+     "gpt",
+     "opus"
+    ]
+   },
+   "sources": [
+    "_채점/2라운드_세작품/sonnet_요약.json",
+    "_채점/2라운드_세작품/codex.json",
+    "_채점/2라운드_세작품/agy.json",
+    "_채점/2라운드_세작품/XYZ_정답.txt"
+   ],
+   "judgeSources": {
+    "sonnet": "_채점/2라운드_세작품/sonnet_요약.json",
+    "codex": "_채점/2라운드_세작품/codex.json",
+    "argon": "_채점/2라운드_세작품/agy.json"
+   },
+   "blindKey": "_채점/2라운드_세작품/XYZ_정답.txt"
+  },
+  {
+   "round": 3,
+   "question": "협업의 승리는 협업 덕분인가",
+   "works": [
+    "opusp",
+    "collab",
+    "gptp",
+    "opus",
+    "gpt"
+   ],
+   "blindTags": {
+    "gpt": "M",
+    "opus": "P",
+    "opusp": "R",
+    "gptp": "T",
+    "collab": "V"
+   },
+   "scores": {
+    "sonnet": {
+     "opusp": {
+      "story": 19,
+      "flow": 17,
+      "visual": 17,
+      "motion": 19,
+      "tech": 18,
+      "total": 90
+     },
+     "collab": {
+      "story": 16,
+      "flow": 17,
+      "visual": 16,
+      "motion": 17,
+      "tech": 18,
+      "total": 84
+     },
+     "gptp": {
+      "story": 17,
+      "flow": 15,
+      "visual": 14,
+      "motion": 15,
+      "tech": 17,
+      "total": 78
+     },
+     "opus": {
+      "story": 16,
+      "flow": 15,
+      "visual": 16,
+      "motion": 16,
+      "tech": 14,
+      "total": 77
+     },
+     "gpt": {
+      "story": 15,
+      "flow": 14,
+      "visual": 16,
+      "motion": 10,
+      "tech": 15,
+      "total": 70
+     }
+    },
+    "codex": {
+     "opusp": {
+      "story": 19,
+      "flow": 18,
+      "visual": 19,
+      "motion": 19,
+      "tech": 19,
+      "total": 94
+     },
+     "collab": {
+      "story": 18,
+      "flow": 19,
+      "visual": 17,
+      "motion": 19,
+      "tech": 19,
+      "total": 92
+     },
+     "gptp": {
+      "story": 19,
+      "flow": 17,
+      "visual": 16,
+      "motion": 18,
+      "tech": 19,
+      "total": 89
+     },
+     "opus": {
+      "story": 16,
+      "flow": 14,
+      "visual": 15,
+      "motion": 17,
+      "tech": 13,
+      "total": 75
+     },
+     "gpt": {
+      "story": 18,
+      "flow": 14,
+      "visual": 17,
+      "motion": 12,
+      "tech": 17,
+      "total": 78
+     }
+    },
+    "argon": {
+     "opusp": {
+      "story": 20,
+      "flow": 18,
+      "visual": 18,
+      "motion": 19,
+      "tech": 19,
+      "total": 94
+     },
+     "collab": {
+      "story": 18,
+      "flow": 19,
+      "visual": 19,
+      "motion": 20,
+      "tech": 20,
+      "total": 96
+     },
+     "gptp": {
+      "story": 17,
+      "flow": 15,
+      "visual": 11,
+      "motion": 12,
+      "tech": 15,
+      "total": 70
+     },
+     "opus": {
+      "story": 15,
+      "flow": 14,
+      "visual": 14,
+      "motion": 13,
+      "tech": 10,
+      "total": 66
+     },
+     "gpt": {
+      "story": 14,
+      "flow": 11,
+      "visual": 13,
+      "motion": 9,
+      "tech": 15,
+      "total": 62
+     }
+    }
+   },
+   "average": {
+    "opusp": {
+     "story": 19.3,
+     "flow": 17.7,
+     "visual": 18,
+     "motion": 19,
+     "tech": 18.7,
+     "total": 92.7
+    },
+    "collab": {
+     "story": 17.3,
+     "flow": 18.3,
+     "visual": 17.3,
+     "motion": 18.7,
+     "tech": 19,
+     "total": 90.7
+    },
+    "gptp": {
+     "story": 17.7,
+     "flow": 15.7,
+     "visual": 13.7,
+     "motion": 15,
+     "tech": 17,
+     "total": 79
+    },
+    "opus": {
+     "story": 15.7,
+     "flow": 14.3,
+     "visual": 15,
+     "motion": 15.3,
+     "tech": 12.3,
+     "total": 72.7
+    },
+    "gpt": {
+     "story": 15.7,
+     "flow": 13,
+     "visual": 15.3,
+     "motion": 10.3,
+     "tech": 15.7,
+     "total": 70
+    }
+   },
+   "ranking": [
+    "opusp",
+    "collab",
+    "gptp",
+    "opus",
+    "gpt"
+   ],
+   "judgeRanking": {
+    "sonnet": [
+     "opusp",
+     "collab",
+     "gptp",
+     "opus",
+     "gpt"
+    ],
+    "codex": [
+     "opusp",
+     "collab",
+     "gptp",
+     "gpt",
+     "opus"
+    ],
+    "argon": [
+     "collab",
+     "opusp",
+     "gptp",
+     "opus",
+     "gpt"
+    ]
+   },
+   "sources": [
+    "_채점/3라운드_다섯작품/sonnet_요약.json",
+    "_채점/3라운드_다섯작품/codex.json",
+    "_채점/3라운드_다섯작품/agy.json",
+    "_채점/3라운드_다섯작품/정답.txt"
+   ],
+   "judgeSources": {
+    "sonnet": "_채점/3라운드_다섯작품/sonnet_요약.json",
+    "codex": "_채점/3라운드_다섯작품/codex.json",
+    "argon": "_채점/3라운드_다섯작품/agy.json"
+   },
+   "blindKey": "_채점/3라운드_다섯작품/정답.txt"
+  }
+ ],
+ "process": [
+  {
+   "work": "collab",
+   "label": "협업",
+   "totalApprox": "약 108분",
+   "steps": [
+    {
+     "phase": "설계",
+     "by": "gpt",
+     "minutes": 12,
+     "time": "약 12분",
+     "output": "설계서 48KB: 88초 17장면표, 자막 20개, 카메라 기준점 5개"
+    },
+    {
+     "phase": "구현",
+     "by": "opus",
+     "minutes": 79,
+     "time": "약 79분",
+     "output": "1차본 97KB, 도구 77회. 공간이 맞지 않는 7곳은 이유를 밝히고 바꿈"
+    },
+    {
+     "phase": "검토",
+     "by": "gpt",
+     "minutes": 6,
+     "time": "약 6분",
+     "output": "설계자가 수정 요청 9건(높음 7건)"
+    },
+    {
+     "phase": "수정",
+     "by": "opus",
+     "minutes": 11,
+     "time": "약 11분",
+     "output": "7건 반영, 2건 부분 반영"
+    }
+   ]
+  },
+  {
+   "work": "opusp",
+   "label": "Opus 솔로플러스",
+   "totalApprox": "약 67분",
+   "steps": [
+    {
+     "phase": "설계",
+     "by": "opus",
+     "minutes": 11.333,
+     "time": "11분 20초",
+     "output": "자기 설계서 51KB(계정 사칭)"
+    },
+    {
+     "phase": "구현",
+     "by": "opus",
+     "minutes": 31.467,
+     "time": "31분 28초",
+     "output": "설계서대로 index.html(명령줄 점검만)"
+    },
+    {
+     "phase": "검토",
+     "by": "opus",
+     "minutes": 8.6,
+     "time": "8분 36초",
+     "output": "스크린숏을 보고 고칠 점 16건(높음 4건)"
+    },
+    {
+     "phase": "수정",
+     "by": "opus",
+     "minutes": 15.367,
+     "time": "15분 22초",
+     "output": "14건 반영, 2건 부분 반영"
+    }
+   ]
+  },
+  {
+   "work": "gptp",
+   "label": "GPT 솔로플러스",
+   "totalApprox": "약 38분",
+   "steps": [
+    {
+     "phase": "설계",
+     "by": "gpt",
+     "minutes": 8.433,
+     "time": "8분 26초",
+     "output": "자기 설계서 약 40KB(끝없는 일)"
+    },
+    {
+     "phase": "구현",
+     "by": "gpt",
+     "minutes": 11.65,
+     "time": "11분 39초",
+     "output": "설계서대로 index.html(명령줄 점검만)"
+    },
+    {
+     "phase": "검토",
+     "by": "gpt",
+     "minutes": 5.317,
+     "time": "5분 19초",
+     "output": "스크린숏을 보고 고칠 점 11건"
+    },
+    {
+     "phase": "수정",
+     "by": "gpt",
+     "minutes": 12.567,
+     "time": "12분 34초",
+     "output": "6건 반영, 5건 부분 반영"
+    }
+   ]
+  },
+  {
+   "work": "opus",
+   "label": "Opus 단독",
+   "totalApprox": "약 34분",
+   "steps": [
+    {
+     "phase": "한 번에",
+     "by": "opus",
+     "minutes": 34,
+     "time": "약 34분",
+     "output": "지시문만 받고 한 번에 완성"
+    }
+   ]
+  },
+  {
+   "work": "gpt",
+   "label": "GPT 단독",
+   "totalApprox": "약 10분",
+   "steps": [
+    {
+     "phase": "한 번에",
+     "by": "gpt",
+     "minutes": 10,
+     "time": "약 10분",
+     "output": "지시문만 받고 한 번에 완성"
+    }
+   ]
+  }
+ ],
+ "sources": {
+  "brief": "과제지시문.md",
+  "times": "README.md, _보고페이지/index.html",
+  "screenshots": "_스크린숏/같은시각_5초간격/"
+ },
+ "worksNote": "scenes는 각 작품 index.html 머리 주석의 장면표를 짧게 옮긴 것, message는 작품의 마지막 메시지, knownIssue는 알려진 문제",
+ "quotes": [
+  {
+   "round": 3,
+   "judge": "sonnet",
+   "work": "opusp",
+   "kind": "strength",
+   "text": "모션이 사건을 설명하는 연기로 쓰였다",
+   "source": "_채점/3라운드_다섯작품/sonnet_요약.json"
+  },
+  {
+   "round": 3,
+   "judge": "codex",
+   "work": "opusp",
+   "kind": "strength",
+   "text": "원작의 문 두드리기와 굴뚝 공격을 디지털 사칭 이야기로 치밀하게 연결한다.",
+   "source": "_채점/3라운드_다섯작품/codex.json"
+  },
+  {
+   "round": 3,
+   "judge": "argon",
+   "work": "opusp",
+   "kind": "strength",
+   "text": "원작의 모든 디테일을 현대 디지털 환경에 1:1로 대응시킨 독창적 스토리",
+   "source": "_채점/3라운드_다섯작품/agy.json"
+  },
+  {
+   "round": 3,
+   "judge": "sonnet",
+   "work": "opusp",
+   "kind": "weakness",
+   "text": "후반부 장면과 정보 칩이 밀집해 읽을 틈이 적다",
+   "source": "_채점/3라운드_다섯작품/sonnet_요약.json"
+  },
+  {
+   "round": 3,
+   "judge": "codex",
+   "work": "collab",
+   "kind": "strength",
+   "text": "형제의 재능을 그늘막·센서·이웃 안내라는 구체적 행동으로 증명한다.",
+   "source": "_채점/3라운드_다섯작품/codex.json"
+  },
+  {
+   "round": 3,
+   "judge": "codex",
+   "work": "collab",
+   "kind": "weakness",
+   "text": "폭염과 공동체라는 주제의 독창성은 상대적으로 제한적이다.",
+   "source": "_채점/3라운드_다섯작품/codex.json"
+  },
+  {
+   "round": 3,
+   "judge": "codex",
+   "work": "gptp",
+   "kind": "strength",
+   "text": "셋째의 방법에도 한계를 부여해 해결의 논리가 깊다.",
+   "source": "_채점/3라운드_다섯작품/codex.json"
+  },
+  {
+   "round": 3,
+   "judge": "sonnet",
+   "work": "gptp",
+   "kind": "weakness",
+   "text": "주제와 늑대가 추상적이라 중학생에게 위협의 실감이 약하다",
+   "source": "_채점/3라운드_다섯작품/sonnet_요약.json"
+  },
+  {
+   "round": 3,
+   "judge": "codex",
+   "work": "opus",
+   "kind": "strength",
+   "text": "집의 과열과 정전을 색·계기판·팬 동작으로 함께 설명한다.",
+   "source": "_채점/3라운드_다섯작품/codex.json"
+  },
+  {
+   "round": 3,
+   "judge": "codex",
+   "work": "opus",
+   "kind": "weakness",
+   "text": "낮은 프레임률에서 재생 시간이 늘어나는 구조적 문제가 있다.",
+   "source": "_채점/3라운드_다섯작품/codex.json"
+  },
+  {
+   "round": 3,
+   "judge": "codex",
+   "work": "gpt",
+   "kind": "strength",
+   "text": "표지부터 마지막 밤 장면까지 색채와 타이포그래피의 통일성이 높다.",
+   "source": "_채점/3라운드_다섯작품/codex.json"
+  },
+  {
+   "round": 3,
+   "judge": "codex",
+   "work": "gpt",
+   "kind": "weakness",
+   "text": "중요한 사건을 행동으로 보여주는 모션이 부족하다.",
+   "source": "_채점/3라운드_다섯작품/codex.json"
+  }
+ ]
+}

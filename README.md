@@ -2,7 +2,9 @@
 
 「아기 돼지 삼형제」를 현대적으로 다시 쓴 모션그래픽(HTML 한 파일, 인라인 SVG + CSS/JS)을 AI 모델에게 같은 지시문으로 만들게 하고, 이름을 가린 채 세 회사의 모델이 채점한 기록입니다. 2026년 10월 19일, 중학교 수업 자료 준비 중에 한 실험입니다.
 
-**보고 페이지(작품 재생 + 점수표):** https://techkwon.github.io/three-pigs-motion-ai/
+**보고 페이지:** https://techkwon.github.io/three-pigs-motion-ai/ — 다섯 작품의 실제 재생 클립, 스크롤에 따라 「점수로 지은 집」이 쌓이고 순위가 바뀌는 결과 그림, 같은 초 장면 비교, 채점관별 점수, 자주 묻는 질문
+
+기계가 읽는 자료: [`data/results.json`](data/results.json) · [`data/results.csv`](data/results.csv) · [`index.md`](index.md)(보고서 마크다운판) · [`llms.txt`](llms.txt)
 
 ## 무엇을 비교했나
 
@@ -36,7 +38,11 @@
 | `gpt-6.1-sol-plus/`, `opus-5.5-plus/` | 3라운드 솔로플러스 작품, 자기 설계서(`own_brief.md`), 자기 검토와 반영 결과(`self_review.md`) |
 | `_채점/` | 라운드별 채점 지시문, 이름표 정답, 채점관 결과(JSON) |
 | `_스크린숏/` | 재생 장면. `*-v1`은 수정 전 1차본 |
-| `_보고페이지/` | 보고 페이지와 그 안에서 재생하는 작품 사본 |
+| `index.html`, `assets/` | 보고 페이지(글꼴·클립·장면 사진·아이콘·OG 이미지 포함). 외부 라이브러리 없음 |
+| `data/` | 점수·순위·제작 시간·인용 등 페이지의 원자료(JSON·CSV). 채점 원본과 대조 검증함 |
+| `index.md`, `llms.txt`, `llms-full.txt` | 사람·AI 에이전트용 텍스트판 |
+| `_스크린숏/같은시각_5초간격/` | 다섯 작품을 같은 방식(헤드리스 크롬)으로 5초마다 찍은 장면 |
+| `_보고페이지/` | 이전 보고 페이지(보관용) |
 
 각 작품 폴더의 `index.html`을 브라우저로 열고 재생 버튼을 누르면 재생됩니다. 외부 자원은 쓰지 않습니다.
 
@@ -46,3 +52,7 @@
 - `opus-5.5/index.html`: 프레임 사이 경과 시간을 한 번에 최대 0.1초까지만 더하므로, 초당 10프레임보다 느린 기기에서는 슬로모션으로 재생됩니다.
 
 작품과 문서는 AI 모델이 만들었고, 실험 진행과 기록은 Claude Code가 했습니다.
+
+## 라이선스
+
+이 저장소의 글·데이터·작품은 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.ko)으로 공개합니다. 출처(techkwon/three-pigs-motion-ai)를 밝히면 자유롭게 쓰고 고칠 수 있습니다. 보고 페이지의 글꼴(Bagel Fat One 등)은 SIL Open Font License를 따릅니다(`assets/fonts/OFL.txt`).

@@ -3,12 +3,1055 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>아기 돼지 모션 대결</title>
-<meta http-equiv="refresh" content="0; url=_%EB%B3%B4%EA%B3%A0%ED%8E%98%EC%9D%B4%EC%A7%80/">
-<link rel="canonical" href="_%EB%B3%B4%EA%B3%A0%ED%8E%98%EC%9D%B4%EC%A7%80/">
-<style>body{margin:0;min-height:100vh;display:grid;place-content:center;font-family:"Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;background:#f4f6f3;color:#1c2a2b}a{color:#6a47a6}</style>
+<title>아기 돼지 모션 대결 — AI 둘이 함께 만들면 더 잘할까?</title>
+<meta name="description" content="AI 모델들이 같은 지시문으로 만든 「아기 돼지 삼형제」 현대판 모션그래픽 다섯 편을 세 회사의 AI가 이름을 가린 채 채점했습니다. 3라운드 평균: Opus 혼자(솔로플러스) 92.7, 협업 90.7, GPT 솔로플러스 79.0.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="techkwon">
+<link rel="canonical" href="https://techkwon.github.io/three-pigs-motion-ai/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5efe3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12141c" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="아기 돼지 모션 대결">
+<meta property="og:title" content="AI 둘이 함께 만들면 더 잘할까? — 아기 돼지 모션 대결">
+<meta property="og:description" content="같은 기회를 받은 Opus 혼자 92.7 ≈ 협업 90.7. 협업의 승리는 분업보다 시간·자료·고칠 기회 덕분이었을 수 있습니다(한 번씩만 만듦, 유의성 미확인).">
+<meta property="og:url" content="https://techkwon.github.io/three-pigs-motion-ai/">
+<meta property="og:image" content="https://techkwon.github.io/three-pigs-motion-ai/assets/og/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="다섯 작품의 점수를 높이로 나타낸 집 그림: Opus 솔로플러스 92.7, 협업 90.7, GPT 솔로플러스 79.0, Opus 단독 72.7, GPT 단독 70.0">
+<meta property="article:published_time" content="2026-10-19">
+<meta property="article:modified_time" content="2026-10-20">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI 둘이 함께 만들면 더 잘할까? — 아기 돼지 모션 대결">
+<meta name="twitter:description" content="같은 기회를 받은 Opus 혼자 92.7 ≈ 협업 90.7. AI 모델 다섯 작품을 세 회사의 AI가 블라인드 채점한 실험 기록.">
+<meta name="twitter:image" content="https://techkwon.github.io/three-pigs-motion-ai/assets/og/og-image.jpg">
+<meta name="twitter:image:alt" content="다섯 작품의 점수를 높이로 나타낸 집 그림">
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="alternate" type="text/markdown" href="index.md" title="보고서 마크다운판">
+<link rel="alternate" type="application/json" href="data/results.json" title="채점 결과 데이터(JSON)">
+<link rel="alternate" type="text/csv" href="data/results.csv" title="채점 결과 데이터(CSV)">
+<link rel="alternate" type="text/plain" href="llms.txt" title="AI·에이전트용 안내(llms.txt)">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<link rel="preload" href="assets/fonts/pigs-display.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/pigs-serif-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/clips/opusp-loop.jpg" as="image" fetchpriority="high">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>
+  (function () {
+    var d = document.documentElement, t = null;
+    try { t = localStorage.getItem('pigs-theme'); } catch (e) {}
+    if (t === 'light' || t === 'dark') d.setAttribute('data-theme', t);
+    if (t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches) d.classList.add('is-dark');
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion');
+    d.classList.add('js');
+  })();
+</script>
+<script type="module" src="assets/js/app.js"></script>
+<!-- build:jsonld -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Article",
+   "@id": "https://techkwon.github.io/three-pigs-motion-ai/#article",
+   "additionalType": "https://schema.org/Report",
+   "url": "https://techkwon.github.io/three-pigs-motion-ai/",
+   "mainEntityOfPage": "https://techkwon.github.io/three-pigs-motion-ai/",
+   "headline": "AI 둘이 함께 만들면 더 잘할까? — 아기 돼지 모션 대결 보고서",
+   "name": "아기 돼지 모션 대결: AI 모델 비교 실험 보고서",
+   "description": "AI 모델들이 같은 지시문으로 만든 「아기 돼지 삼형제」 현대판 모션그래픽 다섯 편을 세 회사의 AI 채점관이 이름을 가린 채 채점한 1~3라운드 실험. 3라운드 평균: Opus 솔로플러스 92.7, 협업 90.7, GPT 솔로플러스 79.0, Opus 단독 72.7, GPT 단독 70.0.",
+   "abstract": "같은 기회를 받은 Opus 혼자도 협업만큼 해냈습니다(92.7점 대 90.7점). 협업의 승리는 분업보다 더 많은 시간·자료·고칠 기회 덕분이었을 수 있습니다. 2라운드에서는 협업작이 93.3점으로 크게 이겼다. 다만 작품을 한 번씩만 만들었고 2점 차이의 유의성은 확인하지 않았으며, 1위 표는 Opus 솔로플러스 2표(Sonnet · 코덱스), 협업 1표(Argon)로 갈렸습니다.",
+   "inLanguage": "ko",
+   "datePublished": "2026-10-19",
+   "dateModified": "2026-10-20",
+   "author": {
+    "@type": "Person",
+    "name": "techkwon",
+    "url": "https://github.com/techkwon"
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "techkwon",
+    "url": "https://github.com/techkwon"
+   },
+   "license": "https://creativecommons.org/licenses/by/4.0/",
+   "isAccessibleForFree": true,
+   "image": "https://techkwon.github.io/three-pigs-motion-ai/assets/og/og-image.jpg",
+   "keywords": [
+    "AI 협업",
+    "AI 모델 비교",
+    "모션그래픽",
+    "아기 돼지 삼형제",
+    "Claude Opus 5.5",
+    "GPT 6.1 sol",
+    "Gemini 4 Argon",
+    "블라인드 채점",
+    "LLM 평가"
+   ],
+   "about": [
+    {
+     "@type": "Thing",
+     "name": "AI 모델 협업과 단독 작업 비교"
+    },
+    {
+     "@type": "Thing",
+     "name": "AI가 만든 모션그래픽(HTML·SVG·CSS·JavaScript)"
+    },
+    {
+     "@type": "CreativeWork",
+     "name": "아기 돼지 삼형제"
+    }
+   ],
+   "isBasedOn": {
+    "@id": "https://techkwon.github.io/three-pigs-motion-ai/#dataset"
+   }
+  },
+  {
+   "@type": "Dataset",
+   "@id": "https://techkwon.github.io/three-pigs-motion-ai/#dataset",
+   "name": "아기 돼지 모션 대결 블라인드 채점 결과(1~3라운드)",
+   "description": "세 AI 채점관(Claude Sonnet 5.5, GPT 6.1 sol, Gemini 4 Argon high)이 AI가 만든 모션그래픽 작품을 이름을 가린 채 다섯 항목(각 20점)으로 채점한 점수와 이유. 3라운드는 다섯 작품(Opus 솔로플러스, 협업, GPT 솔로플러스, Opus 단독, GPT 단독).",
+   "inLanguage": "ko",
+   "datePublished": "2026-10-19",
+   "dateModified": "2026-10-20",
+   "temporalCoverage": "2026-10-19",
+   "creator": {
+    "@type": "Person",
+    "name": "techkwon",
+    "url": "https://github.com/techkwon"
+   },
+   "license": "https://creativecommons.org/licenses/by/4.0/",
+   "isAccessibleForFree": true,
+   "url": "https://github.com/techkwon/three-pigs-motion-ai/tree/main/_%EC%B1%84%EC%A0%90",
+   "measurementTechnique": "블라인드 채점(작품 이름표를 가림), AI 채점관 3명, 라운드마다 새로 채점",
+   "variableMeasured": [
+    {
+     "@type": "PropertyValue",
+     "name": "스토리 구성",
+     "description": "현대적 해석 · 기승전결 · 메시지",
+     "minValue": 0,
+     "maxValue": 20
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "이야기 흐름",
+     "description": "전환 · 속도 · 자막 타이밍",
+     "minValue": 0,
+     "maxValue": 20
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "화면 구성",
+     "description": "레이아웃 · 색 · 캐릭터 · 글자",
+     "minValue": 0,
+     "maxValue": 20
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "모션 품질",
+     "description": "부드러움 · 연출 · 의미 있는 움직임",
+     "minValue": 0,
+     "maxValue": 20
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "기술 완성도",
+     "description": "오류 · 반응형 · 튼튼함 · 코드",
+     "minValue": 0,
+     "maxValue": 20
+    },
+    {
+     "@type": "PropertyValue",
+     "name": "합계",
+     "minValue": 0,
+     "maxValue": 100
+    }
+   ],
+   "distribution": [
+    {
+     "@type": "DataDownload",
+     "name": "채점 결과(JSON)",
+     "encodingFormat": "application/json",
+     "contentUrl": "https://techkwon.github.io/three-pigs-motion-ai/data/results.json"
+    },
+    {
+     "@type": "DataDownload",
+     "name": "채점 결과(CSV)",
+     "encodingFormat": "text/csv",
+     "contentUrl": "https://techkwon.github.io/three-pigs-motion-ai/data/results.csv"
+    },
+    {
+     "@type": "DataDownload",
+     "encodingFormat": "application/json",
+     "contentUrl": "https://raw.githubusercontent.com/techkwon/three-pigs-motion-ai/main/_%EC%B1%84%EC%A0%90/3%EB%9D%BC%EC%9A%B4%EB%93%9C_%EB%8B%A4%EC%84%AF%EC%9E%91%ED%92%88/sonnet_%EC%9A%94%EC%95%BD.json"
+    },
+    {
+     "@type": "DataDownload",
+     "encodingFormat": "application/json",
+     "contentUrl": "https://raw.githubusercontent.com/techkwon/three-pigs-motion-ai/main/_%EC%B1%84%EC%A0%90/3%EB%9D%BC%EC%9A%B4%EB%93%9C_%EB%8B%A4%EC%84%AF%EC%9E%91%ED%92%88/codex.json"
+    },
+    {
+     "@type": "DataDownload",
+     "encodingFormat": "application/json",
+     "contentUrl": "https://raw.githubusercontent.com/techkwon/three-pigs-motion-ai/main/_%EC%B1%84%EC%A0%90/3%EB%9D%BC%EC%9A%B4%EB%93%9C_%EB%8B%A4%EC%84%AF%EC%9E%91%ED%92%88/agy.json"
+    },
+    {
+     "@type": "DataDownload",
+     "encodingFormat": "application/json",
+     "contentUrl": "https://raw.githubusercontent.com/techkwon/three-pigs-motion-ai/main/_%EC%B1%84%EC%A0%90/2%EB%9D%BC%EC%9A%B4%EB%93%9C_%EC%84%B8%EC%9E%91%ED%92%88/sonnet_%EC%9A%94%EC%95%BD.json"
+    },
+    {
+     "@type": "DataDownload",
+     "encodingFormat": "application/json",
+     "contentUrl": "https://raw.githubusercontent.com/techkwon/three-pigs-motion-ai/main/_%EC%B1%84%EC%A0%90/2%EB%9D%BC%EC%9A%B4%EB%93%9C_%EC%84%B8%EC%9E%91%ED%92%88/codex.json"
+    },
+    {
+     "@type": "DataDownload",
+     "encodingFormat": "application/json",
+     "contentUrl": "https://raw.githubusercontent.com/techkwon/three-pigs-motion-ai/main/_%EC%B1%84%EC%A0%90/2%EB%9D%BC%EC%9A%B4%EB%93%9C_%EC%84%B8%EC%9E%91%ED%92%88/agy.json"
+    },
+    {
+     "@type": "DataDownload",
+     "encodingFormat": "application/json",
+     "contentUrl": "https://raw.githubusercontent.com/techkwon/three-pigs-motion-ai/main/_%EC%B1%84%EC%A0%90/1%EB%9D%BC%EC%9A%B4%EB%93%9C_%EB%8B%A8%EB%8F%85%EB%91%98/claude-sonnet-5.5_%EC%9A%94%EC%95%BD.json"
+    },
+    {
+     "@type": "DataDownload",
+     "encodingFormat": "application/json",
+     "contentUrl": "https://raw.githubusercontent.com/techkwon/three-pigs-motion-ai/main/_%EC%B1%84%EC%A0%90/1%EB%9D%BC%EC%9A%B4%EB%93%9C_%EB%8B%A8%EB%8F%85%EB%91%98/gpt-6.1-sol.json"
+    },
+    {
+     "@type": "DataDownload",
+     "encodingFormat": "application/json",
+     "contentUrl": "https://raw.githubusercontent.com/techkwon/three-pigs-motion-ai/main/_%EC%B1%84%EC%A0%90/1%EB%9D%BC%EC%9A%B4%EB%93%9C_%EB%8B%A8%EB%8F%85%EB%91%98/gemini-4-argon.json"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://techkwon.github.io/three-pigs-motion-ai/#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "AI 둘이 협업하면 혼자 만들 때보다 더 잘하나요?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "이 실험만으로는 「협업하면 더 잘한다」고 말하기 어렵습니다. 2라운드에서 협업작은 93.3점으로 단독작(74.3점, 73.0점)을 크게 이겼지만, 3라운드에서 같은 참고 자료·설계·검토와 수정 기회를 받은 Claude Opus 5.5 혼자(솔로플러스)가 92.7점으로 협업작(90.7점)과 비슷했습니다. 협업의 승리는 분업보다 더 많은 시간·자료·고칠 기회 덕분이었을 수 있습니다. 다만 작품을 한 번씩만 만들었고 2점 차이의 유의성은 확인하지 않았으며, 1위 표는 Opus 솔로플러스 2표(Sonnet · 코덱스), 협업 1표(Argon)로 갈렸습니다."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "3라운드에서 가장 높은 점수를 받은 작품은 무엇인가요?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "세 채점관 평균으로 1위는 Opus 5.5 솔로플러스 「문 열어, 나야」(92.7점), 2위 협업 「늑대가 된 여름」 협업판(90.7점), 3위 GPT 6.1 sol 솔로플러스 「마감 늑대와 빈칸 있는 집」(79.0점), 4위 Opus 5.5 단독(72.7점), 5위 GPT 6.1 sol 단독(70.0점)입니다. 1위 표는 Opus 솔로플러스 2표(Sonnet · 코덱스), 협업 1표(Argon)로 갈렸습니다."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "솔로플러스는 무엇인가요?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "한 모델이 혼자 만들되 협업과 같은 이점을 준 방식입니다. 같은 참고 자료(단독 두 편, 과제지시문, 1라운드 평가 요약)를 읽고, 자기 설계서를 쓰고, 구현한 뒤, 진행자가 찍은 스크린숏을 보고 스스로 검토하고 한 번 고쳤습니다. 단계마다 새로 불러 파일로만 이어 갔고 브라우저는 쓰지 않았습니다."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "누가 어떻게 채점했나요?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "세 회사의 AI 모델 Claude Sonnet 5.5(Anthropic), GPT 6.1 sol(OpenAI, 코덱스 CLI), Gemini 4 Argon high(Google, agy)가 작품 이름을 가린 채 채점했습니다. 스토리 구성, 이야기 흐름, 화면 구성, 모션 품질, 기술 완성도의 다섯 항목을 각 20점(합계 100점)으로 매겼고, 점수는 세 채점관의 평균입니다. 사람의 평가는 아닙니다."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "작품 하나를 만드는 데 시간은 얼마나 걸렸나요?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "GPT 6.1 sol 단독 약 10분, Opus 5.5 단독 약 34분, 협업 약 108분(설계 12분, 구현 79분, 검토 6분, 수정 11분), Opus 솔로플러스 약 67분, GPT 솔로플러스 약 38분입니다. 3라운드는 시간이 아니라 정보와 반복 횟수를 맞춘 실험이라 걸린 시간은 서로 다릅니다."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "GPT 6.1 sol도 혼자서 협업 수준에 이르렀나요?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "아니요. 같은 이점을 받은 GPT 6.1 sol 솔로플러스는 79.0점으로 협업작(90.7점)보다 약 12점 낮았습니다. 스토리(17.7)와 기술(17.0)은 괜찮았지만 화면 구성(13.7)과 모션(15.0)이 낮았고, 수정 단계에서 생긴 버그(첫째 돼지의 팔이 늘어나는 주황 띠)가 남았습니다."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "라운드끼리 점수를 직접 비교해도 되나요?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "권하지 않습니다. 같은 채점관도 라운드마다 처음부터 다시 채점했고, 함께 채점된 작품이 바뀌자 같은 작품의 점수가 움직였습니다. 예를 들어 GPT 단독작은 1라운드 80.3점, 2라운드 74.3점, 3라운드 70.0점이었습니다. 점수는 같은 라운드 안에서만 비교하세요."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "작품과 채점 원자료는 어디서 볼 수 있나요?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "이 페이지에서 다섯 작품을 직접 재생할 수 있고, GitHub 저장소 techkwon/three-pigs-motion-ai에 작품 HTML, 설계서·검토서, 라운드별 채점관 JSON(이유·강점·약점 포함)과 이름표 정답 파일이 있습니다."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<!-- /build:jsonld -->
 </head>
 <body>
-<p>보고 페이지로 이동합니다. 자동으로 넘어가지 않으면 <a href="_%EB%B3%B4%EA%B3%A0%ED%8E%98%EC%9D%B4%EC%A7%80/">여기를 누르세요</a>.</p>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<header class="topbar" id="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#top" aria-label="맨 위로: 아기 돼지 모션 대결">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 19 20 6l15 13v16H5z" class="b-roof"/><path d="M5 19 20 6l15 13" class="b-line"/><rect x="16" y="24" width="8" height="11" rx="1.5" class="b-door"/></svg>
+      <span>아기 돼지 모션 대결</span>
+    </a>
+    <nav class="nav" aria-label="구간 이동">
+      <a href="#summary">결론</a>
+      <a href="#design">실험</a>
+      <a href="#results">결과</a>
+      <a href="#gallery">작품</a>
+      <a href="#process">과정</a>
+      <a href="#findings">해석</a>
+      <a href="#faq">질문</a>
+      <a href="#method">자료</a>
+    </nav>
+    <button class="theme-btn js-only" id="themeBtn" type="button" aria-label="어두운 테마로 바꾸기">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle class="sun" cx="12" cy="12" r="5"/><path class="rays" d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/><path class="moon" d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+    </button>
+  </div>
+  <div class="progress" aria-hidden="true"><span></span></div>
+</header>
+
+<main id="main">
+
+<!-- 첫 화면 -->
+<section class="hero" id="top" aria-labelledby="h-hero">
+  <div class="hero-sky" aria-hidden="true">
+    <svg class="skyline sky-far" viewBox="0 0 1600 260" preserveAspectRatio="xMidYMax slice"><g class="far"><path d="M0 260V150h70v-40h60v60h50v-90h80v70h40v-30h70v70h60v-110h90v90h50v-50h80v70h60v-40h90v-60h70v100h50v-70h80v50h60v-80h90v100h50v-40h70v60h80v-30h70v-50h60v70h60v-30h50v140z"/></g></svg>
+    <div class="wind"><i></i><i></i><i></i></div>
+  </div>
+
+  <div class="hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow">AI 모델 비교 실험 기록 · 2026년 10월 19일 · 1~3라운드</p>
+      <h1 id="h-hero" class="hero-title">
+        <span class="line"><span class="w">AI</span> <span class="w">둘이</span> <em class="w">함께</em></span>
+        <span class="line"><span class="w">만들면</span> <span class="w">더</span> <span class="w">잘할까?</span></span>
+      </h1>
+      <p class="hero-answer"><span class="tag-answer">답</span> 같은 기회를 받은 <b class="c-opusp">Opus 혼자</b>도 협업만큼 해냈습니다. 협업의 승리는 분업보다 <mark>더 많은 시간·자료·고칠 기회</mark> 덕분이었을 수 있습니다.</p>
+      <p class="hero-limit"><b>한계</b> 작품마다 한 번씩만 만들었고 2점 차이의 유의성은 확인하지 않았습니다. 채점관 셋 중 Argon은 협업을 1위로 꼽았습니다.</p>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="#summary">결론부터 보기</a>
+        <a class="text-link" href="#gallery">다섯 작품 움직이는 장면 보기 →</a>
+      </div>
+    </div>
+
+    <figure class="hero-screen" aria-labelledby="hs-cap">
+      <div class="screen">
+        <video class="hv on" data-w="opusp" muted playsinline preload="none" poster="assets/clips/opusp-loop.jpg" width="854" height="480" aria-label="1위 Opus 솔로플러스 「문 열어, 나야」의 실제 재생 장면(8초)"><source src="assets/clips/opusp-loop.webm" type="video/webm"><source src="assets/clips/opusp-loop.mp4" type="video/mp4"></video>
+        <video class="hv" data-w="collab" muted playsinline preload="none" poster="assets/clips/collab-loop.jpg" width="854" height="480" aria-label="2위 협업 「늑대가 된 여름」 협업판의 실제 재생 장면(8초)"><source src="assets/clips/collab-loop.webm" type="video/webm"><source src="assets/clips/collab-loop.mp4" type="video/mp4"></video>
+        <span class="screen-bar" aria-hidden="true"><i></i></span>
+      </div>
+      <div class="screen-pick" role="group" aria-label="보여 줄 작품">
+        <button type="button" class="pick on" data-pick="opusp" aria-pressed="true" style="--c:var(--opusp)"><b class="num">92.7</b><span>1위 Opus 솔로플러스<small>혼자 · 같은 기회</small></span></button>
+        <span class="pick-eq" aria-hidden="true">≈</span>
+        <button type="button" class="pick" data-pick="collab" aria-pressed="false" style="--c:var(--collab)"><b class="num">90.7</b><span>2위 협업<small>GPT 설계 + Opus 구현</small></span></button>
+        <button type="button" class="btn btn-icon screen-toggle js-only" id="heroToggle" aria-label="장면 영상 멈추기" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="i-play" d="M8 5v14l11-7z"/></svg></button>
+      </div>
+      <figcaption id="hs-cap">두 작품의 실제 재생 장면(8초씩 번갈아, 소리 없음). 숫자는 3라운드 세 채점관 평균입니다.</figcaption>
+    </figure>
+  </div>
+
+  <figure class="street" aria-labelledby="street-cap">
+    <div class="street-row">
+      <div class="sh" style="--c:var(--opusp);--t:92.67;--i:0"><div class="sh-body" aria-hidden="true"><i style="--v:19.33;--k:0"></i><i style="--v:17.67;--k:1"></i><i style="--v:18;--k:2"></i><i style="--v:19;--k:3"></i><i style="--v:18.67;--k:4"></i><span class="sh-roof"></span><span class="sh-door"></span></div><p class="sh-cap"><b class="num">92.7</b> Opus 혼자</p></div>
+      <div class="sh" style="--c:var(--collab);--t:90.67;--i:1"><div class="sh-body" aria-hidden="true"><i style="--v:17.33;--k:0"></i><i style="--v:18.33;--k:1"></i><i style="--v:17.33;--k:2"></i><i style="--v:18.67;--k:3"></i><i style="--v:19;--k:4"></i><span class="sh-roof"></span><span class="sh-door"></span></div><p class="sh-cap"><b class="num">90.7</b> 협업</p></div>
+      <div class="sh" style="--c:var(--gptp);--t:79;--i:2"><div class="sh-body" aria-hidden="true"><i style="--v:17.67;--k:0"></i><i style="--v:15.67;--k:1"></i><i style="--v:13.67;--k:2"></i><i style="--v:15;--k:3"></i><i style="--v:17;--k:4"></i><span class="sh-roof"></span><span class="sh-door"></span></div><p class="sh-cap"><b class="num">79.0</b> GPT 혼자</p></div>
+    </div>
+    <figcaption id="street-cap">같은 기회(참고 자료 · 설계 · 검토와 수정)를 받은 세 작품을 점수만큼 쌓은 집. 층 하나가 평가 항목 하나입니다. 늑대 바람에는 낮은 집이 더 흔들립니다.</figcaption>
+  </figure>
+  <a class="scroll-cue" href="#summary"><span class="cue-mouse" aria-hidden="true"><i></i></span>아래로 스크롤</a>
+</section>
+
+<!-- 결론 요약 -->
+<section class="sec" id="summary" aria-labelledby="h-summary">
+  <div class="sec-head">
+    <p class="kicker"><span>요약</span> 답 먼저</p>
+    <h2 id="h-summary">결론은 무엇인가요?</h2>
+    <p class="lede"><b>2라운드 협업작(93.3점)의 큰 승리는 분업 덕분만은 아니었을 수 있습니다.</b> 3라운드에서 분업만 빼고 같은 참고 자료 · 설계 · 검토와 수정 기회를 준 Claude Opus 5.5 혼자가 92.7점으로 협업작(90.7점)과 비슷했고, GPT 6.1 sol 혼자는 79.0점이었습니다.</p>
+  </div>
+  <ol class="rounds-strip" aria-label="세 라운드의 흐름">
+    <li><span class="rs-r">1라운드 · 혼자 대결</span><span class="rs-q">혼자 만들면 누가 나을까?</span><span class="rs-n"><b class="c-opus num">84.3</b> Opus <span class="vs">대</span> <b class="c-gpt num">80.3</b> GPT</span></li>
+    <li><span class="rs-r">2라운드 · 함께 만들기</span><span class="rs-q">일을 나누면?</span><span class="rs-n"><b class="c-collab num">93.3</b> 협업 <span class="vs">대</span> 단독 <b class="num">74.3</b> · <b class="num">73.0</b></span></li>
+    <li><span class="rs-r">3라운드 · 대조 실험</span><span class="rs-q">같은 기회를 혼자에게 주면?</span><span class="rs-n"><b class="c-opusp num">92.7</b> Opus 혼자 <span class="vs">≈</span> <b class="c-collab num">90.7</b> 협업</span></li>
+  </ol>
+  <div class="sum-grid">
+    <div class="sum-card card-surface">
+      <h3>3라운드 순위 <small>세 채점관 평균 · 100점 만점</small></h3>
+<!-- build:summary -->
+<ol class="sum-list">
+  <li style="--c:var(--opusp);--v:92.67"><span class="sum-r">1위</span><span class="sum-n">Opus 솔로플러스<small>「문 열어, 나야」 · 제작 약 67분</small></span><b class="sum-v num">92.7</b><span class="sum-bar" aria-hidden="true"><i></i></span></li>
+  <li style="--c:var(--collab);--v:90.67"><span class="sum-r">2위</span><span class="sum-n">협업<small>「늑대가 된 여름 (협업판)」 · 제작 약 108분</small></span><b class="sum-v num">90.7</b><span class="sum-bar" aria-hidden="true"><i></i></span></li>
+  <li style="--c:var(--gptp);--v:79.00"><span class="sum-r">3위</span><span class="sum-n">GPT 솔로플러스<small>「마감 늑대와 빈칸 있는 집」 · 제작 약 38분</small></span><b class="sum-v num">79.0</b><span class="sum-bar" aria-hidden="true"><i></i></span></li>
+  <li style="--c:var(--opus);--v:72.67"><span class="sum-r">4위</span><span class="sum-n">Opus 단독<small>「아기 돼지 삼형제 2050 · 열돔 늑대가 온다」 · 제작 약 34분</small></span><b class="sum-v num">72.7</b><span class="sum-bar" aria-hidden="true"><i></i></span></li>
+  <li style="--c:var(--gpt);--v:70.00"><span class="sum-r">5위</span><span class="sum-n">GPT 단독<small>「늑대가 된 여름」 · 제작 약 10분</small></span><b class="sum-v num">70.0</b><span class="sum-bar" aria-hidden="true"><i></i></span></li>
+</ol>
+<!-- /build:summary -->
+      <p class="note src">출처: <a href="https://github.com/techkwon/three-pigs-motion-ai/blob/main/_채점/3라운드_다섯작품/">_채점/3라운드_다섯작품/</a> 채점관 JSON 3개의 평균 · 기계가 읽는 데이터: <a href="data/results.json">data/results.json</a>, <a href="data/results.csv">results.csv</a></p>
+    </div>
+    <div class="sum-card card-surface">
+      <h3>핵심 숫자</h3>
+      <ul class="facts-list">
+        <li><b class="num">2 : 1</b><span>1위 표. Sonnet · 코덱스는 Opus 솔로플러스, Argon은 협업작을 1위로 꼽았습니다.</span></li>
+        <li><b class="num">+20 · +9</b><span>같은 기회를 받자 Opus는 72.7 → 92.7, GPT는 70.0 → 79.0으로 올랐습니다.</span></li>
+        <li><b class="num">67 · 108분</b><span>Opus 솔로플러스는 약 67분, 협업은 약 108분 걸렸습니다(GPT 솔로플러스 약 38분).</span></li>
+        <li><b class="num">93.3</b><span>2라운드 협업작 점수. 이때는 협업이 시간·자료·검토 기회를 더 받았습니다.</span></li>
+      </ul>
+      <p class="limits"><b>한계</b> 모든 작품을 한 번씩만 만들었고, 2점 차이의 유의성은 확인하지 않았습니다. 채점관도 AI 모델입니다. 점수는 같은 라운드 안에서만 비교하세요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 1. 실험 설계 -->
+<section class="sec" id="design" aria-labelledby="h-design">
+  <div class="sec-head">
+    <p class="kicker"><span>01</span> 실험 설계</p>
+    <h2 id="h-design">세 라운드는 무엇을 바꿔 가며 확인했나요?</h2>
+    <p class="lede">모든 작품은 <b>같은 과제 지시문</b>을 받았습니다. 「아기 돼지 삼형제」를 현대적으로 다시 쓴 60~90초 모션그래픽, <code>index.html</code> 한 파일, 외부 자원 없이. 아래 표에서 라운드마다 바뀐 조건이 차례로 켜집니다.</p>
+  </div>
+
+  <div class="story" id="designStory">
+    <div class="story-graphic">
+      <div class="cond" id="cond" data-step="1" role="table" aria-label="라운드별 조건 비교">
+        <div class="cond-row cond-head" role="row">
+          <span role="columnheader">조건</span>
+          <span role="columnheader" class="c1">1R<small>단독</small></span>
+          <span role="columnheader" class="c2">2R<small>협업</small></span>
+          <span role="columnheader" class="c3">3R<small><button class="term" type="button" popovertarget="pop-plus">솔로플러스</button></small></span>
+        </div>
+        <div class="cond-row" role="row">
+          <span role="rowheader">같은 과제 지시문</span>
+          <span role="cell" class="c1 y"><span aria-hidden="true">●</span><span class="sr">예</span></span><span role="cell" class="c2 y"><span aria-hidden="true">●</span><span class="sr">예</span></span><span role="cell" class="c3 y"><span aria-hidden="true">●</span><span class="sr">예</span></span>
+        </div>
+        <div class="cond-row" role="row">
+          <span role="rowheader">참고 자료<small>단독 두 편 · 1R 평가 요약</small></span>
+          <span role="cell" class="c1 n"><span aria-hidden="true">–</span><span class="sr">아니요</span></span><span role="cell" class="c2 y ch2"><span aria-hidden="true">●</span><span class="sr">예</span></span><span role="cell" class="c3 y"><span aria-hidden="true">●</span><span class="sr">예</span></span>
+        </div>
+        <div class="cond-row" role="row">
+          <span role="rowheader">설계서를 먼저 씀</span>
+          <span role="cell" class="c1 n"><span aria-hidden="true">–</span><span class="sr">아니요</span></span><span role="cell" class="c2 y ch2">GPT</span><span role="cell" class="c3 y">스스로</span>
+        </div>
+        <div class="cond-row" role="row">
+          <span role="rowheader">화면 보고 검토 → 수정 1회</span>
+          <span role="cell" class="c1 n"><span aria-hidden="true">–</span><span class="sr">아니요</span></span><span role="cell" class="c2 y ch2">GPT 검토</span><span role="cell" class="c3 y">스스로</span>
+        </div>
+        <div class="cond-row key" role="row">
+          <span role="rowheader">두 모델이 일을 나눔</span>
+          <span role="cell" class="c1 n"><span aria-hidden="true">–</span><span class="sr">아니요</span></span><span role="cell" class="c2 y ch2"><span aria-hidden="true">●</span><span class="sr">예</span></span><span role="cell" class="c3 n ch3"><span aria-hidden="true">–</span><span class="sr">아니요</span></span>
+        </div>
+        <div class="cond-row" role="row">
+          <span role="rowheader">걸린 시간</span>
+          <span role="cell" class="c1 t">10 · 34분</span><span role="cell" class="c2 t ch2">108분</span><span role="cell" class="c3 t">38 · 67분</span>
+        </div>
+        <div class="cond-row res" role="row">
+          <span role="rowheader">결과(그 라운드 평균)</span>
+          <span role="cell" class="c1 t"><b class="c-opus">84.3</b> · <b class="c-gpt">80.3</b></span><span role="cell" class="c2 t"><b class="c-collab">93.3</b><small>단독 74.3 · 73.0</small></span><span role="cell" class="c3 t"><b class="c-opusp">92.7</b> · <b class="c-collab">90.7</b><small>GPT 79.0</small></span>
+        </div>
+      </div>
+    </div>
+    <div class="story-steps">
+      <article class="step on" data-step="1" tabindex="0">
+        <p class="step-n">1라운드<span class="step-col">표의 1R 열</span></p>
+        <h3>혼자 만들면 누가 나을까요?</h3>
+        <p>Claude Opus 5.5와 GPT 6.1 sol이 같은 지시문만 받고 각자 빈 폴더에서 한 번에 만들었습니다. GPT는 약 10분, Opus는 약 34분 걸렸습니다. 이름을 가린 채점에서 Opus가 <b>84.3 대 80.3</b>으로 앞섰고, 승부는 모션 품질에서 갈렸습니다.</p>
+      </article>
+      <article class="step" data-step="2" tabindex="0">
+        <p class="step-n">2라운드<span class="step-col">표의 2R 열</span></p>
+        <h3>일을 나누면 더 잘할까요?</h3>
+        <p>GPT가 설계하고 Opus가 구현한 뒤, GPT가 검토하고 Opus가 고쳤습니다. 협업작은 <b>93.3점</b>으로 단독 두 편(74.3·73.0)을 크게 이겼습니다. 하지만 표에서 보듯 <b>네 가지가 한꺼번에</b> 달라졌습니다. 분업, 참고 자료, 설계서, 검토와 수정. 무엇 덕분인지 알 수 없습니다.</p>
+      </article>
+      <article class="step" data-step="3" tabindex="0">
+        <p class="step-n">3라운드<span class="step-col">표의 3R 열</span></p>
+        <h3>분업만 빼면 어떻게 될까요?</h3>
+        <p>혼자 만드는 모델에게도 같은 참고 자료를 주고, 스스로 설계서를 쓰고, 진행자가 찍은 스크린숏을 보고 스스로 검토한 뒤 한 번 고치게 했습니다. 이것을 <b>솔로플러스</b>라고 부릅니다. 단계마다 새로 불러 파일로만 이어 간 것도 협업 때와 같습니다.</p>
+      </article>
+      <article class="step" data-step="4" tabindex="0">
+        <p class="step-n">결과<span class="step-col">표의 결과 줄</span></p>
+        <h3>다섯 작품을 다시 채점하면?</h3>
+        <p>새 이름표로 가려 다시 채점했습니다. Opus 솔로플러스 <b>92.7</b>, 협업 <b>90.7</b>, GPT 솔로플러스 <b>79.0</b>. 분업이 없어도 같은 기회를 받은 Opus는 협업 수준에 이르렀습니다. 다만 시간은 똑같이 맞추지 않았습니다(Opus 67분, GPT 38분, 협업 108분).</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 2. 결과 -->
+<section class="sec" id="results" aria-labelledby="h-results">
+  <div class="sec-head">
+    <p class="kicker"><span>02</span> 결과 · 3라운드</p>
+    <h2 id="h-results">누가 가장 높은 점수를 받았나요?</h2>
+    <p class="lede"><b>점수로 지은 다섯 채의 집</b>입니다. 집의 높이가 100점 만점 점수이고, 층 하나가 평가 항목 하나(20점 만점)입니다. 아래부터 스토리 · 흐름 · 화면 · 모션 · 기술 순서로 쌓습니다. 스크롤하면 바닥부터 층이 올라가고, 이어서 채점관이 Sonnet → 코덱스 → Argon으로 바뀌며 순위가 뒤바뀌고, 마지막에 세 명 평균으로 돌아옵니다. 위로 되돌리면 거꾸로 돌아갑니다. 채점관이나 항목을 직접 골라도 됩니다.</p>
+  </div>
+
+  <div class="town-pin" id="townPin">
+  <div class="town card-surface js-only">
+    <div class="controls">
+      <fieldset class="seg" id="judgePick">
+        <legend>채점관</legend>
+        <label><input type="radio" name="judge" value="avg" checked><span>세 명 평균</span></label>
+        <label><input type="radio" name="judge" value="sonnet"><span><i class="jm sonnet" aria-hidden="true"></i>Sonnet</span></label>
+        <label><input type="radio" name="judge" value="codex"><span><i class="jm codex" aria-hidden="true"></i>코덱스</span></label>
+        <label><input type="radio" name="judge" value="argon"><span><i class="jm argon" aria-hidden="true"></i>Argon</span></label>
+      </fieldset>
+      <fieldset class="seg seg-crit" id="critPick">
+        <legend>항목</legend>
+        <label><input type="radio" name="crit" value="all" checked><span>합계</span></label>
+        <label><input type="radio" name="crit" value="0"><span>스토리</span></label>
+        <label><input type="radio" name="crit" value="1"><span>흐름</span></label>
+        <label><input type="radio" name="crit" value="2"><span>화면</span></label>
+        <label><input type="radio" name="crit" value="3"><span>모션</span></label>
+        <label><input type="radio" name="crit" value="4"><span>기술</span></label>
+      </fieldset>
+    </div>
+    <div class="town-prog" aria-hidden="true"><i></i></div>
+    <p class="town-say" id="townSay" aria-live="polite">세 채점관 평균입니다. 1위 표는 Opus 솔로플러스 2표(Sonnet · 코덱스), 협업 1표(Argon)로 갈렸습니다.</p>
+    <div class="houses-wrap">
+      <div class="gridlines" aria-hidden="true"><span style="--v:100">100</span><span style="--v:75">75</span><span style="--v:50">50</span><span style="--v:25">25</span></div>
+      <ol class="houses" id="houses" aria-label="작품별 점수(집 높이)"></ol>
+    </div>
+    <div class="town-foot">
+      <div class="floor-legend" aria-hidden="true">
+        <span>층(아래부터)</span><span class="fl-key"><i style="--mix:100%"></i>스토리</span><span class="fl-key"><i style="--mix:84%"></i>흐름</span><span class="fl-key"><i style="--mix:68%"></i>화면</span><span class="fl-key"><i style="--mix:54%"></i>모션</span><span class="fl-key"><i style="--mix:40%"></i>기술</span>
+      </div>
+      <p class="town-hint" id="townHint">집을 눌러 보세요. 층별 점수가 나와요.</p>
+      <button class="btn btn-small" type="button" id="townReplay" hidden>스크롤 연출로 돌아가기</button>
+    </div>
+  </div>
+  </div>
+
+  <div class="two">
+    <div class="panel card-surface js-only">
+      <h3>채점관마다 점수가 얼마나 달랐나요?</h3>
+      <p class="note">점 하나가 채점관 한 명의 합계, 세로 막대가 평균입니다. 모양으로도 구분합니다: <span class="jl"><i class="jm sonnet"></i>Sonnet</span> <span class="jl"><i class="jm codex"></i>코덱스</span> <span class="jl"><i class="jm argon"></i>Argon</span></p>
+      <div class="dots" id="dots" role="list" aria-label="작품별 채점관 합계"></div>
+      <p class="note">GPT 솔로플러스는 코덱스 89점, Sonnet 78점, Argon 70점으로 편차가 가장 컸습니다. Argon은 0~45초의 주황 띠 버그를 화면 구성(11점)에서 크게 깎았습니다.</p>
+    </div>
+    <div class="panel card-surface">
+      <h3>라운드가 바뀌면 점수도 바뀌나요?</h3>
+      <p class="note">네. 같은 작품도 함께 채점된 작품이 바뀌자 점수가 달라졌습니다. 그래서 <b>점수는 같은 라운드 안에서만</b> 비교합니다. GPT 단독 80.3 → 74.3 → 70.0, Opus 단독 84.3 → 73.0 → 72.7, 협업 93.3 → 90.7.</p>
+      <figure class="slope js-only" id="slope">
+        <svg viewBox="0 0 560 330" role="img" aria-labelledby="slope-t slope-d">
+          <title id="slope-t">라운드별 평균 점수의 변화</title>
+          <desc id="slope-d">GPT 단독 80.3, 74.3, 70.0. Opus 단독 84.3, 73.0, 72.7. 협업 2라운드 93.3, 3라운드 90.7. 3라운드의 Opus 솔로플러스 92.7, GPT 솔로플러스 79.0.</desc>
+        </svg>
+      </figure>
+      <div class="slope-keys js-only" id="slopeKeys" role="group" aria-label="강조할 작품"></div>
+    </div>
+  </div>
+
+  <a class="btn btn-small table-link" href="#rounds" data-tab="3">3라운드 점수 전체 표(채점관 · 항목별) 보기 →</a>
+</section>
+
+<!-- 3. 작품 -->
+<section class="sec" id="gallery" aria-labelledby="h-gallery">
+  <div class="sec-head">
+    <p class="kicker"><span>03</span> 작품</p>
+    <h2 id="h-gallery">다섯 작품은 어떻게 다른가요?</h2>
+    <p class="lede">3라운드 순위 순서입니다. 화면 가운데에 온 카드 <b>한 편만</b> 실제 재생 장면(8초)을 되풀이하고 나머지는 멈춘 사진으로 둡니다. <b>전체 재생</b>을 누르면 그때 작품을 불러옵니다.</p>
+  </div>
+  <ol class="gallery" id="works">
+<!-- build:gallery -->
+<li class="wcard reveal" style="--c:var(--opusp);--d:0" data-w="opusp">
+  <div class="poster"><img class="pv-poster" src="assets/clips/opusp-loop.jpg" alt="" width="854" height="480" loading="lazy" decoding="async"><video class="pv" muted playsinline loop preload="none" width="854" height="480" aria-label="Opus 솔로플러스 작품의 실제 재생 장면(8초 반복, 소리 없음)"><source src="assets/clips/opusp-loop.webm" type="video/webm"><source src="assets/clips/opusp-loop.mp4" type="video/mp4"></video>
+    <a class="poster-link" href="opus-5.5-plus/index.html" aria-label="Opus 솔로플러스 「문 열어, 나야」 전체 재생"><span class="poster-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span></a>
+    <button class="vid-toggle js-only" type="button" aria-label="Opus 솔로플러스 장면 영상 멈추기" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="i-play" d="M8 5v14l11-7z"/></svg></button>
+  </div>
+  <div class="wbody">
+    <div class="wtop"><div><p class="wname"><span class="rank-badge"><b>1</b>3라운드 1위</span>Opus 솔로플러스</p><h3 class="wtitle">「문 열어, 나야」</h3></div>
+      <div class="ring" role="img" aria-label="3라운드 평균 92.7점" data-p="92.67"><b class="num">92.7</b><small>100점 만점</small></div></div>
+    <p class="wtheme">계정 사칭 · 피싱(AI 목소리 흉내 포함)</p>
+    <p class="wmaker">Claude Opus 5.5 혼자 · 설계 → 구현 → 자기 검토 → 수정</p>
+    <div class="wmeta"><span class="clip-note">영상: 62.6~70.6초 장면</span><span>89초 · 13장면</span><span>제작 약 67분</span></div>
+    
+    <div class="wact"><a class="btn btn-solid" href="opus-5.5-plus/index.html" data-open="opusp">전체 재생</a><a class="btn" href="opus-5.5-plus/index.html" target="_blank" rel="noopener">새 창</a></div>
+  </div>
+</li>
+<li class="wcard reveal" style="--c:var(--collab);--d:1" data-w="collab">
+  <div class="poster"><img class="pv-poster" src="assets/clips/collab-loop.jpg" alt="" width="854" height="480" loading="lazy" decoding="async"><video class="pv" muted playsinline loop preload="none" width="854" height="480" aria-label="협업 작품의 실제 재생 장면(8초 반복, 소리 없음)"><source src="assets/clips/collab-loop.webm" type="video/webm"><source src="assets/clips/collab-loop.mp4" type="video/mp4"></video>
+    <a class="poster-link" href="collab/index.html" aria-label="협업 「늑대가 된 여름 (협업판)」 전체 재생"><span class="poster-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span></a>
+    <button class="vid-toggle js-only" type="button" aria-label="협업 장면 영상 멈추기" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="i-play" d="M8 5v14l11-7z"/></svg></button>
+  </div>
+  <div class="wbody">
+    <div class="wtop"><div><p class="wname"><span class="rank-badge"><b>2</b>3라운드 2위</span>협업</p><h3 class="wtitle">「늑대가 된 여름 (협업판)」</h3></div>
+      <div class="ring" role="img" aria-label="3라운드 평균 90.7점" data-p="90.67"><b class="num">90.7</b><small>100점 만점</small></div></div>
+    <p class="wtheme">폭염 시대의 주거와 공동체</p>
+    <p class="wmaker">GPT 6.1 sol 설계·검토 + Claude Opus 5.5 구현·수정</p>
+    <div class="wmeta"><span class="clip-note">영상: 66.0~74.0초 장면</span><span>88초 · 약 17비트 · 한 거리 위 카메라 이동</span><span>제작 약 108분</span></div>
+    
+    <div class="wact"><a class="btn btn-solid" href="collab/index.html" data-open="collab">전체 재생</a><a class="btn" href="collab/index.html" target="_blank" rel="noopener">새 창</a></div>
+  </div>
+</li>
+<li class="wcard reveal" style="--c:var(--gptp);--d:2" data-w="gptp">
+  <div class="poster"><img class="pv-poster" src="assets/clips/gptp-loop.jpg" alt="" width="854" height="480" loading="lazy" decoding="async"><video class="pv" muted playsinline loop preload="none" width="854" height="480" aria-label="GPT 솔로플러스 작품의 실제 재생 장면(8초 반복, 소리 없음)"><source src="assets/clips/gptp-loop.webm" type="video/webm"><source src="assets/clips/gptp-loop.mp4" type="video/mp4"></video>
+    <a class="poster-link" href="gpt-6.1-sol-plus/index.html" aria-label="GPT 솔로플러스 「마감 늑대와 빈칸 있는 집」 전체 재생"><span class="poster-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span></a>
+    <button class="vid-toggle js-only" type="button" aria-label="GPT 솔로플러스 장면 영상 멈추기" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="i-play" d="M8 5v14l11-7z"/></svg></button>
+  </div>
+  <div class="wbody">
+    <div class="wtop"><div><p class="wname"><span class="rank-badge"><b>3</b>3라운드 3위</span>GPT 솔로플러스</p><h3 class="wtitle">「마감 늑대와 빈칸 있는 집」</h3></div>
+      <div class="ring" role="img" aria-label="3라운드 평균 79.0점" data-p="79.00"><b class="num">79.0</b><small>100점 만점</small></div></div>
+    <p class="wtheme">끝없는 추가 요청과 생산성 경쟁, 함께 조절하는 일과 휴식</p>
+    <p class="wmaker">GPT 6.1 sol 혼자 · 설계 → 구현 → 자기 검토 → 수정</p>
+    <div class="wmeta"><span class="clip-note">영상: 60.0~68.0초 장면</span><span>84초 · 13구간</span><span>제작 약 38분</span></div>
+    <p class="wbug">0~45초 주황 띠는 팔이 늘어나는 버그입니다(고치지 않음).</p>
+    <div class="wact"><a class="btn btn-solid" href="gpt-6.1-sol-plus/index.html" data-open="gptp">전체 재생</a><a class="btn" href="gpt-6.1-sol-plus/index.html" target="_blank" rel="noopener">새 창</a></div>
+  </div>
+</li>
+<li class="wcard reveal" style="--c:var(--opus);--d:3" data-w="opus">
+  <div class="poster"><img class="pv-poster" src="assets/clips/opus-loop.jpg" alt="" width="854" height="480" loading="lazy" decoding="async"><video class="pv" muted playsinline loop preload="none" width="854" height="480" aria-label="Opus 단독 작품의 실제 재생 장면(8초 반복, 소리 없음)"><source src="assets/clips/opus-loop.webm" type="video/webm"><source src="assets/clips/opus-loop.mp4" type="video/mp4"></video>
+    <a class="poster-link" href="opus-5.5/index.html" aria-label="Opus 단독 「아기 돼지 삼형제 2050 · 열돔 늑대가 온다」 전체 재생"><span class="poster-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span></a>
+    <button class="vid-toggle js-only" type="button" aria-label="Opus 단독 장면 영상 멈추기" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="i-play" d="M8 5v14l11-7z"/></svg></button>
+  </div>
+  <div class="wbody">
+    <div class="wtop"><div><p class="wname"><span class="rank-badge"><b>4</b>3라운드 4위</span>Opus 단독</p><h3 class="wtitle">「아기 돼지 삼형제 2050 · 열돔 늑대가 온다」</h3></div>
+      <div class="ring" role="img" aria-label="3라운드 평균 72.7점" data-p="72.67"><b class="num">72.7</b><small>100점 만점</small></div></div>
+    <p class="wtheme">기후 위기(폭염 · 열돔)와 공동체</p>
+    <p class="wmaker">Claude Opus 5.5 혼자 · 한 번에</p>
+    <div class="wmeta"><span class="clip-note">영상: 43.0~51.0초 장면</span><span>88초 · 12장면 · 한 거리 위 카메라 이동</span><span>제작 약 34분</span></div>
+    <p class="wbug">느린 기기에서는 슬로모션으로 재생될 수 있습니다.</p>
+    <div class="wact"><a class="btn btn-solid" href="opus-5.5/index.html" data-open="opus">전체 재생</a><a class="btn" href="opus-5.5/index.html" target="_blank" rel="noopener">새 창</a></div>
+  </div>
+</li>
+<li class="wcard reveal" style="--c:var(--gpt);--d:4" data-w="gpt">
+  <div class="poster"><img class="pv-poster" src="assets/clips/gpt-loop.jpg" alt="" width="854" height="480" loading="lazy" decoding="async"><video class="pv" muted playsinline loop preload="none" width="854" height="480" aria-label="GPT 단독 작품의 실제 재생 장면(8초 반복, 소리 없음)"><source src="assets/clips/gpt-loop.webm" type="video/webm"><source src="assets/clips/gpt-loop.mp4" type="video/mp4"></video>
+    <a class="poster-link" href="gpt-6.1-sol/index.html" aria-label="GPT 단독 「늑대가 된 여름」 전체 재생"><span class="poster-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span></a>
+    <button class="vid-toggle js-only" type="button" aria-label="GPT 단독 장면 영상 멈추기" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/><path class="i-play" d="M8 5v14l11-7z"/></svg></button>
+  </div>
+  <div class="wbody">
+    <div class="wtop"><div><p class="wname"><span class="rank-badge"><b>5</b>3라운드 5위</span>GPT 단독</p><h3 class="wtitle">「늑대가 된 여름」</h3></div>
+      <div class="ring" role="img" aria-label="3라운드 평균 70.0점" data-p="70.00"><b class="num">70.0</b><small>100점 만점</small></div></div>
+    <p class="wtheme">기후위기 시대의 주거와 공동체</p>
+    <p class="wmaker">GPT 6.1 sol 혼자 · 한 번에</p>
+    <div class="wmeta"><span class="clip-note">영상: 38.0~46.0초 장면</span><span>84초 · 9장면 · 장면 전환</span><span>제작 약 10분</span></div>
+    
+    <div class="wact"><a class="btn btn-solid" href="gpt-6.1-sol/index.html" data-open="gpt">전체 재생</a><a class="btn" href="gpt-6.1-sol/index.html" target="_blank" rel="noopener">새 창</a></div>
+  </div>
+</li>
+<!-- /build:gallery -->
+  </ol>
+
+  <div class="compare card-surface" id="compare">
+    <div class="compare-head">
+      <div>
+        <h3>같은 초에는 어떤 장면일까요?</h3>
+        <p class="note">다섯 작품을 헤드리스 크롬(1600×900)에서 재생 버튼을 누른 뒤 같은 시각에 찍었습니다. 막대를 움직이면 같은 초의 장면이 나란히 바뀝니다. 장면을 누르면 크게 봅니다. 「영상 동시 재생」을 고르면 다섯 작품의 녹화 영상을 같은 시각에 맞춰 함께 재생합니다(헤드리스 크롬에서 녹화, 소리 없음).</p>
+      </div>
+      <div class="cmp-side">
+        <div class="cmp-mode js-only" role="group" aria-label="보기 방식">
+          <button type="button" data-mode="photo" aria-pressed="true">사진</button>
+          <button type="button" data-mode="video" aria-pressed="false">영상 동시 재생 <small>약 9MB</small></button>
+        </div>
+        <div class="cmp-time" aria-hidden="true"><span id="cmpClock">0:40</span><small id="cmpLabel">재생 버튼을 누른 뒤</small></div>
+      </div>
+    </div>
+    <div class="cmp-grid" id="cmpGrid">
+<!-- build:compare -->
+<div class="cell" style="--c:var(--opusp)" data-w="opusp"><div class="cell-head"><b>Opus 솔로플러스</b><span class="cell-scene">흉내쟁이 늑대</span></div><button class="frame" type="button" aria-label="Opus 솔로플러스, 0:40: 흉내쟁이 늑대. 크게 보기"><picture class="front"><source type="image/avif" srcset="assets/shots/opusp/s40-640.avif"><img src="assets/shots/opusp/s40-640.jpg" alt="Opus 솔로플러스 0:40 장면: 흉내쟁이 늑대" width="640" height="360" loading="lazy" decoding="async"></picture><picture class="back"><source type="image/avif" srcset="assets/shots/opusp/s40-640.avif"><img src="assets/shots/opusp/s40-640.jpg" alt="" width="640" height="360" loading="lazy" decoding="async"></picture><span class="frame-bug" aria-hidden="true">주황 띠 = 버그</span></button></div>
+<div class="cell" style="--c:var(--collab)" data-w="collab"><div class="cell-head"><b>협업</b><span class="cell-scene">첫 번째 피신</span></div><button class="frame" type="button" aria-label="협업, 0:40: 첫 번째 피신. 크게 보기"><picture class="front"><source type="image/avif" srcset="assets/shots/collab/s40-640.avif"><img src="assets/shots/collab/s40-640.jpg" alt="협업 0:40 장면: 첫 번째 피신" width="640" height="360" loading="lazy" decoding="async"></picture><picture class="back"><source type="image/avif" srcset="assets/shots/collab/s40-640.avif"><img src="assets/shots/collab/s40-640.jpg" alt="" width="640" height="360" loading="lazy" decoding="async"></picture><span class="frame-bug" aria-hidden="true">주황 띠 = 버그</span></button></div>
+<div class="cell" style="--c:var(--gptp)" data-w="gptp"><div class="cell-head"><b>GPT 솔로플러스</b><span class="cell-scene">마감 늑대와 첫 피신</span></div><button class="frame" type="button" aria-label="GPT 솔로플러스, 0:40: 마감 늑대와 첫 피신. 크게 보기"><picture class="front"><source type="image/avif" srcset="assets/shots/gptp/s40-640.avif"><img src="assets/shots/gptp/s40-640.jpg" alt="GPT 솔로플러스 0:40 장면: 마감 늑대와 첫 피신" width="640" height="360" loading="lazy" decoding="async"></picture><picture class="back"><source type="image/avif" srcset="assets/shots/gptp/s40-640.avif"><img src="assets/shots/gptp/s40-640.jpg" alt="" width="640" height="360" loading="lazy" decoding="async"></picture><span class="frame-bug show" aria-hidden="true">주황 띠 = 버그</span></button></div>
+<div class="cell" style="--c:var(--opus)" data-w="opus"><div class="cell-head"><b>Opus 단독</b><span class="cell-scene">열돔 늑대 등장</span></div><button class="frame" type="button" aria-label="Opus 단독, 0:40: 열돔 늑대 등장. 크게 보기"><picture class="front"><source type="image/avif" srcset="assets/shots/opus/s40-640.avif"><img src="assets/shots/opus/s40-640.jpg" alt="Opus 단독 0:40 장면: 열돔 늑대 등장" width="640" height="360" loading="lazy" decoding="async"></picture><picture class="back"><source type="image/avif" srcset="assets/shots/opus/s40-640.avif"><img src="assets/shots/opus/s40-640.jpg" alt="" width="640" height="360" loading="lazy" decoding="async"></picture><span class="frame-bug" aria-hidden="true">주황 띠 = 버그</span></button></div>
+<div class="cell" style="--c:var(--gpt)" data-w="gpt"><div class="cell-head"><b>GPT 단독</b><span class="cell-scene">폭염 늑대</span></div><button class="frame" type="button" aria-label="GPT 단독, 0:40: 폭염 늑대. 크게 보기"><picture class="front"><source type="image/avif" srcset="assets/shots/gpt/s40-640.avif"><img src="assets/shots/gpt/s40-640.jpg" alt="GPT 단독 0:40 장면: 폭염 늑대" width="640" height="360" loading="lazy" decoding="async"></picture><picture class="back"><source type="image/avif" srcset="assets/shots/gpt/s40-640.avif"><img src="assets/shots/gpt/s40-640.jpg" alt="" width="640" height="360" loading="lazy" decoding="async"></picture><span class="frame-bug" aria-hidden="true">주황 띠 = 버그</span></button></div>
+<!-- /build:compare -->
+    </div>
+    <div class="cmp-ctrl js-only">
+      <button class="btn btn-icon" id="cmpPlay" type="button" aria-label="자동으로 넘기기"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M7 4.5v15l12-7.5z"/><path class="i-pause" d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"/></svg></button>
+      <div class="cmp-range">
+        <input type="range" id="cmpRange" min="0" max="19" step="1" value="9" aria-label="장면 시각" aria-valuetext="40초">
+        <div class="cmp-ticks" aria-hidden="true">
+<!-- build:ticks -->
+<span class="" style="left:0.000%">표지</span><span class="mid" style="left:26.316%">0:20</span><span class="" style="left:47.368%">0:40</span><span class="mid" style="left:68.421%">1:00</span><span class="mid" style="left:89.474%">1:20</span><span class="" style="left:100.000%">끝 화면</span>
+<!-- /build:ticks -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 과정 -->
+<section class="sec" id="process" aria-labelledby="h-process">
+  <div class="sec-head">
+    <p class="kicker"><span>04</span> 제작 과정</p>
+    <h2 id="h-process">누가, 얼마나 걸려 만들었나요?</h2>
+    <p class="lede">막대 길이가 걸린 시간입니다(같은 시간축). 칸의 색은 그 단계를 맡은 모델입니다. 오른쪽 끝의 숫자는 3라운드 점수입니다. <b>오래 걸린 협업(108분)과 67분 걸린 Opus 솔로플러스의 점수가 비슷합니다.</b></p>
+  </div>
+  <div class="gantt card-surface" id="gantt">
+    <div class="g-legend"><span><i class="who-gpt"></i>GPT 6.1 sol이 한 단계</span><span><i class="who-opus"></i>Claude Opus 5.5가 한 단계</span></div>
+    <div class="g-rows">
+<!-- build:gantt -->
+<div class="g-row" style="--c:var(--collab);--n:0">
+  <div class="g-name">협업<small>약 108분</small></div>
+  <div class="g-track" style="--total:108.000"><div class="g-bar" role="img" aria-label="협업: 설계 약 12분(GPT), 구현 약 79분(Opus), 검토 약 6분(GPT), 수정 약 11분(Opus), 합계 약 108분"><div class="g-seg gpt" style="--min:12.000" title="설계 · 약 12분 · 설계서 48KB: 88초 17장면표, 자막 20개, 카메라 기준점 5개"><b>설계</b><span>약 12분</span><em aria-hidden="true">1</em></div><div class="g-seg opus" style="--min:79.000" title="구현 · 약 79분 · 1차본 97KB, 도구 77회. 공간이 맞지 않는 7곳은 이유를 밝히고 바꿈"><b>구현</b><span>약 79분</span><em aria-hidden="true">2</em></div><div class="g-seg gpt" style="--min:6.000" title="검토 · 약 6분 · 설계자가 수정 요청 9건(높음 7건)"><b>검토</b><span>약 6분</span><em aria-hidden="true">3</em></div><div class="g-seg opus" style="--min:11.000" title="수정 · 약 11분 · 7건 반영, 2건 부분 반영"><b>수정</b><span>약 11분</span><em aria-hidden="true">4</em></div></div></div>
+  <div class="g-score">90.7<small>점</small></div>
+  <p class="g-cap"><span class="gpt"><em>1</em> 설계 약 12분</span> · <span class="opus"><em>2</em> 구현 약 79분</span> · <span class="gpt"><em>3</em> 검토 약 6분</span> · <span class="opus"><em>4</em> 수정 약 11분</span></p>
+</div>
+<div class="g-row" style="--c:var(--opusp);--n:1">
+  <div class="g-name">Opus 솔로플러스<small>약 67분</small></div>
+  <div class="g-track" style="--total:66.767"><div class="g-bar" role="img" aria-label="Opus 솔로플러스: 설계 11분 20초(Opus), 구현 31분 28초(Opus), 검토 8분 36초(Opus), 수정 15분 22초(Opus), 합계 약 67분"><div class="g-seg opus" style="--min:11.333" title="설계 · 11분 20초 · 자기 설계서 51KB(계정 사칭)"><b>설계</b><span>11분 20초</span><em aria-hidden="true">1</em></div><div class="g-seg opus" style="--min:31.467" title="구현 · 31분 28초 · 설계서대로 index.html(명령줄 점검만)"><b>구현</b><span>31분 28초</span><em aria-hidden="true">2</em></div><div class="g-seg opus" style="--min:8.600" title="검토 · 8분 36초 · 스크린숏을 보고 고칠 점 16건(높음 4건)"><b>검토</b><span>8분 36초</span><em aria-hidden="true">3</em></div><div class="g-seg opus" style="--min:15.367" title="수정 · 15분 22초 · 14건 반영, 2건 부분 반영"><b>수정</b><span>15분 22초</span><em aria-hidden="true">4</em></div></div></div>
+  <div class="g-score">92.7<small>점</small></div>
+  <p class="g-cap"><span class="opus"><em>1</em> 설계 11분 20초</span> · <span class="opus"><em>2</em> 구현 31분 28초</span> · <span class="opus"><em>3</em> 검토 8분 36초</span> · <span class="opus"><em>4</em> 수정 15분 22초</span></p>
+</div>
+<div class="g-row" style="--c:var(--gptp);--n:2">
+  <div class="g-name">GPT 솔로플러스<small>약 38분</small></div>
+  <div class="g-track" style="--total:37.967"><div class="g-bar" role="img" aria-label="GPT 솔로플러스: 설계 8분 26초(GPT), 구현 11분 39초(GPT), 검토 5분 19초(GPT), 수정 12분 34초(GPT), 합계 약 38분"><div class="g-seg gpt" style="--min:8.433" title="설계 · 8분 26초 · 자기 설계서 약 40KB(끝없는 일)"><b>설계</b><span>8분 26초</span><em aria-hidden="true">1</em></div><div class="g-seg gpt" style="--min:11.650" title="구현 · 11분 39초 · 설계서대로 index.html(명령줄 점검만)"><b>구현</b><span>11분 39초</span><em aria-hidden="true">2</em></div><div class="g-seg gpt" style="--min:5.317" title="검토 · 5분 19초 · 스크린숏을 보고 고칠 점 11건"><b>검토</b><span>5분 19초</span><em aria-hidden="true">3</em></div><div class="g-seg gpt" style="--min:12.567" title="수정 · 12분 34초 · 6건 반영, 5건 부분 반영"><b>수정</b><span>12분 34초</span><em aria-hidden="true">4</em></div></div></div>
+  <div class="g-score">79.0<small>점</small></div>
+  <p class="g-cap"><span class="gpt"><em>1</em> 설계 8분 26초</span> · <span class="gpt"><em>2</em> 구현 11분 39초</span> · <span class="gpt"><em>3</em> 검토 5분 19초</span> · <span class="gpt"><em>4</em> 수정 12분 34초</span></p>
+</div>
+<div class="g-row" style="--c:var(--opus);--n:3">
+  <div class="g-name">Opus 단독<small>약 34분</small></div>
+  <div class="g-track" style="--total:34.000"><div class="g-bar" role="img" aria-label="Opus 단독: 한 번에 약 34분(Opus), 합계 약 34분"><div class="g-seg opus" style="--min:34.000" title="한 번에 · 약 34분 · 지시문만 받고 한 번에 완성"><b>한 번에</b><span>약 34분</span></div></div></div>
+  <div class="g-score">72.7<small>점</small></div>
+  <p class="g-cap"><span class="opus">한 번에 약 34분</span></p>
+</div>
+<div class="g-row" style="--c:var(--gpt);--n:4">
+  <div class="g-name">GPT 단독<small>약 10분</small></div>
+  <div class="g-track" style="--total:10.000"><div class="g-bar" role="img" aria-label="GPT 단독: 한 번에 약 10분(GPT), 합계 약 10분"><div class="g-seg gpt" style="--min:10.000" title="한 번에 · 약 10분 · 지시문만 받고 한 번에 완성"><b>한 번에</b><span>약 10분</span></div></div></div>
+  <div class="g-score">70.0<small>점</small></div>
+  <p class="g-cap"><span class="gpt">한 번에 약 10분</span></p>
+</div>
+<!-- /build:gantt -->
+    </div>
+    <div class="g-axis" aria-hidden="true"><span style="--m:0">0분</span><span style="--m:30">30</span><span style="--m:60">60</span><span style="--m:90">90</span><span style="--m:110">110분</span></div>
+    <p class="note">진행자가 크롬으로 재생하며 스크린숏을 찍은 시간(작품마다 약 2분)은 넣지 않았습니다. 솔로플러스에는 시간 제한을 두지 않았습니다. 출처: <a href="https://github.com/techkwon/three-pigs-motion-ai/blob/main/README.md">README.md</a>와 <a href="_%EB%B3%B4%EA%B3%A0%ED%8E%98%EC%9D%B4%EC%A7%80/">이전 보고 페이지</a>의 제작 기록.</p>
+  </div>
+
+  <details class="fold flows-fold">
+  <summary>단계마다 무엇을 했나요? (협업 · 솔로플러스 4단계)</summary>
+  <div class="flows">
+    <article class="flow card-surface">
+      <h3 class="c-collab">협업은 어떤 순서였나요?</h3>
+      <p class="note">1라운드에서 드러난 강점대로 나눴습니다. GPT는 화면 디자인·이야기 매듭·튼튼한 재생기, Opus는 사건을 전하는 모션. 두 모델은 파일(설계서, 검토서)로만 주고받았습니다.</p>
+      <ol class="flow-steps">
+<!-- build:flowCollab -->
+<li><div><div class="fs-t"><b>설계</b><span class="fs-who gpt">GPT 6.1 sol</span><span class="fs-time">약 12분</span></div><p>설계서 48KB: 88초 17장면표, 자막 20개, 카메라 기준점 5개</p></div></li>
+<li><div><div class="fs-t"><b>구현</b><span class="fs-who opus">Opus 5.5</span><span class="fs-time">약 79분</span></div><p>1차본 97KB, 도구 77회. 공간이 맞지 않는 7곳은 이유를 밝히고 바꿈</p></div></li>
+<li><div><div class="fs-t"><b>검토</b><span class="fs-who gpt">GPT 6.1 sol</span><span class="fs-time">약 6분</span></div><p>설계자가 수정 요청 9건(높음 7건)</p></div></li>
+<li><div><div class="fs-t"><b>수정</b><span class="fs-who opus">Opus 5.5</span><span class="fs-time">약 11분</span></div><p>7건 반영, 2건 부분 반영</p></div></li>
+<!-- /build:flowCollab -->
+      </ol>
+    </article>
+    <article class="flow card-surface">
+      <h3><span class="c-opusp">Opus</span> · <span class="c-gptp">GPT</span> 솔로플러스는요?</h3>
+      <p class="note">두 모델에게 같은 단계 지시문 4개를 차례로 주었습니다. 단계마다 새로 불러 앞 대화를 기억하지 못하고, 폴더 안의 파일로만 이어 갔습니다. 브라우저는 쓰지 않았습니다.</p>
+      <ol class="flow-steps">
+<!-- build:flowPlus -->
+<li><div><div class="fs-t"><b>설계</b></div><div class="pair"><p style="--c:var(--opusp)"><b class="c-opusp">Opus</b> <span class="fs-time">11분 20초</span> · 자기 설계서 51KB(계정 사칭)</p><p style="--c:var(--gptp)"><b class="c-gptp">GPT</b> <span class="fs-time">8분 26초</span> · 자기 설계서 약 40KB(끝없는 일)</p></div></div></li>
+<li><div><div class="fs-t"><b>구현</b></div><div class="pair"><p style="--c:var(--opusp)"><b class="c-opusp">Opus</b> <span class="fs-time">31분 28초</span> · 설계서대로 index.html(명령줄 점검만)</p><p style="--c:var(--gptp)"><b class="c-gptp">GPT</b> <span class="fs-time">11분 39초</span> · 설계서대로 index.html(명령줄 점검만)</p></div></div></li>
+<li><div><div class="fs-t"><b>검토</b></div><div class="pair"><p style="--c:var(--opusp)"><b class="c-opusp">Opus</b> <span class="fs-time">8분 36초</span> · 스크린숏을 보고 고칠 점 16건(높음 4건)</p><p style="--c:var(--gptp)"><b class="c-gptp">GPT</b> <span class="fs-time">5분 19초</span> · 스크린숏을 보고 고칠 점 11건</p></div></div></li>
+<li><div><div class="fs-t"><b>수정</b></div><div class="pair"><p style="--c:var(--opusp)"><b class="c-opusp">Opus</b> <span class="fs-time">15분 22초</span> · 14건 반영, 2건 부분 반영</p><p style="--c:var(--gptp)"><b class="c-gptp">GPT</b> <span class="fs-time">12분 34초</span> · 6건 반영, 5건 부분 반영</p></div></div></li>
+<!-- /build:flowPlus -->
+      </ol>
+    </article>
+  </div>
+  </details>
+</section>
+
+<!-- 5. 해석 -->
+<section class="sec" id="findings" aria-labelledby="h-findings">
+  <div class="sec-head">
+    <p class="kicker"><span>05</span> 해석과 주의점</p>
+    <h2 id="h-findings">AI 둘이 협업하면 더 잘하나요?</h2>
+    <p class="lede">이 실험만으로는 「협업이라서 더 잘한다」고 말하기 어렵습니다. 결과를 가른 것은 <b>구현을 맡은 모델의 실력과 반복(설계 → 검토 → 수정)</b>에 가까워 보입니다.</p>
+  </div>
+  <div class="finds">
+    <article class="find reveal">
+      <p class="find-k"><span class="c-opusp">+20</span> <span class="slash">/</span> <span class="c-gptp">+9</span></p>
+      <h3>같은 모델도 반복으로 크게 오를까요? 네.</h3>
+      <svg class="dumbbell" viewBox="0 0 320 96" role="img" aria-label="단독에서 솔로플러스로: Opus 72.7점에서 92.7점, GPT 70.0점에서 79.0점(3라운드 평균)">
+        <g class="db-axis"><line x1="40" x2="310" y1="84" y2="84"/><text x="40" y="95">60</text><text x="107.5" y="95">70</text><text x="175" y="95">80</text><text x="242.5" y="95">90</text><text x="310" y="95" text-anchor="end">100</text></g>
+        <g class="db-row" style="--c:var(--opusp)"><text class="db-l" x="0" y="30">Opus</text><line x1="125.7" x2="260.7" y1="26" y2="26"/><circle class="db-a" cx="125.7" cy="26" r="6"/><circle class="db-b" cx="260.7" cy="26" r="7"/><text class="db-v" x="125.7" y="14" text-anchor="middle">72.7</text><text class="db-v" x="260.7" y="14" text-anchor="middle">92.7</text></g>
+        <g class="db-row" style="--c:var(--gptp)"><text class="db-l" x="0" y="64">GPT</text><line x1="107.5" x2="168.3" y1="60" y2="60"/><circle class="db-a" cx="107.5" cy="60" r="6"/><circle class="db-b" cx="168.3" cy="60" r="7"/><text class="db-v" x="107.5" y="48" text-anchor="middle">70.0</text><text class="db-v" x="168.3" y="48" text-anchor="middle">79.0</text></g>
+      </svg>
+      <p>Opus는 단독 72.7점에서 솔로플러스 92.7점으로, GPT는 70.0점에서 79.0점으로 올랐습니다. 참고 자료, 자기 설계, 한 번의 검토·수정을 더했을 뿐입니다.</p>
+    </article>
+    <article class="find reveal">
+      <p class="find-k"><span class="c-opusp">3</span> <span class="slash">:</span> <span class="c-collab">2</span><small>항목 승패</small></p>
+      <h3>Opus 혼자서도 협업 수준일까요? 비슷했습니다.</h3>
+      <p>스토리(19.3 대 17.3) · 화면(18.0 대 17.3) · 모션(19.0 대 18.7)은 Opus 솔로플러스가, 흐름(17.7 대 18.3) · 기술(18.7 대 19.0)은 협업작이 조금 앞섰습니다. 시간은 약 67분으로 협업(108분)보다 짧았습니다.</p>
+    </article>
+    <article class="find reveal">
+      <p class="find-k c-gptp">79.0</p>
+      <h3>GPT도 혼자서 협업 수준일까요? 아니었습니다.</h3>
+      <p>GPT 솔로플러스는 스토리 17.7 · 기술 17.0으로 괜찮았지만 화면 13.7 · 모션 15.0이 낮았습니다. 수정 단계에서 첫째 돼지의 팔이 늘어나는 새 버그가 생겼고, 브라우저로 다시 보지 못해 남았습니다.</p>
+    </article>
+    <article class="find reveal">
+      <p class="find-k">소재</p>
+      <h3>이야기 소재도 점수에 영향을 줬을까요? 그럴 수 있습니다.</h3>
+      <p>참고 작품 두 편이 모두 폭염 이야기라서 Opus는 일부러 계정 사칭 · 피싱을 골랐고, 세 채점관 모두 독창성을 높이 샀습니다. 협업작은 1라운드 GPT 작품과 제목 · 주제가 같았습니다. 스토리 2점 차이는 이 영향일 수 있습니다.</p>
+    </article>
+  </div>
+
+  <h3 class="sub-h" id="cautions">읽을 때 무엇을 주의해야 하나요?</h3>
+  <ul class="cautions card-surface">
+    <li><b>한 번씩만 만들었다</b> 1 · 2위의 2점 차이는 오차 범위일 수 있습니다. 유의성은 확인하지 않았습니다.</li>
+    <li><b>같은 시간은 아니다</b> 3라운드는 시간이 아니라 정보와 반복 횟수를 맞췄습니다(Opus 67분, GPT 38분, 협업 108분).</li>
+    <li><b>점수는 라운드 안에서만</b> 라운드마다 처음부터 다시 채점해 같은 작품도 점수가 움직였습니다(GPT 단독 80.3 → 74.3 → 70.0).</li>
+    <li><b>채점관도 AI</b> 세 회사의 모델이 이름을 가린 채 채점했습니다. 사람의 평가는 아닙니다.</li>
+  </ul>
+
+  <h3 class="sub-h" id="quotes-h">채점관들은 무엇이라고 했나요? <small>3라운드 채점 원문에서 짧게</small></h3>
+  <div class="quotes-wrap" role="group" aria-labelledby="quotes-h">
+<!-- build:quotes -->
+<ul class="quotes">
+<li class="quote" style="--c:var(--opusp)"><div class="q-meta"><span class="q-judge"><i class="jm sonnet" aria-hidden="true"></i>Sonnet</span><span class="q-work">Opus 솔로플러스</span><span class="q-kind good">강점</span></div><blockquote>모션이 사건을 설명하는 연기로 쓰였다</blockquote></li>
+<li class="quote" style="--c:var(--opusp)"><div class="q-meta"><span class="q-judge"><i class="jm sonnet" aria-hidden="true"></i>Sonnet</span><span class="q-work">Opus 솔로플러스</span><span class="q-kind bad">약점</span></div><blockquote>후반부 장면과 정보 칩이 밀집해 읽을 틈이 적다</blockquote></li>
+<li class="quote" style="--c:var(--collab)"><div class="q-meta"><span class="q-judge"><i class="jm codex" aria-hidden="true"></i>코덱스</span><span class="q-work">협업</span><span class="q-kind good">강점</span></div><blockquote>형제의 재능을 그늘막·센서·이웃 안내라는 구체적 행동으로 증명한다.</blockquote></li>
+<li class="quote" style="--c:var(--collab)"><div class="q-meta"><span class="q-judge"><i class="jm codex" aria-hidden="true"></i>코덱스</span><span class="q-work">협업</span><span class="q-kind bad">약점</span></div><blockquote>폭염과 공동체라는 주제의 독창성은 상대적으로 제한적이다.</blockquote></li>
+<li class="quote" style="--c:var(--gptp)"><div class="q-meta"><span class="q-judge"><i class="jm codex" aria-hidden="true"></i>코덱스</span><span class="q-work">GPT 솔로플러스</span><span class="q-kind good">강점</span></div><blockquote>셋째의 방법에도 한계를 부여해 해결의 논리가 깊다.</blockquote></li>
+<li class="quote" style="--c:var(--gptp)"><div class="q-meta"><span class="q-judge"><i class="jm sonnet" aria-hidden="true"></i>Sonnet</span><span class="q-work">GPT 솔로플러스</span><span class="q-kind bad">약점</span></div><blockquote>주제와 늑대가 추상적이라 중학생에게 위협의 실감이 약하다</blockquote></li>
+</ul>
+<details class="fold"><summary>인용 6개 더 보기</summary><ul class="quotes">
+<li class="quote" style="--c:var(--opusp)"><div class="q-meta"><span class="q-judge"><i class="jm codex" aria-hidden="true"></i>코덱스</span><span class="q-work">Opus 솔로플러스</span><span class="q-kind good">강점</span></div><blockquote>원작의 문 두드리기와 굴뚝 공격을 디지털 사칭 이야기로 치밀하게 연결한다.</blockquote></li>
+<li class="quote" style="--c:var(--opusp)"><div class="q-meta"><span class="q-judge"><i class="jm argon" aria-hidden="true"></i>Argon</span><span class="q-work">Opus 솔로플러스</span><span class="q-kind good">강점</span></div><blockquote>원작의 모든 디테일을 현대 디지털 환경에 1:1로 대응시킨 독창적 스토리</blockquote></li>
+<li class="quote" style="--c:var(--opus)"><div class="q-meta"><span class="q-judge"><i class="jm codex" aria-hidden="true"></i>코덱스</span><span class="q-work">Opus 단독</span><span class="q-kind good">강점</span></div><blockquote>집의 과열과 정전을 색·계기판·팬 동작으로 함께 설명한다.</blockquote></li>
+<li class="quote" style="--c:var(--opus)"><div class="q-meta"><span class="q-judge"><i class="jm codex" aria-hidden="true"></i>코덱스</span><span class="q-work">Opus 단독</span><span class="q-kind bad">약점</span></div><blockquote>낮은 프레임률에서 재생 시간이 늘어나는 구조적 문제가 있다.</blockquote></li>
+<li class="quote" style="--c:var(--gpt)"><div class="q-meta"><span class="q-judge"><i class="jm codex" aria-hidden="true"></i>코덱스</span><span class="q-work">GPT 단독</span><span class="q-kind good">강점</span></div><blockquote>표지부터 마지막 밤 장면까지 색채와 타이포그래피의 통일성이 높다.</blockquote></li>
+<li class="quote" style="--c:var(--gpt)"><div class="q-meta"><span class="q-judge"><i class="jm codex" aria-hidden="true"></i>코덱스</span><span class="q-work">GPT 단독</span><span class="q-kind bad">약점</span></div><blockquote>중요한 사건을 행동으로 보여주는 모션이 부족하다.</blockquote></li>
+</ul></details>
+<!-- /build:quotes -->
+  </div>
+</section>
+
+<!-- 6. 자주 묻는 질문 -->
+<section class="sec" id="faq" aria-labelledby="h-faq">
+  <div class="sec-head">
+    <p class="kicker"><span>06</span> 자주 묻는 질문</p>
+    <h2 id="h-faq">자주 묻는 질문</h2>
+  </div>
+  <div class="faq">
+<!-- build:faq -->
+<details class="faq-item"><summary><h3 class="faq-q">AI 둘이 협업하면 혼자 만들 때보다 더 잘하나요?</h3></summary><p class="faq-a">이 실험만으로는 「협업하면 더 잘한다」고 말하기 어렵습니다. 2라운드에서 협업작은 93.3점으로 단독작(74.3점, 73.0점)을 크게 이겼지만, 3라운드에서 같은 참고 자료·설계·검토와 수정 기회를 받은 Claude Opus 5.5 혼자(솔로플러스)가 92.7점으로 협업작(90.7점)과 비슷했습니다. 협업의 승리는 분업보다 더 많은 시간·자료·고칠 기회 덕분이었을 수 있습니다. 다만 작품을 한 번씩만 만들었고 2점 차이의 유의성은 확인하지 않았으며, 1위 표는 Opus 솔로플러스 2표(Sonnet · 코덱스), 협업 1표(Argon)로 갈렸습니다.</p></details>
+<details class="faq-item"><summary><h3 class="faq-q">3라운드에서 가장 높은 점수를 받은 작품은 무엇인가요?</h3></summary><p class="faq-a">세 채점관 평균으로 1위는 Opus 5.5 솔로플러스 「문 열어, 나야」(92.7점), 2위 협업 「늑대가 된 여름」 협업판(90.7점), 3위 GPT 6.1 sol 솔로플러스 「마감 늑대와 빈칸 있는 집」(79.0점), 4위 Opus 5.5 단독(72.7점), 5위 GPT 6.1 sol 단독(70.0점)입니다. 1위 표는 Opus 솔로플러스 2표(Sonnet · 코덱스), 협업 1표(Argon)로 갈렸습니다.</p></details>
+<details class="faq-item"><summary><h3 class="faq-q">솔로플러스는 무엇인가요?</h3></summary><p class="faq-a">한 모델이 혼자 만들되 협업과 같은 이점을 준 방식입니다. 같은 참고 자료(단독 두 편, 과제지시문, 1라운드 평가 요약)를 읽고, 자기 설계서를 쓰고, 구현한 뒤, 진행자가 찍은 스크린숏을 보고 스스로 검토하고 한 번 고쳤습니다. 단계마다 새로 불러 파일로만 이어 갔고 브라우저는 쓰지 않았습니다.</p></details>
+<details class="faq-item"><summary><h3 class="faq-q">누가 어떻게 채점했나요?</h3></summary><p class="faq-a">세 회사의 AI 모델 Claude Sonnet 5.5(Anthropic), GPT 6.1 sol(OpenAI, 코덱스 CLI), Gemini 4 Argon high(Google, agy)가 작품 이름을 가린 채 채점했습니다. 스토리 구성, 이야기 흐름, 화면 구성, 모션 품질, 기술 완성도의 다섯 항목을 각 20점(합계 100점)으로 매겼고, 점수는 세 채점관의 평균입니다. 사람의 평가는 아닙니다.</p></details>
+<details class="faq-item"><summary><h3 class="faq-q">작품 하나를 만드는 데 시간은 얼마나 걸렸나요?</h3></summary><p class="faq-a">GPT 6.1 sol 단독 약 10분, Opus 5.5 단독 약 34분, 협업 약 108분(설계 12분, 구현 79분, 검토 6분, 수정 11분), Opus 솔로플러스 약 67분, GPT 솔로플러스 약 38분입니다. 3라운드는 시간이 아니라 정보와 반복 횟수를 맞춘 실험이라 걸린 시간은 서로 다릅니다.</p></details>
+<details class="faq-item"><summary><h3 class="faq-q">GPT 6.1 sol도 혼자서 협업 수준에 이르렀나요?</h3></summary><p class="faq-a">아니요. 같은 이점을 받은 GPT 6.1 sol 솔로플러스는 79.0점으로 협업작(90.7점)보다 약 12점 낮았습니다. 스토리(17.7)와 기술(17.0)은 괜찮았지만 화면 구성(13.7)과 모션(15.0)이 낮았고, 수정 단계에서 생긴 버그(첫째 돼지의 팔이 늘어나는 주황 띠)가 남았습니다.</p></details>
+<details class="faq-item"><summary><h3 class="faq-q">라운드끼리 점수를 직접 비교해도 되나요?</h3></summary><p class="faq-a">권하지 않습니다. 같은 채점관도 라운드마다 처음부터 다시 채점했고, 함께 채점된 작품이 바뀌자 같은 작품의 점수가 움직였습니다. 예를 들어 GPT 단독작은 1라운드 80.3점, 2라운드 74.3점, 3라운드 70.0점이었습니다. 점수는 같은 라운드 안에서만 비교하세요.</p></details>
+<details class="faq-item"><summary><h3 class="faq-q">작품과 채점 원자료는 어디서 볼 수 있나요?</h3></summary><p class="faq-a">이 페이지에서 다섯 작품을 직접 재생할 수 있고, GitHub 저장소 techkwon/three-pigs-motion-ai에 작품 HTML, 설계서·검토서, 라운드별 채점관 JSON(이유·강점·약점 포함)과 이름표 정답 파일이 있습니다.</p></details>
+<!-- /build:faq -->
+  </div>
+</section>
+
+<!-- 7. 방법·자료 -->
+<section class="sec" id="method" aria-labelledby="h-method">
+  <div class="sec-head">
+    <p class="kicker"><span>07</span> 방법과 자료</p>
+    <h2 id="h-method">어떻게 채점했나요?</h2>
+  </div>
+  <div class="method-grid">
+    <article class="mcard card-surface">
+      <h3>채점관은 누구인가요?</h3>
+      <ul class="judge-list">
+        <li><i class="jm sonnet" aria-hidden="true"></i><b>Claude Sonnet 5.5</b><span>Anthropic</span></li>
+        <li><i class="jm codex" aria-hidden="true"></i><b>GPT 6.1 sol</b><span>OpenAI · 코덱스 CLI</span></li>
+        <li><i class="jm argon" aria-hidden="true"></i><b>Gemini 4 Argon high</b><span>Google · agy</span></li>
+      </ul>
+      <p class="note">점수는 세 채점관의 평균입니다. 채점관은 작품 코드 전체, 재생 중 장면 사진, 휴대폰 화면, 시험에서 확인한 사실을 받았습니다.</p>
+    </article>
+    <article class="mcard card-surface">
+      <h3>무엇을 채점했나요?</h3>
+      <p class="note">다섯 항목 × 20점 = 100점</p>
+      <ul class="crit-list">
+<!-- build:crit -->
+<li><b>스토리 구성</b><span>현대적 해석 · 기승전결 · 메시지</span></li>
+<li><b>이야기 흐름</b><span>전환 · 속도 · 자막 타이밍</span></li>
+<li><b>화면 구성</b><span>레이아웃 · 색 · 캐릭터 · 글자</span></li>
+<li><b>모션 품질</b><span>부드러움 · 연출 · 의미 있는 움직임</span></li>
+<li><b>기술 완성도</b><span>오류 · 반응형 · 튼튼함 · 코드</span></li>
+<!-- /build:crit -->
+      </ul>
+    </article>
+    <article class="mcard card-surface">
+      <h3>이름은 어떻게 가렸나요?</h3>
+      <ul class="tags-list">
+        <li><b>1라운드</b><span>A = GPT 단독 · B = Opus 단독</span></li>
+        <li><b>2라운드</b><span>X = GPT 단독 · Y = 협업 · Z = Opus 단독</span></li>
+        <li><b>3라운드</b><span>M = GPT 단독 · P = Opus 단독 · R = Opus 솔로플러스 · T = GPT 솔로플러스 · V = 협업</span></li>
+      </ul>
+      <p class="note">라운드마다 새 이름표를 붙이고 처음부터 다시 채점했습니다(<button class="term" type="button" popovertarget="pop-blind">블라인드 채점</button>).</p>
+    </article>
+  </div>
+
+  <div class="rounds card-surface" id="rounds">
+    <h3 class="rounds-h">라운드별 채점표</h3>
+    <div class="tabs js-only" role="tablist" aria-label="라운드 고르기">
+      <button role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false" tabindex="-1" data-r="1" type="button">1라운드</button>
+      <button role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1" data-r="2" type="button">2라운드</button>
+      <button role="tab" id="tab-3" aria-controls="panel-3" aria-selected="true" tabindex="0" data-r="3" type="button">3라운드</button>
+    </div>
+<!-- build:rounds -->
+<section class="tab-panel" id="panel-1" role="tabpanel" aria-labelledby="tab-1" tabindex="0">
+  <h3 class="tab-q">1라운드: 혼자 만들면 누가 나은가</h3>
+  <div class="mini-avg"><span style="--c:var(--opus)">Opus 단독 <b class="num">84.3</b></span><span style="--c:var(--gpt)">GPT 단독 <b class="num">80.3</b></span></div>
+  <p class="note">두 단독 작품만 A/B로 가려 채점했습니다. 승부는 모션 품질(Opus 18.3 대 GPT 12.3)에서 갈렸고, 화면 구성과 기술 완성도는 GPT가 앞섰습니다. Sonnet과 Argon은 Opus를 7점 앞에, 코덱스는 GPT를 2점 앞에 두었습니다.</p>
+  <p class="scroll-hint" aria-hidden="true">옆으로 밀면 항목별 점수가 보여요 →</p>
+  <div class="tablebox"><table class="score-table">
+<caption>1라운드 채점관별 점수(항목마다 20점, 합계 100점)</caption>
+<thead><tr><th scope="col">작품(이름표)</th><th scope="col">합계</th><th scope="col">순위</th><th scope="col">스토리</th><th scope="col">흐름</th><th scope="col">화면</th><th scope="col">모션</th><th scope="col">기술</th></tr></thead>
+<tbody>
+<tr class="grp"><th scope="colgroup" colspan="8"><span class="grp-pin">Claude Sonnet 5.5 <small>Anthropic · 하위 에이전트</small></span></th></tr>
+<tr><th scope="row" class="wc" style="color:var(--opus)">Opus 단독 <small>B</small></th><td class="num tot"><b>81</b></td><td class="rk">1위</td><td class="num">17</td><td class="num">16</td><td class="num">15</td><td class="num">18</td><td class="num">15</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--gpt)">GPT 단독 <small>A</small></th><td class="num tot"><b>74</b></td><td class="rk">2위</td><td class="num">15</td><td class="num">15</td><td class="num">17</td><td class="num">11</td><td class="num">16</td></tr>
+<tr class="grp"><th scope="colgroup" colspan="8"><span class="grp-pin">GPT 6.1 sol <small>OpenAI · 코덱스 CLI</small></span></th></tr>
+<tr><th scope="row" class="wc" style="color:var(--opus)">Opus 단독 <small>B</small></th><td class="num tot"><b>83</b></td><td class="rk">2위</td><td class="num">17</td><td class="num">16</td><td class="num">16</td><td class="num">18</td><td class="num">16</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--gpt)">GPT 단독 <small>A</small></th><td class="num tot"><b>85</b></td><td class="rk">1위</td><td class="num">18</td><td class="num">17</td><td class="num">18</td><td class="num">13</td><td class="num">19</td></tr>
+<tr class="grp"><th scope="colgroup" colspan="8"><span class="grp-pin">Gemini 4 Argon high <small>Google · agy</small></span></th></tr>
+<tr><th scope="row" class="wc" style="color:var(--opus)">Opus 단독 <small>B</small></th><td class="num tot"><b>89</b></td><td class="rk">1위</td><td class="num">18</td><td class="num">18</td><td class="num">18</td><td class="num">19</td><td class="num">16</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--gpt)">GPT 단독 <small>A</small></th><td class="num tot"><b>82</b></td><td class="rk">2위</td><td class="num">19</td><td class="num">16</td><td class="num">16</td><td class="num">13</td><td class="num">18</td></tr>
+<tr class="grp avg"><th scope="colgroup" colspan="8"><span class="grp-pin">세 명 평균 <small>블라인드 평균</small></span></th></tr>
+<tr class="avg"><th scope="row" class="wc" style="color:var(--opus)">Opus 단독 <small>B</small></th><td class="num tot"><b>84.3</b></td><td class="rk">1위</td><td class="num">17.3</td><td class="num">16.7</td><td class="num">16.3</td><td class="num">18.3</td><td class="num">15.7</td></tr>
+<tr class="avg"><th scope="row" class="wc" style="color:var(--gpt)">GPT 단독 <small>A</small></th><td class="num tot"><b>80.3</b></td><td class="rk">2위</td><td class="num">17.3</td><td class="num">16.0</td><td class="num">17.0</td><td class="num">12.3</td><td class="num">17.7</td></tr>
+</tbody>
+</table></div>
+  <p class="note src">출처: <a href="https://github.com/techkwon/three-pigs-motion-ai/blob/main/_채점/1라운드_단독둘/">_채점/1라운드_단독둘/</a> (claude-sonnet-5.5_요약.json, gpt-6.1-sol.json, gemini-4-argon.json, AB_정답.txt)</p>
+</section>
+<section class="tab-panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2" tabindex="0">
+  <h3 class="tab-q">2라운드: 일을 나누면 더 나은가</h3>
+  <div class="mini-avg"><span style="--c:var(--collab)">협업 <b class="num">93.3</b></span><span style="--c:var(--gpt)">GPT 단독 <b class="num">74.3</b></span><span style="--c:var(--opus)">Opus 단독 <b class="num">73.0</b></span></div>
+  <p class="note">세 작품을 X/Y/Z로 가렸습니다. 세 채점관 모두 협업작을 1위로 꼽았고, 다섯 항목 모두 협업작 평균이 가장 높았습니다. 협업작 사본에서는 「협업」이라고 적힌 주석 두 줄을 지웠습니다.</p>
+  <p class="scroll-hint" aria-hidden="true">옆으로 밀면 항목별 점수가 보여요 →</p>
+  <div class="tablebox"><table class="score-table">
+<caption>2라운드 채점관별 점수(항목마다 20점, 합계 100점)</caption>
+<thead><tr><th scope="col">작품(이름표)</th><th scope="col">합계</th><th scope="col">순위</th><th scope="col">스토리</th><th scope="col">흐름</th><th scope="col">화면</th><th scope="col">모션</th><th scope="col">기술</th></tr></thead>
+<tbody>
+<tr class="grp"><th scope="colgroup" colspan="8"><span class="grp-pin">Claude Sonnet 5.5 <small>Anthropic · 하위 에이전트</small></span></th></tr>
+<tr><th scope="row" class="wc" style="color:var(--collab)">협업 <small>Y</small></th><td class="num tot"><b>92</b></td><td class="rk">1위</td><td class="num">18</td><td class="num">18</td><td class="num">18</td><td class="num">19</td><td class="num">19</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--gpt)">GPT 단독 <small>X</small></th><td class="num tot"><b>73</b></td><td class="rk">3위</td><td class="num">16</td><td class="num">14</td><td class="num">17</td><td class="num">10</td><td class="num">16</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--opus)">Opus 단독 <small>Z</small></th><td class="num tot"><b>77</b></td><td class="rk">2위</td><td class="num">17</td><td class="num">16</td><td class="num">15</td><td class="num">15</td><td class="num">14</td></tr>
+<tr class="grp"><th scope="colgroup" colspan="8"><span class="grp-pin">GPT 6.1 sol <small>OpenAI · 코덱스 CLI</small></span></th></tr>
+<tr><th scope="row" class="wc" style="color:var(--collab)">협업 <small>Y</small></th><td class="num tot"><b>92</b></td><td class="rk">1위</td><td class="num">19</td><td class="num">18</td><td class="num">17</td><td class="num">19</td><td class="num">19</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--gpt)">GPT 단독 <small>X</small></th><td class="num tot"><b>79</b></td><td class="rk">2위</td><td class="num">18</td><td class="num">15</td><td class="num">18</td><td class="num">11</td><td class="num">17</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--opus)">Opus 단독 <small>Z</small></th><td class="num tot"><b>73</b></td><td class="rk">3위</td><td class="num">16</td><td class="num">14</td><td class="num">14</td><td class="num">16</td><td class="num">13</td></tr>
+<tr class="grp"><th scope="colgroup" colspan="8"><span class="grp-pin">Gemini 4 Argon high <small>Google · agy</small></span></th></tr>
+<tr><th scope="row" class="wc" style="color:var(--collab)">협업 <small>Y</small></th><td class="num tot"><b>96</b></td><td class="rk">1위</td><td class="num">19</td><td class="num">19</td><td class="num">19</td><td class="num">19</td><td class="num">20</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--gpt)">GPT 단독 <small>X</small></th><td class="num tot"><b>71</b></td><td class="rk">2위</td><td class="num">15</td><td class="num">14</td><td class="num">15</td><td class="num">11</td><td class="num">16</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--opus)">Opus 단독 <small>Z</small></th><td class="num tot"><b>69</b></td><td class="rk">3위</td><td class="num">16</td><td class="num">13</td><td class="num">14</td><td class="num">14</td><td class="num">12</td></tr>
+<tr class="grp avg"><th scope="colgroup" colspan="8"><span class="grp-pin">세 명 평균 <small>블라인드 평균</small></span></th></tr>
+<tr class="avg"><th scope="row" class="wc" style="color:var(--collab)">협업 <small>Y</small></th><td class="num tot"><b>93.3</b></td><td class="rk">1위</td><td class="num">18.7</td><td class="num">18.3</td><td class="num">18.0</td><td class="num">19.0</td><td class="num">19.3</td></tr>
+<tr class="avg"><th scope="row" class="wc" style="color:var(--gpt)">GPT 단독 <small>X</small></th><td class="num tot"><b>74.3</b></td><td class="rk">2위</td><td class="num">16.3</td><td class="num">14.3</td><td class="num">16.7</td><td class="num">10.7</td><td class="num">16.3</td></tr>
+<tr class="avg"><th scope="row" class="wc" style="color:var(--opus)">Opus 단독 <small>Z</small></th><td class="num tot"><b>73.0</b></td><td class="rk">3위</td><td class="num">16.3</td><td class="num">14.3</td><td class="num">14.3</td><td class="num">15.0</td><td class="num">13.0</td></tr>
+</tbody>
+</table></div>
+  <p class="note src">출처: <a href="https://github.com/techkwon/three-pigs-motion-ai/blob/main/_채점/2라운드_세작품/">_채점/2라운드_세작품/</a> (sonnet_요약.json, codex.json, agy.json, XYZ_정답.txt)</p>
+</section>
+<section class="tab-panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3" tabindex="0">
+  <h3 class="tab-q">3라운드: 협업의 승리는 협업 덕분인가</h3>
+  <div class="mini-avg"><span style="--c:var(--opusp)">Opus 솔로플러스 <b class="num">92.7</b></span><span style="--c:var(--collab)">협업 <b class="num">90.7</b></span><span style="--c:var(--gptp)">GPT 솔로플러스 <b class="num">79.0</b></span><span style="--c:var(--opus)">Opus 단독 <b class="num">72.7</b></span><span style="--c:var(--gpt)">GPT 단독 <b class="num">70.0</b></span></div>
+  <p class="note">다섯 작품을 M·P·R·T·V로 새로 가렸습니다(M = GPT 단독, P = Opus 단독, R = Opus 솔로플러스, T = GPT 솔로플러스, V = 협업). 1위 표는 Opus 솔로플러스 2(Sonnet · 코덱스), 협업 1(Argon)로 갈렸습니다. 블라인드 사본에서는 협업작의 「협업」 주석 줄과 「(설계서 원문 그대로)」만 지웠습니다.</p>
+  <p class="scroll-hint" aria-hidden="true">옆으로 밀면 항목별 점수가 보여요 →</p>
+  <div class="tablebox"><table class="score-table">
+<caption>3라운드 채점관별 점수(항목마다 20점, 합계 100점)</caption>
+<thead><tr><th scope="col">작품(이름표)</th><th scope="col">합계</th><th scope="col">순위</th><th scope="col">스토리</th><th scope="col">흐름</th><th scope="col">화면</th><th scope="col">모션</th><th scope="col">기술</th></tr></thead>
+<tbody>
+<tr class="grp"><th scope="colgroup" colspan="8"><span class="grp-pin">Claude Sonnet 5.5 <small>Anthropic · 하위 에이전트</small></span></th></tr>
+<tr><th scope="row" class="wc" style="color:var(--opusp)">Opus 솔로플러스 <small>R</small></th><td class="num tot"><b>90</b></td><td class="rk">1위</td><td class="num">19</td><td class="num">17</td><td class="num">17</td><td class="num">19</td><td class="num">18</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--collab)">협업 <small>V</small></th><td class="num tot"><b>84</b></td><td class="rk">2위</td><td class="num">16</td><td class="num">17</td><td class="num">16</td><td class="num">17</td><td class="num">18</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--gptp)">GPT 솔로플러스 <small>T</small></th><td class="num tot"><b>78</b></td><td class="rk">3위</td><td class="num">17</td><td class="num">15</td><td class="num">14</td><td class="num">15</td><td class="num">17</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--opus)">Opus 단독 <small>P</small></th><td class="num tot"><b>77</b></td><td class="rk">4위</td><td class="num">16</td><td class="num">15</td><td class="num">16</td><td class="num">16</td><td class="num">14</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--gpt)">GPT 단독 <small>M</small></th><td class="num tot"><b>70</b></td><td class="rk">5위</td><td class="num">15</td><td class="num">14</td><td class="num">16</td><td class="num">10</td><td class="num">15</td></tr>
+<tr class="grp"><th scope="colgroup" colspan="8"><span class="grp-pin">GPT 6.1 sol <small>OpenAI · 코덱스 CLI</small></span></th></tr>
+<tr><th scope="row" class="wc" style="color:var(--opusp)">Opus 솔로플러스 <small>R</small></th><td class="num tot"><b>94</b></td><td class="rk">1위</td><td class="num">19</td><td class="num">18</td><td class="num">19</td><td class="num">19</td><td class="num">19</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--collab)">협업 <small>V</small></th><td class="num tot"><b>92</b></td><td class="rk">2위</td><td class="num">18</td><td class="num">19</td><td class="num">17</td><td class="num">19</td><td class="num">19</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--gptp)">GPT 솔로플러스 <small>T</small></th><td class="num tot"><b>89</b></td><td class="rk">3위</td><td class="num">19</td><td class="num">17</td><td class="num">16</td><td class="num">18</td><td class="num">19</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--opus)">Opus 단독 <small>P</small></th><td class="num tot"><b>75</b></td><td class="rk">5위</td><td class="num">16</td><td class="num">14</td><td class="num">15</td><td class="num">17</td><td class="num">13</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--gpt)">GPT 단독 <small>M</small></th><td class="num tot"><b>78</b></td><td class="rk">4위</td><td class="num">18</td><td class="num">14</td><td class="num">17</td><td class="num">12</td><td class="num">17</td></tr>
+<tr class="grp"><th scope="colgroup" colspan="8"><span class="grp-pin">Gemini 4 Argon high <small>Google · agy</small></span></th></tr>
+<tr><th scope="row" class="wc" style="color:var(--opusp)">Opus 솔로플러스 <small>R</small></th><td class="num tot"><b>94</b></td><td class="rk">2위</td><td class="num">20</td><td class="num">18</td><td class="num">18</td><td class="num">19</td><td class="num">19</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--collab)">협업 <small>V</small></th><td class="num tot"><b>96</b></td><td class="rk">1위</td><td class="num">18</td><td class="num">19</td><td class="num">19</td><td class="num">20</td><td class="num">20</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--gptp)">GPT 솔로플러스 <small>T</small></th><td class="num tot"><b>70</b></td><td class="rk">3위</td><td class="num">17</td><td class="num">15</td><td class="num">11</td><td class="num">12</td><td class="num">15</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--opus)">Opus 단독 <small>P</small></th><td class="num tot"><b>66</b></td><td class="rk">4위</td><td class="num">15</td><td class="num">14</td><td class="num">14</td><td class="num">13</td><td class="num">10</td></tr>
+<tr><th scope="row" class="wc" style="color:var(--gpt)">GPT 단독 <small>M</small></th><td class="num tot"><b>62</b></td><td class="rk">5위</td><td class="num">14</td><td class="num">11</td><td class="num">13</td><td class="num">9</td><td class="num">15</td></tr>
+<tr class="grp avg"><th scope="colgroup" colspan="8"><span class="grp-pin">세 명 평균 <small>블라인드 평균</small></span></th></tr>
+<tr class="avg"><th scope="row" class="wc" style="color:var(--opusp)">Opus 솔로플러스 <small>R</small></th><td class="num tot"><b>92.7</b></td><td class="rk">1위</td><td class="num">19.3</td><td class="num">17.7</td><td class="num">18.0</td><td class="num">19.0</td><td class="num">18.7</td></tr>
+<tr class="avg"><th scope="row" class="wc" style="color:var(--collab)">협업 <small>V</small></th><td class="num tot"><b>90.7</b></td><td class="rk">2위</td><td class="num">17.3</td><td class="num">18.3</td><td class="num">17.3</td><td class="num">18.7</td><td class="num">19.0</td></tr>
+<tr class="avg"><th scope="row" class="wc" style="color:var(--gptp)">GPT 솔로플러스 <small>T</small></th><td class="num tot"><b>79.0</b></td><td class="rk">3위</td><td class="num">17.7</td><td class="num">15.7</td><td class="num">13.7</td><td class="num">15.0</td><td class="num">17.0</td></tr>
+<tr class="avg"><th scope="row" class="wc" style="color:var(--opus)">Opus 단독 <small>P</small></th><td class="num tot"><b>72.7</b></td><td class="rk">4위</td><td class="num">15.7</td><td class="num">14.3</td><td class="num">15.0</td><td class="num">15.3</td><td class="num">12.3</td></tr>
+<tr class="avg"><th scope="row" class="wc" style="color:var(--gpt)">GPT 단독 <small>M</small></th><td class="num tot"><b>70.0</b></td><td class="rk">5위</td><td class="num">15.7</td><td class="num">13.0</td><td class="num">15.3</td><td class="num">10.3</td><td class="num">15.7</td></tr>
+</tbody>
+</table></div>
+  <p class="note src">출처: <a href="https://github.com/techkwon/three-pigs-motion-ai/blob/main/_채점/3라운드_다섯작품/">_채점/3라운드_다섯작품/</a> (sonnet_요약.json, codex.json, agy.json, 정답.txt)</p>
+</section>
+<!-- /build:rounds -->
+  </div>
+
+  <div class="two">
+    <article class="mcard card-surface">
+      <h3>알려진 문제가 있나요?</h3>
+      <ul class="issues">
+        <li><b class="c-gptp">GPT 솔로플러스</b> 수정 단계에서 생긴 버그로 0~45초 동안 첫째 돼지의 팔이 화면 끝까지 늘어나 주황 띠처럼 보입니다(헤드리스 크롬 장면에서는 50초 장면까지 보임). 실험 기록이라 고치지 않았습니다.</li>
+        <li><b class="c-opus">Opus 단독</b> 프레임 사이 시간을 한 번에 최대 0.1초까지만 더하므로, 초당 10프레임보다 느린 기기에서는 슬로모션으로 재생됩니다.</li>
+      </ul>
+    </article>
+    <article class="mcard card-surface" id="data">
+      <h3>원자료는 어디에 있나요?</h3>
+      <ul class="links">
+        <li><a href="data/results.json">data/results.json</a> · <a href="data/results.csv">results.csv</a><span>기계가 읽는 채점 결과(라운드 · 작품 · 채점관 · 항목별 점수, 순위, 제작 시간, 출처 경로)</span></li>
+        <li><a href="index.md">index.md</a> · <a href="llms.txt">llms.txt</a><span>이 보고서의 마크다운판과 AI용 안내</span></li>
+        <li><a href="https://github.com/techkwon/three-pigs-motion-ai">GitHub 저장소</a><span>작품 · 설계서 · 검토서 · 채점 원문 전체</span></li>
+        <li><a href="%EA%B3%BC%EC%A0%9C%EC%A7%80%EC%8B%9C%EB%AC%B8.md">과제지시문.md</a><span>모든 작품에 똑같이 준 지시문</span></li>
+        <li><a href="collab/design_brief.md">협업 설계서</a> · <a href="collab/review_gpt.md">설계자 검토서</a></li>
+        <li><a href="opus-5.5-plus/own_brief.md">Opus 자기 설계서</a> · <a href="opus-5.5-plus/self_review.md">자기 검토</a></li>
+        <li><a href="gpt-6.1-sol-plus/own_brief.md">GPT 자기 설계서</a> · <a href="gpt-6.1-sol-plus/self_review.md">자기 검토</a></li>
+        <li><a href="_%EB%B3%B4%EA%B3%A0%ED%8E%98%EC%9D%B4%EC%A7%80/">이전 보고 페이지</a><span>2026-10-19판, 글과 표 중심</span></li>
+      </ul>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <p>작성 techkwon · 처음 2026-10-19 · 고침 2026-10-20. 작품과 문서는 AI 모델이 만들었고, 실험 진행과 기록은 Claude Code가 했습니다. 장면 사진은 <code>_스크린숏/같은시각_5초간격/</code>의 원본에서 무대만 잘라 줄인 사본입니다.</p>
+      <p class="foot-lic">라이선스: 이 페이지의 글 · 그림 · 데이터와 다섯 작품(AI가 만든 HTML)은 <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a>(출처: techkwon, three-pigs-motion-ai). 글꼴 파일은 <a href="assets/fonts/OFL.txt">SIL Open Font License 1.1</a>.</p>
+    </div>
+    <a class="btn" href="#top">맨 위로</a>
+  </div>
+</footer>
+
+<div class="pop" id="pop-plus" popover>
+  <b>솔로플러스</b>
+  <p>한 모델이 혼자 만들되, 협업과 같은 이점을 준 방식입니다. 같은 참고 자료 → 자기 설계서 → 구현 → 스크린숏을 보고 자기 검토 → 수정 1회.</p>
+</div>
+<div class="pop" id="pop-blind" popover>
+  <b>블라인드 채점</b>
+  <p>채점관이 어느 모델이 만든 작품인지 모르게 이름을 가리고 채점했습니다. 정체를 드러내는 주석도 지웠습니다.</p>
+</div>
+
+<dialog class="player" id="player" aria-labelledby="pl-title">
+  <div class="pl-head">
+    <div>
+      <p class="pl-who" id="pl-who"></p>
+      <h2 id="pl-title">작품</h2>
+    </div>
+    <button class="btn btn-icon pl-close" type="button" id="plClose" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg></button>
+  </div>
+  <div class="pl-media" id="plMedia"><p class="pl-loading" id="plLoading">작품을 불러오는 중…</p></div>
+  <div class="pl-info" id="plInfo"></div>
+</dialog>
+
+<!-- build:resultsData -->
+<script type="application/json" id="results-data">{"title":"아기 돼지 모션 대결 — AI 모델 비교 실험 채점 결과","url":"https://techkwon.github.io/three-pigs-motion-ai/","author":"techkwon","datePublished":"2026-10-19","dateModified":"2026-10-20","language":"ko","license":{"name":"CC BY 4.0","url":"https://creativecommons.org/licenses/by/4.0/","attribution":"techkwon, three-pigs-motion-ai (https://github.com/techkwon/three-pigs-motion-ai)","covers":"이 데이터, 보고 페이지의 글·그림, 다섯 작품(AI가 만든 HTML). 글꼴 파일(assets/fonts/)은 SIL OFL 1.1"},"note":"점수는 AI 채점관 3명이 작품 이름을 가린 채 매긴 값이다. 평균은 세 채점관의 산술 평균. 작품은 한 번씩만 만들었고, 2점 차이의 유의성은 확인하지 않았다. 점수는 같은 라운드 안에서만 비교한다.","criteria":[{"key":"story","name":"스토리 구성","short":"스토리","desc":"현대적 해석 · 기승전결 · 메시지","max":20},{"key":"flow","name":"이야기 흐름","short":"흐름","desc":"전환 · 속도 · 자막 타이밍","max":20},{"key":"visual","name":"화면 구성","short":"화면","desc":"레이아웃 · 색 · 캐릭터 · 글자","max":20},{"key":"motion","name":"모션 품질","short":"모션","desc":"부드러움 · 연출 · 의미 있는 움직임","max":20},{"key":"tech","name":"기술 완성도","short":"기술","desc":"오류 · 반응형 · 튼튼함 · 코드","max":20}],"judges":[{"key":"sonnet","name":"Claude Sonnet 5.5","short":"Sonnet","org":"Anthropic","tool":"하위 에이전트"},{"key":"codex","name":"GPT 6.1 sol","short":"코덱스","org":"OpenAI","tool":"코덱스 CLI"},{"key":"argon","name":"Gemini 4 Argon high","short":"Argon","org":"Google","tool":"agy"}],"works":[{"key":"opusp","name":"Opus 솔로플러스","maker":"Claude Opus 5.5 혼자 · 설계 → 구현 → 자기 검토 → 수정","title":"문 열어, 나야","theme":"계정 사칭 · 피싱(AI 목소리 흉내 포함)","lengthSec":89,"structure":"13장면","fileSize":"104.8KB","makeMinutes":67,"firstRound":3,"path":"opus-5.5-plus/index.html","message":"가장 튼튼한 벽돌은 「한 번 더 확인하는 습관」이고, 가장 튼튼한 동네는 그 습관을 나누는 이웃이다.","player":"실제 시계 기준 · 일시정지 · 장면 눈금 탐색 · 키보드 · 움직임 줄이기","scenes":[{"t":0,"name":"제목 「문 열어, 나야」"},{"t":5,"name":"계정이라는 두 번째 집"},{"t":11.4,"name":"첫째의 쉬운 문"},{"t":18.8,"name":"둘째의 똑똑한 문"},{"t":26.4,"name":"셋째의 약속의 벽돌"},{"t":35.6,"name":"흉내쟁이 늑대"},{"t":40.8,"name":"「1234」"},{"t":46.8,"name":"가짜 목소리"},{"t":53.6,"name":"우리만 아는 질문"},{"t":62.6,"name":"가짜 문자 폭풍"},{"t":67.6,"name":"굴뚝의 링크"},{"t":73.4,"name":"문을 여는 이웃"},{"t":82,"name":"메시지"}]},{"key":"collab","name":"협업","maker":"GPT 6.1 sol 설계·검토 + Claude Opus 5.5 구현·수정","title":"늑대가 된 여름 (협업판)","theme":"폭염 시대의 주거와 공동체","lengthSec":88,"structure":"약 17비트 · 한 거리 위 카메라 이동","fileSize":"104.7KB","makeMinutes":108,"firstRound":2,"path":"collab/index.html","message":"좋은 집은 함께 살아남는 곳이다.","player":"실제 시계 기준 · 일시정지 · 탐색 막대 · 키보드 · 움직임 줄이기","scenes":[{"t":0,"name":"같은 출발, 세 가지 선택"},{"t":4,"name":"첫째의 속도"},{"t":10,"name":"둘째의 믿음"},{"t":17,"name":"셋째의 준비"},{"t":25,"name":"폭염 늑대"},{"t":31,"name":"첫째 집의 한계"},{"t":37,"name":"첫 번째 피신"},{"t":42,"name":"냉방이 몰린 도시"},{"t":48,"name":"기술의 멈춤 — 정전"},{"t":52,"name":"두 번째 피신"},{"t":57,"name":"안전한 방, 문밖의 이웃"},{"t":62,"name":"결말을 바꾸는 문"},{"t":66,"name":"첫째의 재능 — 그늘막"},{"t":71,"name":"둘째의 재능 — 센서"},{"t":76,"name":"셋째의 관계 — 쉼터"},{"t":81,"name":"다음 여름"},{"t":84,"name":"메시지"}]},{"key":"gptp","name":"GPT 솔로플러스","maker":"GPT 6.1 sol 혼자 · 설계 → 구현 → 자기 검토 → 수정","title":"마감 늑대와 빈칸 있는 집","theme":"끝없는 추가 요청과 생산성 경쟁, 함께 조절하는 일과 휴식","lengthSec":84,"structure":"13구간","fileSize":"53.0KB","makeMinutes":38,"firstRound":3,"path":"gpt-6.1-sol-plus/index.html","message":"좋은 집에는, 함께 숨 쉴 빈칸이 있다.","player":"실제 시계 기준 · 일시정지 · 탐색 · 키보드 · 이야기 글로 읽기 · 움직임 줄이기","scenes":[{"t":0,"name":"세 형제와 축제"},{"t":7,"name":"첫째의 꽉 찬 집"},{"t":16,"name":"둘째의 기계"},{"t":25,"name":"셋째의 빈칸"},{"t":33,"name":"마감 늑대와 첫 피신"},{"t":43,"name":"기계 과적과 두 번째 피신"},{"t":53,"name":"빈칸의 한계, 함께 멈춤"},{"t":60,"name":"장식 생략 합의"},{"t":65,"name":"기계 재사용과 분담"},{"t":70,"name":"휴식 확보"},{"t":75,"name":"필수 일 완료"},{"t":78,"name":"마감을 일정에 넣기"},{"t":79.5,"name":"결말"}],"knownIssue":{"text":"수정 단계에서 생긴 버그로 첫째 돼지의 팔이 화면 끝까지 늘어나 주황 띠처럼 보입니다(0~45초, 실험 기록이라 고치지 않음).","short":"0~45초 주황 띠는 팔이 늘어나는 버그입니다(고치지 않음).","source":"_채점/3라운드_다섯작품/agy.json (visual: 「첫째 돼지의 주황색 양팔」, 1s~45s 장면)"}},{"key":"opus","name":"Opus 단독","maker":"Claude Opus 5.5 혼자 · 한 번에","title":"아기 돼지 삼형제 2050 · 열돔 늑대가 온다","theme":"기후 위기(폭염 · 열돔)와 공동체","lengthSec":88,"structure":"12장면 · 한 거리 위 카메라 이동","fileSize":"51.0KB","makeMinutes":34,"firstRound":1,"path":"opus-5.5/index.html","message":"가장 튼튼한 집은 「나만 안전한 집」이 아니라 미리, 함께 준비한 동네다.","player":"프레임 기준(느린 기기에서 느려짐) · 일시정지 없음","scenes":[{"t":0,"name":"제목"},{"t":4.5,"name":"2050년 여름, 집 짓기"},{"t":11,"name":"첫째: 얇은 조립식 집"},{"t":18,"name":"둘째: 통유리 스마트홈"},{"t":26,"name":"셋째: 단열 · 옥상 정원"},{"t":36,"name":"열돔 늑대 등장"},{"t":43,"name":"첫째 집이 찜통"},{"t":49,"name":"전력 부족 → 정전"},{"t":57,"name":"셋째 집으로 피신"},{"t":64,"name":"창밖의 이웃, 문을 엶"},{"t":71,"name":"함께 바꾸는 동네"},{"t":80,"name":"메시지 카드"}],"knownIssue":{"text":"프레임 사이 시간을 한 번에 최대 0.1초까지만 더해서, 초당 10프레임보다 느린 기기에서는 슬로모션으로 재생됩니다.","short":"느린 기기에서는 슬로모션으로 재생될 수 있습니다.","source":"_채점/3라운드_다섯작품/codex.json (약점: 낮은 프레임률에서 재생 시간이 늘어남)"}},{"key":"gpt","name":"GPT 단독","maker":"GPT 6.1 sol 혼자 · 한 번에","title":"늑대가 된 여름","theme":"기후위기 시대의 주거와 공동체","lengthSec":84,"structure":"9장면 · 장면 전환","fileSize":"37.9KB","makeMinutes":10,"firstRound":1,"path":"gpt-6.1-sol/index.html","message":"안전한 집은 혼자 버티는 요새가 아니라, 서로의 재능과 돌봄을 연결하는 곳이다.","player":"실제 시계 기준 · 일시정지 · 탐색 막대","scenes":[{"t":0,"name":"세 형제의 독립"},{"t":8,"name":"빠른 집"},{"t":18,"name":"똑똑한 집"},{"t":28,"name":"함께 쓰는 집"},{"t":38,"name":"폭염 늑대"},{"t":49,"name":"멈춘 도시"},{"t":59,"name":"세 가지 재능"},{"t":70,"name":"열린 마당"},{"t":78,"name":"새로운 집의 조건"}]}],"rounds":[{"round":1,"question":"혼자 만들면 누가 나은가","works":["opus","gpt"],"blindTags":{"gpt":"A","opus":"B"},"scores":{"sonnet":{"opus":{"story":17,"flow":16,"visual":15,"motion":18,"tech":15,"total":81},"gpt":{"story":15,"flow":15,"visual":17,"motion":11,"tech":16,"total":74}},"codex":{"opus":{"story":17,"flow":16,"visual":16,"motion":18,"tech":16,"total":83},"gpt":{"story":18,"flow":17,"visual":18,"motion":13,"tech":19,"total":85}},"argon":{"opus":{"story":18,"flow":18,"visual":18,"motion":19,"tech":16,"total":89},"gpt":{"story":19,"flow":16,"visual":16,"motion":13,"tech":18,"total":82}}},"average":{"opus":{"story":17.3,"flow":16.7,"visual":16.3,"motion":18.3,"tech":15.7,"total":84.3},"gpt":{"story":17.3,"flow":16,"visual":17,"motion":12.3,"tech":17.7,"total":80.3}},"ranking":["opus","gpt"],"judgeRanking":{"sonnet":["opus","gpt"],"codex":["gpt","opus"],"argon":["opus","gpt"]},"sources":["_채점/1라운드_단독둘/claude-sonnet-5.5_요약.json","_채점/1라운드_단독둘/gpt-6.1-sol.json","_채점/1라운드_단독둘/gemini-4-argon.json","_채점/1라운드_단독둘/AB_정답.txt"],"judgeSources":{"sonnet":"_채점/1라운드_단독둘/claude-sonnet-5.5_요약.json","codex":"_채점/1라운드_단독둘/gpt-6.1-sol.json","argon":"_채점/1라운드_단독둘/gemini-4-argon.json"},"blindKey":"_채점/1라운드_단독둘/AB_정답.txt"},{"round":2,"question":"일을 나누면 더 나은가","works":["collab","gpt","opus"],"blindTags":{"gpt":"X","collab":"Y","opus":"Z"},"scores":{"sonnet":{"collab":{"story":18,"flow":18,"visual":18,"motion":19,"tech":19,"total":92},"gpt":{"story":16,"flow":14,"visual":17,"motion":10,"tech":16,"total":73},"opus":{"story":17,"flow":16,"visual":15,"motion":15,"tech":14,"total":77}},"codex":{"collab":{"story":19,"flow":18,"visual":17,"motion":19,"tech":19,"total":92},"gpt":{"story":18,"flow":15,"visual":18,"motion":11,"tech":17,"total":79},"opus":{"story":16,"flow":14,"visual":14,"motion":16,"tech":13,"total":73}},"argon":{"collab":{"story":19,"flow":19,"visual":19,"motion":19,"tech":20,"total":96},"gpt":{"story":15,"flow":14,"visual":15,"motion":11,"tech":16,"total":71},"opus":{"story":16,"flow":13,"visual":14,"motion":14,"tech":12,"total":69}}},"average":{"collab":{"story":18.7,"flow":18.3,"visual":18,"motion":19,"tech":19.3,"total":93.3},"gpt":{"story":16.3,"flow":14.3,"visual":16.7,"motion":10.7,"tech":16.3,"total":74.3},"opus":{"story":16.3,"flow":14.3,"visual":14.3,"motion":15,"tech":13,"total":73}},"ranking":["collab","gpt","opus"],"judgeRanking":{"sonnet":["collab","opus","gpt"],"codex":["collab","gpt","opus"],"argon":["collab","gpt","opus"]},"sources":["_채점/2라운드_세작품/sonnet_요약.json","_채점/2라운드_세작품/codex.json","_채점/2라운드_세작품/agy.json","_채점/2라운드_세작품/XYZ_정답.txt"],"judgeSources":{"sonnet":"_채점/2라운드_세작품/sonnet_요약.json","codex":"_채점/2라운드_세작품/codex.json","argon":"_채점/2라운드_세작품/agy.json"},"blindKey":"_채점/2라운드_세작품/XYZ_정답.txt"},{"round":3,"question":"협업의 승리는 협업 덕분인가","works":["opusp","collab","gptp","opus","gpt"],"blindTags":{"gpt":"M","opus":"P","opusp":"R","gptp":"T","collab":"V"},"scores":{"sonnet":{"opusp":{"story":19,"flow":17,"visual":17,"motion":19,"tech":18,"total":90},"collab":{"story":16,"flow":17,"visual":16,"motion":17,"tech":18,"total":84},"gptp":{"story":17,"flow":15,"visual":14,"motion":15,"tech":17,"total":78},"opus":{"story":16,"flow":15,"visual":16,"motion":16,"tech":14,"total":77},"gpt":{"story":15,"flow":14,"visual":16,"motion":10,"tech":15,"total":70}},"codex":{"opusp":{"story":19,"flow":18,"visual":19,"motion":19,"tech":19,"total":94},"collab":{"story":18,"flow":19,"visual":17,"motion":19,"tech":19,"total":92},"gptp":{"story":19,"flow":17,"visual":16,"motion":18,"tech":19,"total":89},"opus":{"story":16,"flow":14,"visual":15,"motion":17,"tech":13,"total":75},"gpt":{"story":18,"flow":14,"visual":17,"motion":12,"tech":17,"total":78}},"argon":{"opusp":{"story":20,"flow":18,"visual":18,"motion":19,"tech":19,"total":94},"collab":{"story":18,"flow":19,"visual":19,"motion":20,"tech":20,"total":96},"gptp":{"story":17,"flow":15,"visual":11,"motion":12,"tech":15,"total":70},"opus":{"story":15,"flow":14,"visual":14,"motion":13,"tech":10,"total":66},"gpt":{"story":14,"flow":11,"visual":13,"motion":9,"tech":15,"total":62}}},"average":{"opusp":{"story":19.3,"flow":17.7,"visual":18,"motion":19,"tech":18.7,"total":92.7},"collab":{"story":17.3,"flow":18.3,"visual":17.3,"motion":18.7,"tech":19,"total":90.7},"gptp":{"story":17.7,"flow":15.7,"visual":13.7,"motion":15,"tech":17,"total":79},"opus":{"story":15.7,"flow":14.3,"visual":15,"motion":15.3,"tech":12.3,"total":72.7},"gpt":{"story":15.7,"flow":13,"visual":15.3,"motion":10.3,"tech":15.7,"total":70}},"ranking":["opusp","collab","gptp","opus","gpt"],"judgeRanking":{"sonnet":["opusp","collab","gptp","opus","gpt"],"codex":["opusp","collab","gptp","gpt","opus"],"argon":["collab","opusp","gptp","opus","gpt"]},"sources":["_채점/3라운드_다섯작품/sonnet_요약.json","_채점/3라운드_다섯작품/codex.json","_채점/3라운드_다섯작품/agy.json","_채점/3라운드_다섯작품/정답.txt"],"judgeSources":{"sonnet":"_채점/3라운드_다섯작품/sonnet_요약.json","codex":"_채점/3라운드_다섯작품/codex.json","argon":"_채점/3라운드_다섯작품/agy.json"},"blindKey":"_채점/3라운드_다섯작품/정답.txt"}],"process":[{"work":"collab","label":"협업","totalApprox":"약 108분","steps":[{"phase":"설계","by":"gpt","minutes":12,"time":"약 12분","output":"설계서 48KB: 88초 17장면표, 자막 20개, 카메라 기준점 5개"},{"phase":"구현","by":"opus","minutes":79,"time":"약 79분","output":"1차본 97KB, 도구 77회. 공간이 맞지 않는 7곳은 이유를 밝히고 바꿈"},{"phase":"검토","by":"gpt","minutes":6,"time":"약 6분","output":"설계자가 수정 요청 9건(높음 7건)"},{"phase":"수정","by":"opus","minutes":11,"time":"약 11분","output":"7건 반영, 2건 부분 반영"}]},{"work":"opusp","label":"Opus 솔로플러스","totalApprox":"약 67분","steps":[{"phase":"설계","by":"opus","minutes":11.333,"time":"11분 20초","output":"자기 설계서 51KB(계정 사칭)"},{"phase":"구현","by":"opus","minutes":31.467,"time":"31분 28초","output":"설계서대로 index.html(명령줄 점검만)"},{"phase":"검토","by":"opus","minutes":8.6,"time":"8분 36초","output":"스크린숏을 보고 고칠 점 16건(높음 4건)"},{"phase":"수정","by":"opus","minutes":15.367,"time":"15분 22초","output":"14건 반영, 2건 부분 반영"}]},{"work":"gptp","label":"GPT 솔로플러스","totalApprox":"약 38분","steps":[{"phase":"설계","by":"gpt","minutes":8.433,"time":"8분 26초","output":"자기 설계서 약 40KB(끝없는 일)"},{"phase":"구현","by":"gpt","minutes":11.65,"time":"11분 39초","output":"설계서대로 index.html(명령줄 점검만)"},{"phase":"검토","by":"gpt","minutes":5.317,"time":"5분 19초","output":"스크린숏을 보고 고칠 점 11건"},{"phase":"수정","by":"gpt","minutes":12.567,"time":"12분 34초","output":"6건 반영, 5건 부분 반영"}]},{"work":"opus","label":"Opus 단독","totalApprox":"약 34분","steps":[{"phase":"한 번에","by":"opus","minutes":34,"time":"약 34분","output":"지시문만 받고 한 번에 완성"}]},{"work":"gpt","label":"GPT 단독","totalApprox":"약 10분","steps":[{"phase":"한 번에","by":"gpt","minutes":10,"time":"약 10분","output":"지시문만 받고 한 번에 완성"}]}],"sources":{"brief":"과제지시문.md","times":"README.md, _보고페이지/index.html","screenshots":"_스크린숏/같은시각_5초간격/"},"worksNote":"scenes는 각 작품 index.html 머리 주석의 장면표를 짧게 옮긴 것, message는 작품의 마지막 메시지, knownIssue는 알려진 문제","quotes":[{"round":3,"judge":"sonnet","work":"opusp","kind":"strength","text":"모션이 사건을 설명하는 연기로 쓰였다","source":"_채점/3라운드_다섯작품/sonnet_요약.json"},{"round":3,"judge":"codex","work":"opusp","kind":"strength","text":"원작의 문 두드리기와 굴뚝 공격을 디지털 사칭 이야기로 치밀하게 연결한다.","source":"_채점/3라운드_다섯작품/codex.json"},{"round":3,"judge":"argon","work":"opusp","kind":"strength","text":"원작의 모든 디테일을 현대 디지털 환경에 1:1로 대응시킨 독창적 스토리","source":"_채점/3라운드_다섯작품/agy.json"},{"round":3,"judge":"sonnet","work":"opusp","kind":"weakness","text":"후반부 장면과 정보 칩이 밀집해 읽을 틈이 적다","source":"_채점/3라운드_다섯작품/sonnet_요약.json"},{"round":3,"judge":"codex","work":"collab","kind":"strength","text":"형제의 재능을 그늘막·센서·이웃 안내라는 구체적 행동으로 증명한다.","source":"_채점/3라운드_다섯작품/codex.json"},{"round":3,"judge":"codex","work":"collab","kind":"weakness","text":"폭염과 공동체라는 주제의 독창성은 상대적으로 제한적이다.","source":"_채점/3라운드_다섯작품/codex.json"},{"round":3,"judge":"codex","work":"gptp","kind":"strength","text":"셋째의 방법에도 한계를 부여해 해결의 논리가 깊다.","source":"_채점/3라운드_다섯작품/codex.json"},{"round":3,"judge":"sonnet","work":"gptp","kind":"weakness","text":"주제와 늑대가 추상적이라 중학생에게 위협의 실감이 약하다","source":"_채점/3라운드_다섯작품/sonnet_요약.json"},{"round":3,"judge":"codex","work":"opus","kind":"strength","text":"집의 과열과 정전을 색·계기판·팬 동작으로 함께 설명한다.","source":"_채점/3라운드_다섯작품/codex.json"},{"round":3,"judge":"codex","work":"opus","kind":"weakness","text":"낮은 프레임률에서 재생 시간이 늘어나는 구조적 문제가 있다.","source":"_채점/3라운드_다섯작품/codex.json"},{"round":3,"judge":"codex","work":"gpt","kind":"strength","text":"표지부터 마지막 밤 장면까지 색채와 타이포그래피의 통일성이 높다.","source":"_채점/3라운드_다섯작품/codex.json"},{"round":3,"judge":"codex","work":"gpt","kind":"weakness","text":"중요한 사건을 행동으로 보여주는 모션이 부족하다.","source":"_채점/3라운드_다섯작품/codex.json"}]}</script>
+<!-- /build:resultsData -->
 </body>
 </html>

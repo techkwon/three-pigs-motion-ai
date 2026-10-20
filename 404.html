@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>페이지를 찾을 수 없어요 — 아기 돼지 모션 대결</title>
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5efe3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12141c" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f5efe3'/%3E%3Cpath d='M12 31 32 13l20 18v21H12z' fill='%23c4532d'/%3E%3Cpath d='M10 32 32 12l22 20' fill='none' stroke='%231f1b26' stroke-width='3.6' stroke-linejoin='round' stroke-linecap='round'/%3E%3Crect x='27' y='38' width='10' height='14' rx='2' fill='%23fffaf1'/%3E%3Cellipse cx='32' cy='28' rx='6' ry='4.4' fill='%23f2a0b5'/%3E%3C/svg%3E">
+<style>
+  /* GitHub Pages는 어느 경로에서든 이 파일을 보여 주므로, 글꼴은 사이트 기준 절대 경로로 부른다(로컬 미리보기는 두 번째 경로). */
+  @font-face { font-family: "Pigs Display"; src: url("/three-pigs-motion-ai/assets/fonts/pigs-display.woff2") format("woff2"), url("/assets/fonts/pigs-display.woff2") format("woff2"); font-display: swap; }
+  :root { --paper: #f5efe3; --card: #fffaf1; --ink: #1f1b26; --muted: #5d5669; --line: #ddd1bc; --brick: #c4532d; --straw: #d9a633; color-scheme: light; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --paper: #11131b; --card: #1b1f2c; --ink: #f2ede3; --muted: #aba4b9; --line: #2d3244; --brick: #e57a52; --straw: #f0c35a; color-scheme: dark; } }
+  :root[data-theme="dark"] { --paper: #11131b; --card: #1b1f2c; --ink: #f2ede3; --muted: #aba4b9; --line: #2d3244; --brick: #e57a52; --straw: #f0c35a; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100svh; display: grid; place-items: center; padding: 24px 16px; background: var(--paper); color: var(--ink); font: 400 17px/1.7 "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; word-break: keep-all; }
+  main { width: min(560px, 100%); text-align: center; display: grid; gap: 16px; justify-items: center; }
+  svg { width: min(260px, 70vw); height: auto; overflow: visible; }
+  .ground { fill: color-mix(in srgb, var(--straw) 30%, var(--paper)); }
+  .post { fill: var(--brick); } .line { fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+  .sign { fill: var(--card); stroke: var(--ink); stroke-width: 4; }
+  .t { font: 400 34px "Pigs Display", sans-serif; fill: var(--brick); }
+  h1 { margin: 0; text-wrap: balance; word-break: keep-all; font: 400 clamp(30px, 7vw, 46px)/1.15 "Pigs Display", "Malgun Gothic", sans-serif; }
+  p { margin: 0; color: var(--muted); }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 8px; }
+  a { display: inline-flex; align-items: center; min-height: 46px; padding: 0 22px; border-radius: 999px; border: 2px solid var(--ink); color: var(--ink); font-weight: 700; text-decoration: none; }
+  a.solid { background: var(--ink); color: var(--paper); }
+  a:focus-visible { outline: 3px solid var(--brick); outline-offset: 3px; }
+  @media (prefers-reduced-motion: no-preference) { .sign-g { transform-origin: 130px 40px; animation: sway 3s ease-in-out infinite; } }
+  @keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+</style>
+</head>
+<body>
+<main>
+  <svg viewBox="0 0 260 200" role="img" aria-label="쓰러질 듯 흔들리는 404 표지판">
+    <rect class="ground" x="0" y="176" width="260" height="24" rx="12"/>
+    <rect class="post" x="122" y="40" width="16" height="140" rx="4"/>
+    <g class="sign-g"><rect class="sign" x="40" y="40" width="180" height="78" rx="14"/><text class="t" x="130" y="94" text-anchor="middle">404</text></g>
+    <path class="line" d="M30 176h200"/>
+  </svg>
+  <h1>늑대가 이 집을 날려 버렸나 봐요</h1>
+  <p>찾으시는 페이지가 없어요. 주소가 바뀌었거나 잘못 적혔을 수 있어요. 보고서 첫 화면에서 다시 시작해 보세요.</p>
+  <div class="btns">
+    <a class="solid" id="home" href="https://techkwon.github.io/three-pigs-motion-ai/">보고서 첫 화면으로</a>
+    <a id="works" href="https://techkwon.github.io/three-pigs-motion-ai/#gallery">다섯 작품 보기</a>
+  </div>
+</main>
+<script>
+  // 로컬 미리보기(127.0.0.1 등)에서는 같은 서버의 첫 화면으로 보낸다.
+  (function () {
+    var onPages = /github\.io$/.test(location.hostname);
+    var base = onPages ? '/three-pigs-motion-ai/' : '/';
+    document.getElementById('home').setAttribute('href', base);
+    document.getElementById('works').setAttribute('href', base + '#gallery');
+    try { var t = localStorage.getItem('pigs-theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  })();
+</script>
+</body>
+</html>
