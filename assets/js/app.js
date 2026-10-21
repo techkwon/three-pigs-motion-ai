@@ -24,6 +24,7 @@ const ORDER = R3.works; // 3라운드 평균 순위
 const judgeName = Object.fromEntries(JUDGES.map(j => [j.k, j]));
 const mmss = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
 const shot = (k, n, size, ext) => `assets/shots/${k}/${n}-${size}.${ext}`;
+const BUG_NOTE = ' (이 무렵 화면을 가로지르는 주황 띠는 첫째 돼지 팔이 늘어나는 버그)';
 const clamp01 = v => Math.min(1, Math.max(0, v));
 const ease = u => (u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2);
 const decoded = img => (img.decode ? img.decode().catch(() => {}) : Promise.resolve());
@@ -225,6 +226,7 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
   const pin = $('#townPin');
   const town = $('.town', pin);
   const say = $('#townSay');
+  const live = $('#townLive');
   const prog = $('.town-prog i', town);
   const replay = $('#townReplay');
   const grid = $$('.gridlines span', town);
@@ -241,7 +243,7 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
     const fl = ev.target.closest('.fl');
     if (!fl) { if (!ms) hideTip(); return; }
     const k = +fl.dataset.k;
-    showTip(`${WORKS[w].name} · ${CRIT[k].name} ${fmtOf(shownJ)(items[w].vals[k])}점`, ev.clientX, ev.clientY, ms);
+    showTip(`${WORKS[w].name} · ${CRIT[k].name} ${fmtOf(shownJ)(valsOf(shownJ, w)[k])}점(${labelOf(shownJ)})`, ev.clientX, ev.clientY, ms);
   };
   ORDER.forEach(w => {
     const li = h('li', { class: 'house', style: `--c:var(--${w})` });
@@ -261,7 +263,8 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
     const tell = () => {
       Object.values(items).forEach(x => x.btn.setAttribute('aria-pressed', String(x.li === li)));
       if (!pinMode || manual) say.setAttribute('aria-live', 'polite');
-      say.textContent = detail(w, items[w].vals, shownJ);
+      say.textContent = detail(w, valsOf(shownJ, w), shownJ);
+      if (pinMode && !manual) live.textContent = say.textContent;
     };
     btn.addEventListener('click', tell);
   });
@@ -269,7 +272,7 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
 
   /* 집 하나를 그린다: 스크롤 연출과 직접 고르기가 같은 함수(transform만)를 쓴다.
      ck = 고른 항목 번호이면 그 층 하나만 바닥에 세우고 높이 = 항목 점수(20점 만점) */
-  function paint(it, vals, x = 0, lift = 0, ck = null) {
+  function paint(it, vals, x = 0, lift = 0, ck = null, lab = 1) {
     let o = 0;
     it.fl.forEach((fl, k) => {
       const v = ck == null ? vals[k] : k === ck ? vals[k] * 5 : 0;
@@ -277,7 +280,7 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
       fl.style.transform = `translateY(${(-base / 100 * Hpx).toFixed(2)}px) scaleY(${(v / 20).toFixed(4)})`;
       const tg = it.tags[k], px = v / 100 * Hpx;
       tg.style.transform = `translate(-50%, calc(50% + ${(-(base + v / 2) / 100 * Hpx).toFixed(2)}px))`;
-      tg.style.opacity = clamp01((px - 18) / 6).toFixed(2);
+      tg.style.opacity = (clamp01((px - 18) / 6) * lab).toFixed(2);
       if (ck == null) o += vals[k];
     });
     const top = ck == null ? o : vals[ck] * 5;
@@ -286,17 +289,24 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
     it.ch.style.transform = `translateY(calc(${ty}px - var(--roof) * .35))`;
     it.sc.style.transform = `translate(-50%, calc(${ty}px - var(--roof) - 8px))`;
     it.door.style.transform = `scaleY(${Math.min(1, top / 14).toFixed(3)})`;
-    // 순위가 바뀌는 두 집: 올라가는 집은 위 레인(앞, 또렷), 내려가는 집은 아래 레인(뒤, 작고 흐리게, 0.5 아래로는 안 흐려짐)
+    // 순위가 바뀌는 두 집: 올라가는 집은 앞·위로, 내려가는 집은 바닥 기준으로 작아지며 뒤로 물러난다.
+    // 지나가는 동안(lab=0) 두 집의 이름표·순위·지붕 숫자는 숨기고, 도착하면 다시 나타난다.
     const a = Math.abs(lift) < .001 ? 0 : Math.abs(lift), up = a > 0 && lift > 0;
-    it.li.style.transform = x || a ? `translate(${x.toFixed(2)}px, ${(up ? -30 * a : 14 * a).toFixed(2)}px) scale(${(up ? 1 + .04 * a : 1 - .1 * a).toFixed(3)})` : '';
+    it.li.style.transform = x || a ? `translate(${x.toFixed(2)}px, ${(up ? -18 * a : 0).toFixed(2)}px)${up ? ` scale(${(1 + .03 * a).toFixed(3)})` : ''}` : '';
     it.li.style.zIndex = up ? 2 : '';
-    const back = a && !up ? (1 - .45 * a).toFixed(2) : '';
-    it.body.style.opacity = back; it.name.style.opacity = back;
+    // 내려가는 집은 땅에 붙은 채(몸체 바닥 기준) 작아지고 흐려진다
+    it.body.style.transform = a && !up ? `scale(${(1 - .38 * a).toFixed(3)})` : '';
+    it.body.style.opacity = a && !up ? (1 - .5 * a).toFixed(2) : '';
+    const nm = lab < 1 ? lab.toFixed(2) : '';
+    if (it.name.style.opacity !== nm) it.name.style.opacity = nm;
     return top;
   }
 
   /* 직접 고르기(전환 애니메이션 + FLIP 자리 이동) */
+  let flips = [];
+  const stopFlips = () => { flips.forEach(a => a.cancel()); flips = []; };
   function render(animate) {
+    stopFlips();
     Hpx = H();
     shownJ = judge;
     const ck = crit === 'all' ? null : +crit;
@@ -312,6 +322,7 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
       const it = items[d.w];
       it.vals = d.v;
       paint(it, d.v, 0, 0, ck);
+      it.sc.style.opacity = '';
       setText(it.sc, fmt(d.key));
       it.rk.textContent = d.rank;
       it.name.querySelector('.nm-s').textContent = SHORT[d.w];
@@ -322,7 +333,7 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
     if (first) data.forEach(d => {
       const li = items[d.w].li;
       const dx = first.get(d.w) - li.getBoundingClientRect().left;
-      if (Math.abs(dx) > 1) li.animate([{ transform: `translateX(${dx}px)` }, { transform: 'none' }], { duration: 750, easing: 'cubic-bezier(.3,1.15,.4,1)' });
+      if (Math.abs(dx) > 1) flips.push(li.animate([{ transform: `translateX(${dx}px)` }, { transform: 'none' }], { duration: 750, easing: 'cubic-bezier(.3,1.15,.4,1)' }));
     });
     const nm = d => `${WORKS[d.w].name}(${fmt(d.key)})`;
     say.textContent = ck == null && judge === 'avg'
@@ -334,10 +345,13 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
 
   /* 스크롤 서사: 들어오자마자 1층(스토리)이 서 있고, 0~0.2 동안 2~5층이 쌓인 뒤 Sonnet → 코덱스 → Argon → 다시 세 명 평균 */
   const G1 = .2;
-  const SEG = [[.25, .36, 0, 1], [.43, .54, 1, 2], [.61, .72, 2, 3], [.79, .90, 3, 4]]; // [시작, 끝, 앞 단계, 뒤 단계]
+  const SEG = [[.26, .33, 0, 1], [.44, .51, 1, 2], [.62, .69, 2, 3], [.80, .87, 3, 4]]; // [시작, 끝, 앞 단계, 뒤 단계] — 전환은 짧게, 멈춘 구간은 길게
+  // 전환 중 글자 표시: 자리를 바꾸는 두 집은 움직이기 시작하자마자(u 0.08~0.92) 숨기고, 양 끝 0.02 안쪽에서만 보인다
+  const labOf = u => clamp01((Math.abs(u - .5) - .42) / .06);
   const rankIdx = j => { const o = [...ORDER].sort((a, b) => sum(valsOf(j, b)) - sum(valsOf(j, a)) || avgTotal(3, b) - avgTotal(3, a)); return Object.fromEntries(o.map((w, i) => [w, i])); };
   const RANK = Object.fromEntries(JSEQ.map(j => [j, rankIdx(j)]));
   const measure = () => {
+    measurePin();
     $$('.house', ol).forEach(li => { li.style.transform = ''; });
     const lis = ORDER.map(w => items[w].li);
     slotW = lis[1].getBoundingClientRect().left - lis[0].getBoundingClientRect().left;
@@ -362,30 +376,38 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
   const writeSr = () => {
     srTimer = 0;
     if (!pinMode || manual) return;
-    ORDER.forEach(w => { const it = items[w]; it.sr.textContent = `${it.rk.textContent}위 ${WORKS[w].name}, ${labelOf(shownJ)} 기준 합계 ${it.sc.textContent}점. ` + CRIT.map((c, k) => `${c.short} ${f1(it.vals[k])}`).join(', '); });
+    ORDER.forEach(w => { const v = valsOf(shownJ, w), f = fmtOf(shownJ); items[w].sr.textContent = `${RANK[shownJ][w] + 1}위 ${WORKS[w].name}, ${labelOf(shownJ)} 기준 합계 ${f(sum(v))}점. ` + CRIT.map((c, k) => `${c.short} ${f(v[k])}`).join(', '); });
   };
   const cancelSr = () => { clearTimeout(srTimer); srTimer = 0; };
   function apply(p) {
     const s = state(p);
     shownJ = s.j;
     const tot = {};
+    const lab = s.grow ? 1 : labOf(s.u);
+    const fj = fmtOf(s.j);
     ORDER.forEach((w, hi) => {
       const it = items[w];
-      let vals, x = 0, lift = 0;
-      if (s.grow) vals = valsOf('avg', w).map((v, k) => v * s.frac(hi, k));
-      else {
+      let vals, x = 0, lift = 0, moving = false, numVis = lab;
+      if (s.grow) {
+        vals = valsOf('avg', w).map((v, k) => v * s.frac(hi, k));
+        numVis = s.frac(hi, 4) >= 1 ? 1 : 0; // 마지막 층까지 다 쌓인 집에만 숫자(쌓는 중에는 보이지 않음)
+      } else {
         const va = valsOf(s.a, w), vb = valsOf(s.b, w);
         vals = va.map((v, k) => v + (vb[k] - v) * s.u);
         const ra = RANK[s.a][w], rb = RANK[s.b][w];
         x = ((ra + (rb - ra) * s.u) - hi) * slotW;
-        if (ra !== rb) lift = Math.sin(Math.PI * s.u) * (rb < ra ? 1 : -1);
+        if (ra !== rb) { moving = true; lift = Math.sin(Math.PI * s.u) * (rb < ra ? 1 : -1); }
       }
       it.vals = vals;
-      tot[w] = paint(it, vals, x, lift);
-      setText(it.sc, f1(tot[w]));
+      tot[w] = paint(it, vals, x, lift, null, moving ? lab : 1);
+      // 지붕 숫자: 지금 단계 채점관의 실제 합계만. 전환 중에는 숨긴다
+      setText(it.sc, fj(sum(valsOf(s.j, w))));
+      const sv = numVis >= 1 ? '' : numVis.toFixed(2);
+      if (it.sc.style.opacity !== sv) it.sc.style.opacity = sv;
     });
-    // 층을 쌓는 동안에는 순위 번호를 최종(평균) 순위로 둔다
-    const order = s.grow ? ORDER : [...ORDER].sort((a, b) => tot[b] - tot[a]);
+    // 순위 번호도 지금 단계 채점관의 실제 순위(쌓는 동안은 평균 순위)
+    const rk = s.grow ? RANK.avg : RANK[s.j];
+    const order = [...ORDER].sort((a, b) => rk[a] - rk[b]);
     ORDER.forEach(w => {
       const it = items[w], r = String(order.indexOf(w) + 1);
       if (it.rk.textContent !== r) {
@@ -408,13 +430,12 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
       $('#critPick input[value="all"]').checked = true;
     }
   }
-  const pinOn = () => motion() && getComputedStyle(pin).height !== 'auto' && pin.offsetHeight > innerHeight * 1.5;
-  const progress = () => {
-    const r = pin.getBoundingClientRect();
-    const top = parseFloat(getComputedStyle(town).top) || 0;
-    const span = pin.offsetHeight - town.offsetHeight;
-    return span > 0 ? clamp01((top - r.top) / span) : 0;
-  };
+  const stickTopCss = () => (parseFloat(getComputedStyle(root).getPropertyValue('--top')) || 60) + 8;
+  const pinOn = () => motion() && town.offsetHeight <= innerHeight - stickTopCss();
+  // 고정 위치·길이는 크기가 바뀔 때만 재고(measure), 스크롤 때는 scrollY만 쓴다
+  let pinTop = 0, pinSpan = 0, stickTop = 0;
+  const measurePin = () => { stickTop = parseFloat(getComputedStyle(town).top) || 0; pinTop = pin.getBoundingClientRect().top + scrollY; pinSpan = pin.offsetHeight - town.offsetHeight; };
+  const progress = () => (pinSpan > 0 ? clamp01((scrollY + stickTop - pinTop) / pinSpan) : 0);
   let raf = 0;
   const onScroll = () => {
     if (raf) return;
@@ -427,6 +448,7 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
     });
   };
   function resume() {
+    stopFlips();
     manual = false; judge = 'avg'; crit = 'all'; ol.dataset.crit = 'all';
     $('#judgePick input[value="avg"]').checked = true; $('#critPick input[value="all"]').checked = true;
     grid.forEach(g => setText(g, g.style.getPropertyValue('--v').trim()));
@@ -438,7 +460,7 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
   }
   function goManual() {
     if (manual) return;
-    cancelSr(); manual = true; leftTop = progress() > .1; replay.hidden = false; town.classList.add('manual');
+    cancelSr(); stopFlips(); manual = true; leftTop = progress() > .1; replay.hidden = false; town.classList.add('manual');
     say.setAttribute('aria-live', 'polite');
     ol.classList.remove('scrub');
   }
@@ -453,7 +475,7 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
   const setup = () => {
     const on = pinOn();
     if (on && !pinMode) {
-      pinMode = true; town.classList.remove('no-pin');
+      pinMode = true; town.classList.remove('no-pin'); pin.classList.remove('unpinned');
       resume();
       addEventListener('scroll', onScroll, { passive: true });
     } else if (!on && pinMode) {
@@ -463,11 +485,15 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
       render(false);
     } else if (on && !manual) { measure(); apply(progress()); }
     else if (H() !== Hpx) render(false); // 고정하지 않을 때는 크기가 바뀌면 다시 그린다
-    if (!on) town.classList.add('no-pin');
+    if (!on) { town.classList.add('no-pin'); pin.classList.add('unpinned'); }
   };
   render(false);
   setup();
   new ResizeObserver(() => requestAnimationFrame(setup)).observe(ol);
+  // 위쪽 내용 높이가 바뀌면(글꼴·그림) 고정 구간 위치를 다시 잰다
+  // 카드 높이가 바뀌면 고정할 수 있는지부터 다시 판단한다(setup이 다시 재고 그린다)
+  const ro = new ResizeObserver(() => requestAnimationFrame(() => { if (pinMode && pinOn()) { measurePin(); if (!manual) apply(progress()); } else setup(); }));
+  ro.observe(document.body); ro.observe(town);
   reduceMQ.addEventListener('change', setup);
 })();
 
@@ -486,14 +512,15 @@ const setText = (el, t) => { if (el.textContent !== t) el.textContent = t; };
       const same = ts.filter(t => t === ts[r]).length, idx = ts.slice(0, r).filter(t => t === ts[r]).length;
       const dy = same > 1 ? (idx - (same - 1) / 2) * 11 : 0;
       const label = `${WORKS[w].name} · ${j.short} ${ts[r]}점`;
-      const d = h('span', { class: `dot ${j.k}`, style: `--v:${ts[r]};--r:${r};--dy:${dy}px`, tabindex: '0', role: 'img', 'aria-label': label });
+      const d = h('span', { class: `dot ${j.k}`, style: `--v:${ts[r]};--r:${r};--dy:${dy}px`, 'aria-hidden': 'true' });
       const on = () => { const b = d.getBoundingClientRect(); showTip(label, b.left + b.width / 2, b.top); };
-      d.addEventListener('pointerenter', on); d.addEventListener('focus', on);
-      d.addEventListener('pointerleave', hideTip); d.addEventListener('blur', hideTip);
+      d.addEventListener('pointerenter', on);
+      d.addEventListener('pointerleave', hideTip);
       d.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') { on(); tipTimer = setTimeout(hideTip, 2500); } });
       tr.append(d);
     });
-    row.append(tr, h('div', { class: 'd-val' }, `평균 ${f1(m)}<small>${Math.min(...ts)}~${Math.max(...ts)}점</small>`));
+    row.append(tr, h('div', { class: 'd-val' }, `평균 ${f1(m)}<small>${Math.min(...ts)}~${Math.max(...ts)}점</small>`),
+      h('span', { class: 'sr' }, JUDGES.map((j, r) => `${j.short} ${ts[r]}점`).join(', ')));
     box.append(row);
   });
   const ax = h('div', { class: 'd-axis', 'aria-hidden': 'true' }, '<span></span><div></div><span></span>');
@@ -713,7 +740,7 @@ function pickClip() {
   }
   cardClips.forEach(c => { c.active = c === best; c.sync(); });
 }
-const queuePick = () => { if (clipRaf || !cardClips.some(c => c.visible)) return; clipRaf = requestAnimationFrame(() => { clipRaf = 0; pickClip(); }); };
+const queuePick = () => { clearTimeout(clipRaf); if (!cardClips.some(c => c.visible)) return; clipRaf = setTimeout(pickClip, 140); };
 addEventListener('scroll', queuePick, { passive: true });
 addEventListener('resize', queuePick);
 $$('#works .wcard').forEach(li => {
@@ -734,7 +761,7 @@ $$('#works .wcard').forEach(li => {
   const open = e => { if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return; e.preventDefault(); openPlayer(w, { fromEl: poster }); };
   $('.poster-link', poster).addEventListener('click', open);
   $('[data-open]', li).addEventListener('click', open);
-  onView(li, () => { const ring = $('.ring', li); ring.style.setProperty('--p', ring.dataset.p); }, { threshold: .3 });
+  onView(li, () => $('.ring', li).classList.add('on'), { threshold: .3 });
 });
 
 /* ---------------- 같은 초: 사진 20장 / 영상 동시 재생 ---------------- */
@@ -782,7 +809,9 @@ $$('#works .wcard').forEach(li => {
         const name = sceneAt(st.w, f);
         st.scene.textContent = name;
         st.fr.setAttribute('aria-label', `${WORKS[st.w].name}, ${when}: ${name}. 크게 보기`);
-        st.bug.classList.toggle('show', st.w === 'gptp' && f.t != null && f.t <= 50);
+        const bugOn = st.w === 'gptp' && f.t != null && f.t <= 50;
+        st.bug?.classList.toggle('show', bugOn);
+        if (bugOn) st.fr.setAttribute('aria-label', st.fr.getAttribute('aria-label') + BUG_NOTE);
         const back = st.layers[1 - st.front], old = st.layers[st.front];
         imgs[k].alt = `${WORKS[st.w].name} ${when} 장면: ${name}`;
         old.querySelector('img').alt = '';
@@ -802,12 +831,12 @@ $$('#works .wcard').forEach(li => {
     lab.textContent = '녹화 영상 · 재생 버튼을 누른 뒤';
     range.setAttribute('aria-valuetext', `${Math.round(t)}초`);
     cells.forEach(st => {
-      const name = sceneAt(st.w, f);
-      if (st.lastScene === name) { st.bug.classList.toggle('show', st.w === 'gptp' && t > .5 && t <= 50); return; }
-      st.lastScene = name;
+      const name = sceneAt(st.w, f), bugOn = st.w === 'gptp' && t > .5 && t <= 50, slot = Math.round(t / 5);
+      if (st.lastScene === name && st.lastBug === bugOn && st.lastSlot === slot) return;
+      st.lastScene = name; st.lastBug = bugOn; st.lastSlot = slot;
       st.scene.textContent = name;
-      st.fr.setAttribute('aria-label', `${WORKS[st.w].name}, 영상 ${mmss(Math.round(t / 5) * 5)} 무렵: ${name}. 가까운 사진 크게 보기`);
-      st.bug.classList.toggle('show', st.w === 'gptp' && t > .5 && t <= 50);
+      st.fr.setAttribute('aria-label', `${WORKS[st.w].name}, 영상 ${mmss(Math.round(t / 5) * 5)} 무렵: ${name}. 가까운 사진 크게 보기` + (bugOn ? BUG_NOTE : ''));
+      st.bug?.classList.toggle('show', bugOn);
     });
   };
   const seekAll = t => cells.forEach(st => { if (st.v && Math.abs(st.v.currentTime - t) > .05) st.v.currentTime = t; });
