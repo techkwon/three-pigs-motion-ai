@@ -98,7 +98,7 @@ safe(() => {
     const vt = document.startViewTransition(apply);
     vt.ready.then(() => root.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
       { duration: 650, easing: 'cubic-bezier(.6,0,.25,1)', pseudoElement: '::view-transition-new(root)' })).catch(() => {});
-    vt.finished.finally(() => root.classList.remove('vt-theme'));
+    vt.finished.finally(() => root.classList.remove('vt-theme')).catch(() => {});
   });
 });
 
@@ -739,7 +739,10 @@ safe(() => {
     if (ready) setQuery({ round: i === tabs.length - 1 ? null : i + 1 }); // 방향키·Home·End·본문 링크 모두
   };
   const select = (tab, focus) => {
-    if (document.startViewTransition && motion()) document.startViewTransition(() => show(tab)); else show(tab);
+    if (document.startViewTransition && motion()) {
+      const vt = document.startViewTransition(() => show(tab));
+      vt.ready.catch(() => {}); vt.finished.catch(() => {}); // 느린 기기에서 전환이 취소돼도 탭 내용은 이미 바뀌어 있다
+    } else show(tab);
     if (focus) tab.focus();
   };
   tabs.forEach((t, i) => {
@@ -828,8 +831,10 @@ function openPlayer(w, opts = {}) {
   const from = opts.fromEl;
   if (from && document.startViewTransition && motion() && !dlg.open) {
     from.style.viewTransitionName = 'work-media';
-    const vt = document.startViewTransition(() => { from.style.viewTransitionName = ''; plMedia.style.viewTransitionName = 'work-media'; go(); });
-    vt.finished.finally(() => { plMedia.style.viewTransitionName = ''; });
+    let ran = false;
+    const vt = document.startViewTransition(() => { ran = true; from.style.viewTransitionName = ''; plMedia.style.viewTransitionName = 'work-media'; go(); });
+    vt.ready.catch(() => {}); // 느린 기기에서 전환이 시간 초과로 취소돼도 창은 열린다
+    vt.finished.finally(() => { plMedia.style.viewTransitionName = ''; if (!ran) go(); }).catch(() => {});
   } else go();
 }
 dlg.addEventListener('close', () => {
