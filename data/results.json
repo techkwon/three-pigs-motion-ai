@@ -60,7 +60,7 @@
   {
    "key": "codex",
    "name": "GPT 6.1 sol",
-   "short": "코덱스",
+   "short": "GPT 심사",
    "org": "OpenAI",
    "tool": "코덱스 CLI"
   },

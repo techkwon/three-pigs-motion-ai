@@ -20,7 +20,7 @@
   --display: "Pigs Display", "Display Fallback", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --story: "Pigs Serif", "Noto Serif KR", "Nanum Myeongjo", serif;
   --body: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
-  --small: 14.5px;
+  --small: 15px;
   --m1: 84%; --m2: 68%; --m3: 54%; --m4: 40%; --fl-sep: color-mix(in srgb, #fff 55%, transparent); --avg-row: 14%;
   --top: 60px;
   color-scheme: light;
@@ -198,14 +198,14 @@ button { font: inherit; color: inherit; }
 /* 첫 화면 거리: 점수로 짓는 세 집 */
 .street { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; display: grid; justify-items: center; gap: 8px; padding: 0 16px 14px; }
 .street-row { position: relative; display: flex; align-items: flex-end; justify-content: center; gap: clamp(30px, 7vw, 110px); transform-origin: 50% 100%; }
-.sh { --a: calc((100 - var(--t)) * .32deg); display: grid; justify-items: center; gap: 6px; position: relative; z-index: 1; }
+.sh { --a: calc((100 - var(--t)) * .32deg); display: grid; justify-items: center; gap: 0; position: relative; z-index: 1; }
 .sh-body { position: relative; width: clamp(60px, 7.6vw, 112px); height: calc(var(--SH) * var(--t) / 100); display: flex; flex-direction: column-reverse; transform-origin: 50% 100%; }
 .sh-body i { display: block; height: calc(var(--v) / var(--t) * 100%); transform-origin: 50% 100%; background: color-mix(in oklab, var(--c) var(--mix, 100%), var(--card)); box-shadow: inset 0 2px 0 var(--fl-sep); }
 .sh-body i:nth-child(1) { border-radius: 0 0 3px 3px; box-shadow: none; } .sh-body i:nth-child(2) { --mix: var(--m1); } .sh-body i:nth-child(3) { --mix: var(--m2); } .sh-body i:nth-child(4) { --mix: var(--m3); } .sh-body i:nth-child(5) { --mix: var(--m4); }
 .sh-roof { position: absolute; left: -13%; right: -13%; bottom: 100%; height: calc(var(--SH) * .17); background: var(--c); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
-.sh::before { content: ""; position: absolute; left: -85%; right: -85%; bottom: 26px; height: 8px; border-radius: 4px; background: color-mix(in srgb, var(--wood) 35%, var(--paper)); }
+.sh-cap::before { content: ""; position: absolute; top: 0; left: -45%; right: -45%; height: 8px; border-radius: 4px; background: color-mix(in srgb, var(--wood) 35%, var(--paper)); }
 .sh-door { position: absolute; left: 38%; width: 24%; bottom: 0; height: calc(var(--SH) * .2); border-radius: 99px 99px 0 0; background: color-mix(in oklab, var(--c) 45%, #000); opacity: .85; }
-.sh-cap { margin: 0; height: 28px; display: flex; align-items: center; gap: 4px; font-size: 15px; font-weight: 700; color: var(--c); white-space: nowrap; line-height: 1.2; }
+.sh-cap { position: relative; margin: 0; padding-top: 12px; justify-self: stretch; justify-content: center; display: flex; align-items: center; gap: 4px; font-size: 15px; font-weight: 700; color: var(--c); white-space: nowrap; line-height: 1.2; }
 .sh-cap b { font-family: var(--display); font-weight: 400; font-size: 22px; margin-right: 2px; }
 .street figcaption { position: relative; font-size: var(--small); color: var(--muted); text-align: center; max-width: 52em; line-height: 1.5; }
 .motion .sh-body i { animation: floor-up .42s cubic-bezier(.3, 1.35, .5, 1) both; animation-delay: calc(.2s + var(--i) * .14s + var(--k) * .12s); }
@@ -224,6 +224,7 @@ button { font: inherit; color: inherit; }
 /* ---------- 구간 공통 ---------- */
 .sec { max-width: 1240px; margin: 0 auto; padding: clamp(72px, 10vw, 140px) max(16px, env(safe-area-inset-left)) 0; display: grid; gap: clamp(24px, 3vw, 40px); }
 .sec-head { display: grid; gap: 14px; max-width: 860px; }
+.sec-head::before { content: ""; display: block; width: 64px; height: 16px; background: var(--brick); clip-path: polygon(0 100%, 50% 0, 100% 100%, 86% 100%, 50% 30%, 14% 100%); transform-origin: 50% 100%; }
 .kicker { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; color: var(--brick); letter-spacing: .02em; }
 .kicker span { display: inline-grid; place-items: center; min-width: 34px; height: 26px; padding: 0 8px; border-radius: 8px; background: var(--brick); color: var(--on-brick); font-size: var(--small); }
 .lede { font-size: clamp(17px, 1.6vw, 19px); color: var(--ink-2); line-height: 1.75; }
@@ -236,6 +237,8 @@ button { font: inherit; color: inherit; }
 @supports (animation-timeline: view()) {
   .motion .sec-head > * { animation: head-in linear both; animation-timeline: view(); animation-range: entry 5% entry 75%; }
   .motion .sec-head > h2 { animation-range: entry 10% entry 85%; }
+  .motion .sec-head::before { animation: roof-line linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+  @keyframes roof-line { from { transform: scale(.2, 0); } to { transform: none; } }
   @keyframes head-in { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
 }
 
@@ -279,7 +282,6 @@ button { font: inherit; color: inherit; }
 .story { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
 .story-graphic { grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--top) + 24px); }
 .story-steps { grid-column: 1; grid-row: 1; display: grid; padding-bottom: 4vh; }
-.step { cursor: pointer; }
 .step:focus-visible { outline-offset: 4px; }
 .step { position: relative; min-height: 38vh; display: grid; align-content: center; gap: 10px; padding: 24px 0 24px 18px; transition: opacity .5s; }
 .step::before { content: ""; position: absolute; left: 0; top: 30%; bottom: 30%; width: 4px; border-radius: 4px; background: var(--line); transition: background-color .4s, top .4s, bottom .4s; }
@@ -309,6 +311,7 @@ button { font: inherit; color: inherit; }
 /* 단계별 상태: 데스크톱에서 움직임을 허용할 때만 흐리게(그 밖에는 처음부터 모두 또렷) */
 @media (min-width: 821px) and (prefers-reduced-motion: no-preference) {
   .js-ready .step:not(.on) { opacity: .78; }
+  .js-ready .step { cursor: pointer; }
   .cond .key > span:first-child::after { display: none; }
   .cond[data-step="3"] .key > span:first-child::after, .cond[data-step="4"] .key > span:first-child::after { display: block; }
   .cond[data-step="1"] .c2, .cond[data-step="1"] .c3, .cond[data-step="2"] .c3 { opacity: .55; }
@@ -333,7 +336,8 @@ button { font: inherit; color: inherit; }
 .town { padding: clamp(16px, 2.6vw, 32px); display: grid; gap: 12px; container-type: inline-size; }
 .town-prog { height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; }
 .town-prog i { display: block; height: 100%; background: var(--brick); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
-.no-pin .town-prog, .manual .town-prog { display: none; }
+.no-pin .town-prog { display: none; }
+.manual .town-prog { visibility: hidden; } /* 자리는 남겨 직접 고르기로 바뀔 때 집이 위로 튀지 않게 */
 .controls { display: flex; flex-wrap: wrap; gap: 14px 28px; }
 .seg { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .seg legend { float: left; margin-right: 6px; font-size: 15px; font-weight: 700; color: var(--muted); padding: 0; }
@@ -349,12 +353,12 @@ button { font: inherit; color: inherit; }
 .jm.argon { background: var(--j-argon); transform: rotate(45deg) scale(.85); border-radius: 1px; }
 .seg input:checked + span .jm { outline: 2px solid var(--paper); }
 .town-say { font-family: var(--story); font-weight: 700; font-size: 17px; min-height: 3em; }
-.houses-wrap { --H: min(clamp(210px, 30vw, 380px), 38svh); --roof: clamp(20px, 3vw, 34px); position: relative; padding-top: calc(var(--roof) + 40px); overflow: clip; overflow-clip-margin: 12px; }
+.houses-wrap { --H: min(clamp(210px, 30vw, 380px), 38svh); --roof: clamp(20px, 3vw, 34px); --pad: 40px; position: relative; padding-top: calc(var(--roof) + var(--pad)); overflow: clip; overflow-clip-margin: 12px; }
 @supports (width: 1cqw) { .houses-wrap { --H: min(clamp(210px, 34cqw, 380px), 38svh); --roof: clamp(20px, 3.4cqw, 34px); } }
-.gridlines { position: absolute; left: 0; right: 0; top: calc(var(--roof) + 40px); height: var(--H); pointer-events: none; }
+.gridlines { position: absolute; left: 0; right: 0; top: calc(var(--roof) + var(--pad)); height: var(--H); pointer-events: none; }
 .gridlines span { position: absolute; left: 0; right: 0; bottom: calc(var(--v) * 1%); border-top: 1px dashed color-mix(in srgb, var(--line-2) 70%, transparent); font-size: var(--small); color: var(--muted); line-height: 1; padding-top: 2px; }
 .houses { list-style: none; margin: 0; padding: 0 0 0 30px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(6px, 2cqw, 26px); position: relative; }
-.ground-line { position: absolute; left: 0; right: 0; top: calc(var(--roof) + 40px + var(--H)); height: 6px; margin-left: 24px; border-radius: 3px; background: color-mix(in srgb, var(--wood) 35%, var(--paper)); }
+.ground-line { position: absolute; left: 0; right: 0; top: calc(var(--roof) + var(--pad) + var(--H)); height: 6px; margin-left: 24px; border-radius: 3px; background: color-mix(in srgb, var(--wood) 35%, var(--paper)); }
 .house { position: relative; transform-origin: 50% 100%; }
 .h-btn { width: 100%; display: grid; gap: 10px; justify-items: center; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; border-radius: 12px; }
 .h-btn:focus-visible { outline: 3px solid var(--c); outline-offset: 4px; }
@@ -376,14 +380,17 @@ button { font: inherit; color: inherit; }
 .h-score { left: 50%; white-space: nowrap; font-family: var(--display); font-size: clamp(18px, 3.2cqw, 34px); line-height: 1; color: var(--c); }
 .door { left: 39%; width: 22%; height: calc(var(--H) * .12); max-height: 40px; background: color-mix(in oklab, var(--c) 45%, #000); border-radius: 40px 40px 0 0; opacity: .85; transform-origin: 50% 100%; }
 .fl-tag { left: 50%; z-index: 1; padding: 1px 7px; border-radius: 99px; background: var(--card); color: var(--ink); font-size: 14px; font-weight: 700; line-height: 1.35; white-space: nowrap; box-shadow: 0 1px 3px rgba(0, 0, 0, .18); pointer-events: none; opacity: 0; }
-.house:not(.first) .fl-tag { display: none; }
+.house:not(.first):not(.picked) .fl-tag { display: none; }
+/* 자리를 옮기는 집: 숫자·이름표·층 배지는 움직이는 동안 바로 감춘다(투명도 페이드를 기다리지 않음) */
+.house.move .h-score, .house.move .h-name, .house.move .fl-tag { visibility: hidden; }
+.house.picked .fl-tag { background: var(--ink); color: var(--paper); }
 .h-score, .h-rank { contain: layout style; }
-.h-name { text-align: center; line-height: 1.3; font-size: clamp(14px, 1.8cqw, 16px); font-weight: 700; color: var(--c); min-height: 3.4em; }
+.h-name { text-align: center; line-height: 1.3; font-size: clamp(15px, 1.8cqw, 16px); font-weight: 700; color: var(--c); min-height: 3.4em; }
 .h-rank { display: inline-grid; place-items: center; min-width: 24px; height: 24px; padding: 0 5px; margin: 0 4px 2px 0; border-radius: 99px; background: var(--card); border: 2px solid var(--c); color: var(--c); font-weight: 700; font-size: 14px; line-height: 1; vertical-align: middle; }
 .house.first .h-rank { background: var(--c); color: var(--card); }
 .houses.scrub .fl, .houses.scrub .roof, .houses.scrub .chimney, .houses.scrub .h-score, .houses.scrub .door, .houses.scrub .fl-tag, .houses.scrub .house { transition: none !important; will-change: transform; }
 .town-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
-.floor-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 15px; color: var(--ink-2); }
+.floor-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 16px; color: var(--ink-2); }
 .floor-legend > span { font-weight: 700; color: var(--muted); }
 .floor-band { display: inline-flex; flex-direction: column-reverse; width: 18px; height: 50px; border-radius: 4px; overflow: hidden; vertical-align: middle; }
 .floor-band i, .fl-key i { display: block; flex: 1; background: color-mix(in oklab, var(--opusp) var(--mix), var(--card)); }
@@ -391,13 +398,19 @@ button { font: inherit; color: inherit; }
 .fl-key { display: inline-flex; align-items: center; gap: 5px; }
 .fl-key i { flex: none; width: 16px; height: 12px; border-radius: 3px; }
 .town-hint { font-size: var(--small); color: var(--muted); }
+/* 고정 연출 중에는 안내 문장과 「스크롤 연출로 돌아가기」 버튼이 한 칸(같은 너비·높이)을 번갈아 쓴다:
+   둘 다 늘 자리를 차지하고 보이기만 바꾸므로, 직접 고르기로 바뀌어도 카드 높이·줄바꿈이 그대로다(고정이 풀리거나 집이 밀리지 않음) */
+.town-act { display: grid; align-items: center; justify-items: start; }
+.town-act > * { grid-area: 1 / 1; margin: 0; }
+.town:not(.no-pin) #townReplay[hidden] { display: inline-flex !important; visibility: hidden; } /* 전역 [hidden] 규칙(!important)보다 앞서야 자리가 남는다 */
+.town.manual:not(.no-pin) .town-hint { visibility: hidden; }
 .tip { position: fixed; z-index: 60; pointer-events: none; background: var(--ink); color: var(--paper); padding: 6px 10px; border-radius: 10px; font-size: 15px; font-weight: 500; white-space: nowrap; opacity: 0; transform: translate(-50%, -110%); transition: opacity .15s; }
 .tip.show { opacity: 1; }
 
 /* 채점관 점 */
 .dots { display: grid; gap: 4px; }
 .drow { display: grid; grid-template-columns: 108px minmax(0, 1fr) 80px; align-items: center; gap: 10px; min-height: 42px; }
-.drow-name { font-weight: 700; font-size: 15px; line-height: 1.25; color: var(--c); }
+.drow-name { font-weight: 700; font-size: 16px; line-height: 1.25; color: var(--c); }
 .drow-track { position: relative; height: 36px; container-type: inline-size; }
 .drow-track::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; background: var(--line); border-radius: 2px; }
 .d-range { position: absolute; top: 50%; left: 0; height: 8px; margin-top: -4px; width: 100cqw; transform-origin: 0 50%; border-radius: 4px; background: color-mix(in srgb, var(--c) 22%, transparent); transform: translateX(calc((var(--a) - 60) / 40 * 100cqw)) scaleX(calc((var(--b) - var(--a)) / 40)); transition: transform .9s cubic-bezier(.2, .9, .2, 1); }
@@ -410,7 +423,7 @@ button { font: inherit; color: inherit; }
 .dot.argon::before { content: ""; position: absolute; inset: 0; background: var(--j-argon); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
 .motion.js-ready .dots:not(.in) .dot { transform: translate(calc((var(--m) - 60) / 40 * 100cqw), 0) scale(.4); }
 .motion.js-ready .dots:not(.in) .d-range { transform: translateX(calc((var(--m) - 60) / 40 * 100cqw)) scaleX(0); }
-.d-val { font-size: 15px; font-weight: 700; color: var(--c); line-height: 1.2; text-align: right; }
+.d-val { font-size: 16px; font-weight: 700; color: var(--c); line-height: 1.2; text-align: right; }
 .d-val small { display: block; font-weight: 500; color: var(--muted); font-size: var(--small); }
 .d-axis { display: grid; grid-template-columns: 108px minmax(0, 1fr) 80px; gap: 10px; font-size: var(--small); color: var(--muted); }
 .d-axis div { position: relative; height: 18px; }
@@ -421,12 +434,12 @@ button { font: inherit; color: inherit; }
 .slope { margin: 0; }
 .slope svg { width: 100%; height: auto; overflow: visible; display: block; }
 .slope .ax { stroke: var(--line); stroke-width: 1; }
-.slope .axl { fill: var(--ink-2); font-size: 15px; font-weight: 700; }
+.slope .axl { fill: var(--ink-2); font-size: 16px; font-weight: 700; }
 .slope .gl { stroke: var(--line); stroke-dasharray: 3 5; }
 .slope .gt { fill: var(--muted); font-size: 14px; }
 .slope .ln { fill: none; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; }
 .slope .pt { stroke: var(--card); stroke-width: 2.5; }
-.slope .lb, .slope .vl { font-size: 15px; font-weight: 700; }
+.slope .lb, .slope .vl { font-size: 16px; font-weight: 700; }
 .motion .slope .ln { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .85s cubic-bezier(.5, 0, .2, 1); }
 .slope .lead { fill: none; stroke-width: 1.5; }
 .motion .slope .pt, .motion .slope .vl, .motion .slope .lb, .motion .slope .lead { opacity: .45; transition: opacity .25s; transition-delay: var(--dl, 0ms); }
@@ -443,10 +456,11 @@ button { font: inherit; color: inherit; }
 
 /* 점수 표(자료 구간의 라운드 탭) */
 .tablebox { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
-.score-table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 15px; }
+.score-table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 16px; }
+.tcap { margin: 0; padding: 10px 12px 0; font-weight: 700; font-size: 16px; color: var(--ink-2); }
 .score-table caption { caption-side: top; text-align: left; padding: 10px 12px; font-weight: 700; font-size: 15px; color: var(--ink-2); }
 .score-table th, .score-table td { padding: 8px 10px; text-align: center; border-bottom: 1px solid var(--line); }
-.score-table th { color: var(--ink-2); font-weight: 700; font-size: 15px; background: var(--card-2); }
+.score-table th { color: var(--ink-2); font-weight: 700; font-size: 16px; background: var(--card-2); }
 .score-table td:first-child, .score-table th:first-child, .score-table .wc { text-align: left; }
 .score-table tr.grp th { background: var(--card-2); color: var(--ink); font-size: 15px; padding: 9px 12px; border-top: 2px solid var(--line-2); }
 .score-table tr.grp th small { color: var(--muted); font-weight: 400; font-size: var(--small); margin-left: 4px; }
@@ -472,7 +486,7 @@ button { font: inherit; color: inherit; }
 .poster-play { width: 64px; height: 64px; border-radius: 50%; background: color-mix(in srgb, #15121c 82%, transparent); display: grid; place-items: center; transform: scale(.6); opacity: 0; transition: transform .3s cubic-bezier(.3, 1.6, .5, 1), opacity .3s; }
 .poster-play svg { width: 26px; height: 26px; fill: #fff; margin-left: 4px; }
 .poster-link:hover .poster-play, .poster-link:focus-visible .poster-play { transform: scale(1); opacity: 1; }
-.vid-toggle { position: absolute; right: 8px; bottom: 8px; z-index: 2; width: 34px; height: 34px; border-radius: 50%; border: 0; display: grid; place-items: center; background: rgba(13, 12, 18, .72); color: #fff; cursor: pointer; }
+.vid-toggle { position: absolute; right: 8px; bottom: 8px; z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 0; display: grid; place-items: center; background: rgba(13, 12, 18, .72); color: #fff; cursor: pointer; }
 .vid-toggle svg { width: 18px; height: 18px; }
 .rank-badge { display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; font-weight: 700; font-size: 15px; color: var(--ink-2); }
 .rank-badge b { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--c); color: var(--card); font-size: 15px; }
@@ -484,7 +498,8 @@ button { font: inherit; color: inherit; }
 .ring { flex: none; position: relative; width: 74px; height: 74px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--c) calc(var(--p) * 1%), var(--line) 0); transition: --p 1.4s cubic-bezier(.2, .8, .2, 1); }
 .ring::before { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: var(--card); }
 .ring b { position: relative; font-family: var(--display); font-weight: 400; font-size: 23px; color: var(--c); line-height: 1; }
-.ring small { position: absolute; bottom: -21px; font-size: var(--small); color: var(--muted); white-space: nowrap; }
+.ring-box { flex: none; display: grid; justify-items: center; gap: 4px; }
+.ring-box small { font-size: var(--small); color: var(--muted); white-space: nowrap; }
 .wtheme { color: var(--ink-2); font-size: 15.5px; }
 .wmaker { font-size: var(--small); color: var(--ink-2); margin-top: -6px; }
 .wmeta { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -524,6 +539,8 @@ button { font: inherit; color: inherit; }
 .frame-bug.show { opacity: 1; }
 .cmp-ctrl { display: flex; align-items: center; gap: 14px; }
 .cmp-ctrl .btn-icon { flex: none; }
+.cmp-now { flex: none; order: 3; margin: 0 0 18px; text-align: right; font-family: var(--display); font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; }
+.cmp-now small { display: block; margin-top: 4px; font-family: var(--body); font-size: var(--small); color: var(--muted); }
 #cmpPlay .i-pause { display: none; } #cmpPlay.playing .i-pause { display: block; } #cmpPlay.playing .i-play { display: none; }
 .cmp-range { position: relative; flex: 1; min-width: 0; padding-bottom: 22px; }
 .cmp-range input { width: 100%; margin: 0; accent-color: var(--brick); height: 32px; cursor: pointer; }
@@ -535,13 +552,13 @@ button { font: inherit; color: inherit; }
 
 /* ---------- 제작 과정 ---------- */
 .gantt { padding: clamp(16px, 2.6vw, 30px); display: grid; gap: 14px; }
-.g-legend { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 15px; color: var(--ink-2); }
+.g-legend { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 16px; color: var(--ink-2); }
 .g-legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; margin-right: 6px; vertical-align: -2px; }
 .who-gpt { background: var(--who-gpt); } .who-opus { background: var(--who-opus); }
 .g-rows { display: grid; gap: 12px; }
 .g-row { display: grid; grid-template-columns: 150px minmax(0, 1fr) 64px; grid-template-areas: "n t s" ". c ."; align-items: center; gap: 2px 12px; }
 .g-name { grid-area: n; } .g-track { grid-area: t; } .g-score { grid-area: s; }
-.g-name { font-weight: 700; color: var(--c); font-size: 15.5px; line-height: 1.25; }
+.g-name { font-weight: 700; color: var(--c); font-size: 16px; line-height: 1.25; }
 .g-name small { display: block; color: var(--muted); font-weight: 500; font-size: var(--small); }
 .g-track { position: relative; height: 46px; }
 .g-bar { position: absolute; left: 0; top: 0; bottom: 0; width: calc(var(--total) / 110 * 100%); display: flex; gap: 2px; clip-path: inset(0 0 0 0 round 10px); }
@@ -550,9 +567,10 @@ button { font: inherit; color: inherit; }
 .g-seg b { font-size: 15px; line-height: 1.15; white-space: nowrap; }
 .g-seg span { font-size: 14px; opacity: .92; white-space: nowrap; line-height: 1.2; }
 .g-seg em, .g-cap em { font-style: normal; font-weight: 800; }
-.g-seg em { display: none; font-size: 14px; text-align: center; margin: 0 -10px; }
+.g-seg em { display: none; font-size: 16px; text-align: center; margin: 0 -10px; }
 @container (max-width: 74px) { .g-seg span { display: none; } }
-@container (max-width: 46px) { .g-seg { padding: 0 1px; align-items: center; } .g-seg b { display: none; } .g-seg em { display: block; } }
+@container (max-width: 64px) { .g-seg b { display: none; } .g-seg em { display: block; } }
+@container (max-width: 46px) { .g-seg { padding: 0 1px; align-items: center; } }
 .g-score { font-family: var(--display); font-size: 24px; color: var(--c); text-align: right; line-height: 1; }
 .g-score small { display: block; font-family: var(--body); font-size: var(--small); color: var(--muted); margin-top: 2px; }
 .g-cap { grid-area: c; margin: 0; font-size: var(--small); color: var(--ink-2); line-height: 1.5; }
@@ -565,18 +583,6 @@ button { font: inherit; color: inherit; }
 .motion.js-ready .gantt:not(.in) .g-score { opacity: 0; }
 .motion .g-bar::after { transition: transform 1.4s cubic-bezier(.6, 0, .2, 1); transition-delay: calc(var(--n) * 150ms); }
 .motion .g-score { transition: opacity .6s, transform .6s; transition-delay: calc(var(--n) * 150ms + .6s); }
-@media (max-width: 820px) { @supports (animation-timeline: view()) {
-  .motion .gantt .g-bar::after { animation-range: entry 0% cover 25% !important; }
-  .motion .gantt .g-score { animation-range: entry 5% cover 28% !important; }
-} }
-@supports (animation-timeline: view()) {
-  .motion .gantt .g-bar::after { transition: none; animation: bar-grow linear both; animation-timeline: view(); animation-range: entry 30% cover 45%; }
-  .motion .gantt .g-score { transition: none; animation: score-in linear both; animation-timeline: view(); animation-range: entry 45% cover 50%; }
-  .motion.js-ready .gantt:not(.in) .g-bar::after { transform: scaleX(0); }
-  .motion.js-ready .gantt:not(.in) .g-score { opacity: 1; }
-  @keyframes bar-grow { from { transform: scaleX(1); } to { transform: scaleX(0); } }
-  @keyframes score-in { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
-}
 .flows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .flow { padding: clamp(18px, 2.4vw, 28px); display: grid; gap: 12px; align-content: start; }
 .flow h3 { font-size: 22px; font-weight: 800; }
@@ -724,6 +730,24 @@ button { font: inherit; color: inherit; }
 .vt-theme::view-transition-old(root), .vt-theme::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 .vt-theme::view-transition-old(root) { z-index: 1; } .vt-theme::view-transition-new(root) { z-index: 2; }
 
+/* ---------- 낮은 창 ---------- */
+@media (min-width: 821px) and (max-height: 780px) {
+  .town { padding: 14px 18px; gap: 8px; }
+  .houses-wrap { --H: min(clamp(150px, 26cqw, 300px), 30svh); --roof: clamp(16px, 2.4cqw, 26px); --pad: 32px; }
+  .town-say { font-size: 16px; min-height: 2.4em; }
+  .seg label span { min-height: 34px; padding: 0 12px; }
+  .h-name { min-height: 2.8em; }
+  .town-foot { gap: 4px 14px; }
+  .floor-legend { font-size: 15px; }
+}
+
+/* 키가 작은 휴대폰(높이 760px 이하)에서도 카드가 화면에 들어오게 */
+@media (max-width: 560px) and (max-height: 760px) {
+  .houses-wrap { --H: min(170px, 30svh); --pad: 30px; }
+  .town-say { min-height: 3.6em; }
+  .floor-legend { display: none; }
+}
+
 /* ---------- 반응형 ---------- */
 @media (max-width: 1020px) {
   .hero-in { grid-template-columns: 1fr; }
@@ -768,10 +792,15 @@ button { font: inherit; color: inherit; }
 @media (max-width: 560px) {
   :root { --top: 56px; --small: 15.5px; }
   body { font-size: 16px; }
-  .hero { --SH: 96px; padding-bottom: calc(var(--SH) * 1.16 + 168px); }
-  .street-row { gap: 24px; }
+  .hero { --SH: 96px; padding-bottom: 28px; }
+  .street { position: relative; margin-top: 26px; }
+  .street-row { gap: 10px; width: 100%; justify-content: space-around; }
+  .sh { width: 31%; }
+  .sh-cap { height: calc(1.25em * 3 + 14px); justify-content: flex-start; flex-direction: column; gap: 0; white-space: normal; text-align: center; line-height: 1.25; }
+  .street figcaption { padding: 0 4px; }
+  .motion .street-row { animation: none; }
   .pick small { display: none; }
-  .sh-cap { font-size: 14.5px; } .sh-cap b { font-size: 19px; }
+  .sh-cap { font-size: 14px; } .sh-cap b { font-size: 19px; margin: 0; }
   .brand span { display: none; }
   .nav { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8px, #000 calc(100% - 14px), transparent); mask-image: linear-gradient(90deg, transparent, #000 8px, #000 calc(100% - 14px), transparent); padding: 0 14px 0 6px; gap: 0; min-width: 0; }
   .nav a { padding: 8px 8px; font-size: 15px; }
@@ -811,6 +840,7 @@ button { font: inherit; color: inherit; }
   .cmp-time { text-align: left; display: flex; align-items: baseline; gap: 10px; }
   .cmp-grid { gap: 10px; }
   .cmp-ticks span.mid { display: none; }
+  .cmp-now { display: none; }
   .g-axis span:nth-child(4) { display: none; }
   .cell-head { flex-direction: column; align-items: flex-start; gap: 0; }
   .cell-scene { -webkit-line-clamp: 2; }
