@@ -202,11 +202,14 @@ onView($('.sum-list'), l => l.classList.add('in'), { threshold: .3 });
 safe(() => {
   const cond = $('#cond');
   const steps = $$('.story-steps .step');
-  const set = s => {
+  const live = $('#condLive');
+  const COL = { 1: '1라운드 열', 2: '2라운드 열', 3: '3라운드 열', 4: '결과 줄' };
+  const set = (s, say) => {
     cond.dataset.step = s;
-    steps.forEach(st => st.classList.toggle('on', st.dataset.step === String(s)));
+    steps.forEach(st => { const on = st.dataset.step === String(s); st.classList.toggle('on', on); if (on) st.setAttribute('aria-current', 'step'); else st.removeAttribute('aria-current'); });
+    if (say && live) live.textContent = `조건 표에서 ${COL[s]}을 강조했습니다.`;
   };
-  const live = matchMedia('(min-width: 821px) and (prefers-reduced-motion: no-preference)');
+  const liveMQ = matchMedia('(min-width: 821px) and (prefers-reduced-motion: no-preference)');
   let raf = 0, near = false;
   const pickCenter = () => {
     raf = 0;
@@ -218,9 +221,9 @@ safe(() => {
   new IntersectionObserver(([e]) => { near = e.isIntersecting; if (near) pickCenter(); }).observe($('#designStory'));
   addEventListener('scroll', () => { if (near && !raf) raf = requestAnimationFrame(pickCenter); }, { passive: true });
   set(1);
-  const interactive = () => steps.forEach(st => { if (live.matches) st.tabIndex = 0; else st.removeAttribute('tabindex'); });
-  steps.forEach(st => { const go = () => { if (live.matches) set(st.dataset.step); }; st.addEventListener('click', go); st.addEventListener('focus', go); });
-  interactive(); live.addEventListener('change', interactive);
+  const interactive = () => steps.forEach(st => { if (liveMQ.matches) st.tabIndex = 0; else st.removeAttribute('tabindex'); });
+  steps.forEach(st => { const go = () => { if (liveMQ.matches) set(st.dataset.step, true); }; st.addEventListener('click', go); st.addEventListener('focus', go); });
+  interactive(); liveMQ.addEventListener('change', interactive);
 });
 
 /* ---------------- 결과: 다섯 채의 집(고정된 스크롤 서사 + 직접 고르기) ---------------- */
@@ -242,19 +245,21 @@ safe(() => {
   const ol = $('#houses');
   const pin = $('#townPin');
   const town = $('.town', pin);
+  const wrap = ol.parentElement;
   const say = $('#townSay');
   const live = $('#townLive');
-  const prog = $('.town-prog i', town);
+  const prog = $('.town-prog', town);
   const replay = $('#townReplay');
   const grid = $$('.gridlines span', town);
-  ol.parentElement.append(h('div', { class: 'ground-line', 'aria-hidden': 'true' }));
+  const stepBtns = $$('#townSteps button', town);
+  wrap.append(h('div', { class: 'ground-line', 'aria-hidden': 'true' }));
   const items = {};
   const JSEQ = ['avg', 'sonnet', 'codex', 'argon', 'avg']; // 마지막에 본문 결론(세 명 평균)으로 돌아온다
   const SHORT = { opusp: 'Opus 솔로+', collab: '협업', gptp: 'GPT 솔로+', opus: 'Opus 단독', gpt: 'GPT 단독' };
   const valsOf = (j, w) => (j === 'avg' ? CRIT.map((_, i) => avgCrit(3, w, i)) : R3.judges[j][w]);
   const labelOf = j => (j === 'avg' ? '세 명 평균' : judgeName[j].short);
   const fmtOf = j => (j === 'avg' ? f1 : v => String(Math.round(v * 10) / 10));
-  let judge = 'avg', crit = 'all', manual = false, pinMode = false, shownJ = 'avg', Hpx = 0, slotW = 0, leftTop = false;
+  let judge = 'avg', crit = 'all', manual = false, pinMode = false, shownJ = 'avg', Hpx = 0, slotW = 0, olW = 0, lift = 48, leftTop = false;
   const detail = (w, vals, j) => `${WORKS[w].name}(${labelOf(j)}): ` + CRIT.map((c, k) => `${c.short} ${fmtOf(j)(vals[k])}`).join(' · ') + ` = ${fmtOf(j)(sum(vals))}점`;
   const floorTip = (ev, w, ms) => {
     const fl = ev.target.closest('.fl');
@@ -278,8 +283,9 @@ safe(() => {
     const body = h('span', { class: 'h-body', 'aria-hidden': 'true' });
     CRIT.forEach((c, k) => body.append(h('span', { class: 'fl', 'data-k': k })));
     CRIT.forEach((c, k) => body.append(h('span', { class: 'fl-tag' }, c.short)));
-    body.append(h('span', { class: 'chimney' }), h('span', { class: 'roof' }), h('span', { class: 'door' }), h('span', { class: 'h-score num' }));
-    btn.append(body, h('span', { class: 'h-name', 'aria-hidden': 'true' }, `<span class="h-rank"></span><span class="nm-l">${WORKS[w].name}</span><span class="nm-s">${SHORT[w]}</span>`), h('span', { class: 'sr' }));
+    // 자리를 바꾸는 동안에만 보이는 작품 이름표(집과 함께 움직여 누가 누구를 앞지르는지 보이게)
+    body.append(h('span', { class: 'chimney' }), h('span', { class: 'roof' }), h('span', { class: 'door' }), h('span', { class: 'h-score num' }), h('span', { class: 'h-chip' }, SHORT[w].split(' ').map(t => `<span>${t}</span>`).join(' ')));
+    btn.append(body, h('span', { class: 'h-name', 'aria-hidden': 'true' }, `<span class="h-rank"></span><span class="nm-l">${WORKS[w].name}</span><span class="nm-s">${SHORT[w].replace(' ', '<br>')}</span>`), h('span', { class: 'sr' }));
     li.append(btn);
     ol.append(li);
     items[w] = { li, btn, body, fl: $$('.fl', li), tags: $$('.fl-tag', li), roof: $('.roof', li), ch: $('.chimney', li), door: $('.door', li), sc: $('.h-score', li), rk: $('.h-rank', li), name: $('.h-name', li), sr: $('.sr', li) };
@@ -306,7 +312,7 @@ safe(() => {
   const H = () => $('.h-body', ol).clientHeight;
 
   /* 집의 몸체(층·지붕·숫자 위치·문)를 그린다. ck = 고른 항목이면 그 층 하나만 높이 = 항목 점수(20점 만점) */
-  function paintBody(it, vals, ck = null, tagsOn = 1) {
+  function paintBody(it, vals, ck = null) {
     let o = 0;
     it.fl.forEach((fl, k) => {
       const v = ck == null ? vals[k] : k === ck ? vals[k] * 5 : 0;
@@ -314,7 +320,7 @@ safe(() => {
       fl.style.transform = `translateY(${(-base / 100 * Hpx).toFixed(2)}px) scaleY(${(v / 20).toFixed(4)})`;
       const tg = it.tags[k], px = v / 100 * Hpx;
       tg.style.transform = `translate(-50%, calc(50% + ${(-(base + v / 2) / 100 * Hpx).toFixed(2)}px))`;
-      tg.style.opacity = (clamp01((px - 18) / 6) * tagsOn).toFixed(2);
+      tg.style.opacity = clamp01((px - 18) / 6).toFixed(2);
       if (ck == null) o += vals[k];
     });
     const top = ck == null ? o : vals[ck] * 5;
@@ -326,49 +332,133 @@ safe(() => {
     return top;
   }
 
-  /* 직접 고르기(전환 애니메이션 + FLIP 자리 이동) */
-  let flips = [];
-  const stopFlips = () => { flips.forEach(a => a.cancel()); flips = []; $$('.house.move', ol).forEach(li => li.classList.remove('move')); };
-  function render(animate) {
-    // 처음 자리: 진행 중인 전환을 끊기 전에, 지금 화면에 보이는 그대로(X·Y·투명도) 잰다
-    const first = animate && motion() ? new Map(Object.entries(items).map(([w, it]) => { const r = it.li.getBoundingClientRect(); return [w, { x: r.left, y: r.top, o: parseFloat(getComputedStyle(it.body).opacity) || 1 }]; })) : null;
-    stopFlips(); stopTween();
+  /* ---- 집 자리 옮기기: 서사·직접 고르기·쌓기 복귀가 모두 이 한 갈래(moveTo)를 쓴다 ----
+     - 자리(x)는 「지금 DOM 순서의 칸」 기준 translate. 움직임이 모두 끝나면 DOM을 순위대로 다시 놓고 translate를 지운다(commit)
+       → 화면은 그대로이고, 탭 순서·스크린리더 순서가 보이는 순위와 같아진다
+     - 지금 위치는 getComputedStyle 대신 우리가 만든 키프레임과 애니메이션 시각(currentTime)으로 계산한다(레이아웃·스타일 읽기 없음)
+     - 왼쪽(위 순위)으로 가는 집은 앞 레인: 원래 크기로 떠올라 호를 그림(멀리 갈수록 더 높이)
+       오른쪽으로 가는 집은 뒤 레인: 땅에 붙은 채 .94배·투명도 .8(깊이)
+     - 움직이는 동안 숫자·이름표·층 배지는 감추고(visibility, 페이드 없음) 작품 이름표(.h-chip)가 집을 따라간다. 도착하는 순간 한 번에 보인다 */
+  const TWEEN = 900, EASE = 'cubic-bezier(.45, 0, .2, 1)';
+  const bezier = (x1, y1, x2, y2) => t => {
+    if (t <= 0) return 0;
+    if (t >= 1) return 1;
+    let u = t;
+    for (let i = 0; i < 8; i++) {
+      const x = 3 * (1 - u) * (1 - u) * u * x1 + 3 * (1 - u) * u * u * x2 + u * u * u - t;
+      const d = 3 * (1 - u) * (1 - u) * x1 + 6 * (1 - u) * u * (x2 - x1) + 3 * u * u * (1 - x2);
+      if (Math.abs(x) < 1e-5 || !d) break;
+      u = clamp01(u - x / d);
+    }
+    return 3 * (1 - u) * (1 - u) * u * y1 + 3 * (1 - u) * u * u * y2 + u * u * u;
+  };
+  const EASEF = bezier(.45, 0, .2, 1);
+  const OFF = [0, .15, .5, .85, 1];
+  const DEPTH_S = .94, DEPTH_O = .8;
+  const mv = {}; // 움직이는 집: { a: 집 애니메이션, b: 몸체 투명도 애니메이션, kf }
+  const rest = {}; // 멈춘 자리(지금 DOM 칸 기준 x)
+  let lastR = Object.fromEntries(ORDER.map((w, i) => [w, i]));
+  const idx = w => Array.prototype.indexOf.call(ol.children, items[w].li);
+  const now = w => {
+    const m = mv[w];
+    if (m && m.a.playState !== 'finished' && m.a.playState !== 'idle') {
+      const e = EASEF(clamp01((Number(m.a.currentTime) || 0) / TWEEN));
+      let i = 0;
+      while (i < OFF.length - 2 && e > OFF[i + 1]) i++;
+      const f = (e - OFF[i]) / (OFF[i + 1] - OFF[i]), A = m.kf[i], B = m.kf[i + 1];
+      const L = k => A[k] + (B[k] - A[k]) * f;
+      return { x: L('x'), y: L('y'), s: L('s'), o: L('o') };
+    }
+    return { x: rest[w] || 0, y: 0, s: 1, o: 1 };
+  };
+  const stopMoves = () => {
+    Object.entries(mv).forEach(([w, m]) => { m.a.cancel(); m.b.cancel(); delete mv[w]; items[w].li.classList.remove('move', 'back'); items[w].li.style.zIndex = ''; });
+    ol.classList.remove('tweening');
+  };
+  // 움직임이 모두 끝나면: DOM을 순위대로 다시 놓고 translate를 지운다(보이는 자리는 그대로). 집 안에 초점이 있으면 미룬다
+  function commit() {
+    if (Object.keys(mv).length || ol.contains(document.activeElement)) return;
+    const order = ORDER.slice().sort((a, b) => lastR[a] - lastR[b]);
+    if (order.every((w, i) => ol.children[i] === items[w].li) && order.every(w => !rest[w])) return;
+    order.forEach(w => { ol.append(items[w].li); rest[w] = 0; items[w].li.style.transform = ''; });
+  }
+  ol.addEventListener('focusout', () => setTimeout(commit, 0));
+  function landed(w) {
+    const it = items[w];
+    if (it.bump && motion()) { it.rk.classList.remove('bump'); void it.rk.offsetWidth; it.rk.classList.add('bump'); }
+    it.bump = false;
+  }
+  // R: 작품 → 칸(0~4). animate가 거짓이면 바로 그 자리
+  function moveTo(R, animate) {
+    lastR = { ...R };
+    const cur = Object.fromEntries(ORDER.map(w => [w, now(w)]));
+    stopMoves();
+    let n = 0;
+    ORDER.forEach(w => {
+      const it = items[w], x1 = (R[w] - idx(w)) * slotW, c = cur[w];
+      rest[w] = x1;
+      it.li.style.transform = Math.abs(x1) > .01 ? `translateX(${x1.toFixed(2)}px)` : '';
+      const off = Math.abs(x1 - c.x) > 1 || Math.abs(c.y) > .5 || Math.abs(c.s - 1) > .005 || c.o < .99;
+      if (!animate || !off) return;
+      n++;
+      const dx = Math.abs(x1 - c.x), slots = Math.max(1, dx / (slotW || 1));
+      // 레인: 이미 레인에 있으면(떠 있거나 작아져 있으면) 그 레인을 지킨다 → 도중에 되돌려도 두 집이 위아래로 엇갈리지 않음. 아니면 방향으로(왼쪽 = 앞)
+      const up = c.y < -1 ? true : c.s < .995 ? false : dx > 1 ? x1 < c.x : c.y < 0;
+      const L = lift * (1 + .45 * (slots - 1));
+      const kf = OFF.map((o, i) => {
+        if (i === 0) return c;
+        if (i === OFF.length - 1) return { x: x1, y: 0, s: 1, o: 1 };
+        const x = c.x + (x1 - c.x) * o;
+        return up ? { x, y: -L * (i === 2 ? 1 : .8), s: 1, o: 1 } : { x, y: 0, s: DEPTH_S, o: DEPTH_O };
+      });
+      it.li.style.zIndex = up ? 3 : 1; it.li.classList.add('move'); it.li.classList.toggle('back', !up);
+      const a = it.li.animate(kf.map((k, i) => ({ offset: OFF[i], transform: `translate(${k.x.toFixed(2)}px, ${k.y.toFixed(2)}px) scale(${k.s.toFixed(3)})` })), { duration: TWEEN, easing: EASE });
+      const b = it.body.animate(kf.map((k, i) => ({ offset: OFF[i], opacity: k.o })), { duration: TWEEN, easing: EASE });
+      mv[w] = { a, b, kf };
+      a.onfinish = () => {
+        if (!mv[w] || mv[w].a !== a) return;
+        delete mv[w]; b.cancel();
+        it.li.classList.remove('move', 'back'); it.li.style.zIndex = '';
+        landed(w);
+        if (!Object.keys(mv).length) { ol.classList.remove('tweening'); commit(); }
+      };
+    });
+    ol.classList.toggle('tweening', n > 0);
+    if (!n) commit();
+    return n;
+  }
+
+  /* 한 화면 그리기(서사의 단계와 직접 고르기 공통): 높이·숫자·순위를 바로 정하고 자리는 moveTo로 */
+  function show(j, ck, animate) {
     Hpx = H();
-    shownJ = judge;
-    const ck = crit === 'all' ? null : +crit;
-    const data = ORDER.map(w => { const v = valsOf(judge, w); return { w, v, t: sum(v), key: ck == null ? sum(v) : v[ck] }; });
-    data.sort((a, b) => b.key - a.key || b.t - a.t);
+    shownJ = j;
+    const data = ORDER.map(w => { const v = valsOf(j, w); return { w, v, t: sum(v), key: ck == null ? sum(v) : v[ck] }; });
+    data.sort((a, b) => b.key - a.key || b.t - a.t || avgTotal(3, b.w) - avgTotal(3, a.w));
     let rank = 0, prev = null;
-    data.forEach((d, i) => { if (prev === null || Math.abs(d.key - prev) > 1e-9) rank = i + 1; d.rank = rank; prev = d.key; });
-    ol.dataset.crit = crit;
+    data.forEach((d, i) => { if (prev === null || Math.abs(d.key - prev) > 1e-9) rank = i + 1; d.rank = rank; d.slot = i; prev = d.key; });
+    ol.dataset.crit = ck == null ? 'all' : String(ck);
     grid.forEach(g => { const v = +g.style.getPropertyValue('--v'); setText(g, String(ck == null ? v : v / 5)); });
-    const fmt = fmtOf(judge);
+    const fmt = fmtOf(j);
     data.forEach(d => {
       const it = items[d.w];
       paintBody(it, d.v, ck);
-      it.li.style.transform = ''; it.li.style.zIndex = ''; it.body.style.opacity = '';
-      it.sc.style.opacity = ''; it.name.style.opacity = '';
+      // 숫자·순위는 바로 바꾼다: 움직이는 집은 어차피 도착할 때까지 감춰져 있고, 자리가 그대로인 집은 깜빡이지 않게
       setText(it.sc, fmt(d.key));
-      it.rk.textContent = d.rank;
+      const r = String(d.rank);
+      it.bump = animate && it.rk.textContent !== r && !!it.rk.textContent;
+      it.rk.textContent = r;
       it.li.classList.toggle('first', d.rank === 1);
-      it.sr.textContent = `${d.rank}위 ${WORKS[d.w].name}, ` + (ck == null ? `합계 ${fmt(d.t)}점. ` : `${CRIT[ck].name} ${fmt(d.key)}점(20점 만점). `) + CRIT.map((c, k) => `${c.short} ${fmt(d.v[k])}`).join(', ');
-      ol.append(it.li);
+      it.sr.textContent = `${d.rank}위 ${WORKS[d.w].name}, ${labelOf(j)} 기준 ` + (ck == null ? `합계 ${fmt(d.t)}점. ` : `${CRIT[ck].name} ${fmt(d.key)}점(20점 만점). `) + CRIT.map((c, k) => `${c.short} ${fmt(d.v[k])}`).join(', ');
     });
+    data.moved = moveTo(Object.fromEntries(data.map(d => [d.w, d.slot])), animate);
     const picked = Object.keys(items).find(w => items[w].li.classList.contains('picked'));
     if (picked) setTags(picked);
-    if (first) data.forEach(d => {
-      const it = items[d.w], li = it.li, f = first.get(d.w), r = li.getBoundingClientRect();
-      const dx = f.x - r.left, dy = f.y - r.top;
-      if (Math.abs(dx) <= 1 && Math.abs(dy) <= .5 && f.o >= .99) return;
-      // 서사와 같은 레인: 왼쪽으로 가는 집은 앞(위), 오른쪽은 뒤(아래). 움직이는 동안 숫자·이름·배지는 숨김
-      const up = Math.abs(dx) > 1 ? dx > 0 : dy < 0, lane = Math.abs(dx) > slotW * .4;
-      li.style.zIndex = up ? 3 : 1; li.classList.add('move');
-      const a = li.animate(lane
-        ? [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: `translate(${dx / 2}px, ${up ? -26 : 10}px)`, offset: .5 }, { transform: 'none' }]
-        : [{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], { duration: 750, easing: EASE });
-      a.onfinish = () => { li.classList.remove('move'); li.style.zIndex = ''; };
-      flips.push(a, it.body.animate([{ opacity: f.o }, { opacity: up || !lane ? 1 : .72, offset: .5 }, { opacity: 1 }], { duration: 750, easing: EASE }));
-    });
+    return data;
+  }
+  function render(animate) {
+    const ck = crit === 'all' ? null : +crit;
+    const data = show(judge, ck, animate && motion());
+    const fmt = fmtOf(judge);
     const nm = d => `${WORKS[d.w].name}(${fmt(d.key)})`;
     say.textContent = ck == null && judge === 'avg'
       ? `세 채점관 평균입니다. 1위 표는 ${votesText(3)}로 갈렸습니다.`
@@ -378,15 +468,29 @@ safe(() => {
   }
 
   /* 스크롤 서사
-     - 앞 20%: 들어오자마자 1층(스토리)이 서 있고, 스크롤에 맞춰 2~5층이 다 함께 쌓인다(숫자는 다 쌓인 뒤 한꺼번에)
-     - 그 뒤: 스크롤은 「단계」만 고른다(평균 → Sonnet → GPT 심사 → Argon → 다시 평균).
-       단계가 바뀌면 0.9초짜리 시간 기반 전환으로 집 높이가 바뀌고, 순위가 바뀌는 집은 앞·뒤 레인으로 갈라져 호를 그리며 자리를 바꾼다.
-       숫자·이름표는 자리가 바뀌는 집만 잠깐 숨기고, 나머지 집은 숫자만 짧게 바꿔 끼운다. */
+     - 앞 20%(쌓기): 1층(스토리)이 서 있고 2~5층이 다섯 집에서 함께 쌓인다. 스크롤 타임라인을 지원하면 CSS(view-timeline)가
+       합성 단계에서 그리고(스크롤마다 JS가 쓰는 스타일 없음), 지원하지 않으면 JS가 그린다. 숫자는 다 쌓인 뒤 한꺼번에
+     - 그 뒤: 스크롤은 「단계」만 고른다(평균 → Sonnet → GPT 심사 → Argon → 다시 평균). 단계가 바뀌면 0.9초 시간 기반 전환
+     - 고정 길이 400vh: 단계 하나에 약 0.6화면 */
   const G1 = .2;
   const TH = [.32, .5, .68, .86];
-  const TWEEN = 900, EASE = 'cubic-bezier(.45, 0, .2, 1)';
+  const MID = [.26, .41, .59, .77, .93]; // 단계 점을 누르면 가는 곳
+  const TL = CSS.supports('animation-timeline: view()') && CSS.supports('view-timeline-inset: 0px 0px');
   const rankIdx = j => { const o = [...ORDER].sort((a, b) => sum(valsOf(j, b)) - sum(valsOf(j, a)) || avgTotal(3, b) - avgTotal(3, a)); return Object.fromEntries(o.map((w, i) => [w, i])); };
   const RANK = Object.fromEntries(JSEQ.map(j => [j, rankIdx(j)]));
+  // 쌓기 애니메이션(CSS)이 쓸 값: 층마다 바닥 위치(--gb)·높이 배율(--gs), 지붕이 지나는 다섯 높이(--gt0~4). 평균이라 한 번만 정한다
+  ORDER.forEach(w => {
+    const v = valsOf('avg', w), it = items[w];
+    let o = 0;
+    it.fl.forEach((fl, k) => { fl.style.setProperty('--gb', (o / 100).toFixed(4)); fl.style.setProperty('--gs', (v[k] / 20).toFixed(4)); o += v[k]; });
+    let t = 0;
+    v.forEach((x, k) => { t += x; it.body.style.setProperty(`--gt${k}`, (t / 100).toFixed(4)); });
+  });
+  const SAY0 = '층을 쌓고 있어요(세 채점관 평균): 스토리 → 흐름 → 화면 → 모션 → 기술.';
+  // 마지막 문장은 다른 단계 문장과 같은 길이로(1위 표 이야기는 첫 단계에서 이미 했다)
+  const SAYEND = `다시 세 채점관 평균: 1위 ${WORKS[ORDER[0]].name}(${f1(avgTotal(3, ORDER[0]))}), 2위 ${WORKS[ORDER[1]].name}(${f1(avgTotal(3, ORDER[1]))}), 가장 낮은 작품은 ${WORKS[ORDER[4]].name}(${f1(avgTotal(3, ORDER[4]))})입니다.`;
+  const sayFor = j => { const o = Object.entries(RANK[j]).sort((a, b) => a[1] - b[1]).map(([w]) => w); const f = fmtOf(j); return `${labelOf(j)}의 순위: 1위 ${WORKS[o[0]].name}(${f(sum(valsOf(j, o[0])))}), 2위 ${WORKS[o[1]].name}(${f(sum(valsOf(j, o[1])))}), 가장 낮은 작품은 ${WORKS[o[4]].name}(${f(sum(valsOf(j, o[4])))})입니다.`; };
+  const sayStage = st => (st === 4 ? SAYEND : st === 0 ? `세 채점관 평균입니다. 1위 표는 ${votesText(3)}로 갈렸습니다.` : sayFor(JSEQ[st]));
   // 서사 문장 중 가장 긴 것의 높이를 미리 잡아 둔다(문장이 바뀔 때 아래 집들이 위아래로 밀리지 않게)
   const fitSay = () => {
     const c = say.cloneNode(false);
@@ -398,153 +502,82 @@ safe(() => {
     c.remove();
     say.style.minHeight = Math.ceil(mx) + 'px';
   };
-  const measure = () => {
-    fitSay();
-    measurePin();
-    stopTween();
-    $$('.house', ol).forEach(li => { li.style.transform = ''; });
-    const lis = ORDER.map(w => items[w].li);
-    slotW = lis[1].getBoundingClientRect().left - lis[0].getBoundingClientRect().left;
+  // 칸 너비·집 높이·떠오르는 높이를 잰다(크기가 바뀔 때만). 진행 중인 움직임은 끊고 DOM 순서 자리로
+  const measureSlots = () => {
+    stopMoves();
+    ORDER.forEach(w => { rest[w] = 0; items[w].li.style.transform = ''; });
+    const a = ol.children[0].getBoundingClientRect(), b = ol.children[1].getBoundingClientRect();
+    slotW = b.left - a.left; olW = ol.clientWidth;
     Hpx = H();
+    lift = (parseFloat(getComputedStyle(wrap).getPropertyValue('--pad')) || 40) + 8;
   };
-  const SAY0 = '층을 쌓고 있어요(세 채점관 평균): 스토리 → 흐름 → 화면 → 모션 → 기술.';
-  // 마지막 문장은 다른 단계 문장과 같은 길이로(1위 표 이야기는 첫 단계에서 이미 했다)
-  const SAYEND = `다시 세 채점관 평균: 1위 ${WORKS[ORDER[0]].name}(${f1(avgTotal(3, ORDER[0]))}), 2위 ${WORKS[ORDER[1]].name}(${f1(avgTotal(3, ORDER[1]))}), 가장 낮은 작품은 ${WORKS[ORDER[4]].name}(${f1(avgTotal(3, ORDER[4]))})입니다.`;
-  const sayFor = j => { const o = Object.entries(RANK[j]).sort((a, b) => a[1] - b[1]).map(([w]) => w); const f = fmtOf(j); return `${labelOf(j)}의 순위: 1위 ${WORKS[o[0]].name}(${f(sum(valsOf(j, o[0])))}), 2위 ${WORKS[o[1]].name}(${f(sum(valsOf(j, o[1])))}), 가장 낮은 작품은 ${WORKS[o[4]].name}(${f(sum(valsOf(j, o[4])))})입니다.`; };
-  const sayStage = st => (st === 4 ? SAYEND : st === 0 ? `세 채점관 평균입니다. 1위 표는 ${votesText(3)}로 갈렸습니다.` : sayFor(JSEQ[st]));
-  const writeSr = j => ORDER.forEach(w => { const v = valsOf(j, w), f = fmtOf(j); items[w].sr.textContent = `${RANK[j][w] + 1}위 ${WORKS[w].name}, ${labelOf(j)} 기준 합계 ${f(sum(v))}점. ` + CRIT.map((c, k) => `${c.short} ${f(v[k])}`).join(', '); });
-  const setRank = (w, r, bump) => {
-    const it = items[w], t = String(r + 1);
-    if (it.rk.textContent === t) return;
-    it.rk.textContent = t; it.li.classList.toggle('first', r === 0);
-    if (bump && motion()) { it.rk.classList.remove('bump'); void it.rk.offsetWidth; it.rk.classList.add('bump'); }
-  };
+  const measure = () => { fitSay(); measurePin(); measureSlots(); };
 
-  let mode = null, shownSt = -1, curRank = { ...RANK.avg }, curX = {}, tw = { timers: [], anims: [] }, lastP = -1;
-  const homing = new Set(); // 쌓기 단계로 돌아가며 아직 제자리로 가는 집
-  function stopTween() {
-    tw.timers.forEach(clearTimeout);
-    tw.anims.forEach(a => a.cancel());
-    tw = { timers: [], anims: [] };
-    homing.clear();
-    $$('.house.move', ol).forEach(li => li.classList.remove('move'));
-    ol.classList.remove('tweening');
-  }
-  // 지금 화면에 보이는 자리(진행 중인 애니메이션 포함): X·Y 이동량과 몸체 투명도
-  const whereNow = () => Object.fromEntries(ORDER.map(w => {
-    const it = items[w], m = new DOMMatrixReadOnly(getComputedStyle(it.li).transform);
-    return [w, { x: m.m41, y: m.m42, o: parseFloat(getComputedStyle(it.body).opacity) || 1 }];
+  // 단계 점: 지금 단계는 aria-current, 누르면 그 단계 가운데로. 단계가 0.3초 머물면 한 줄로 알려 준다(polite)
+  let mode = null, shownSt = -1, annT = 0;
+  const markStep = st => stepBtns.forEach((b, i) => { if (i === st) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
+  // 집이 다 움직인 뒤(움직이는 집이 있으면 0.9초 뒤) 0.3초가 지나도 같은 단계일 때만 읽어 준다(잠깐 거쳐 가는 단계는 읽지 않음)
+  const announce = (st, wait) => { clearTimeout(annT); annT = setTimeout(() => { if (!manual && mode === 'stage' && shownSt === st) live.textContent = sayStage(st); }, wait + 300); };
+  stepBtns.forEach((b, i) => b.addEventListener('click', () => {
+    if (!pinMode) return;
+    if (manual) resume();
+    scrollTo({ top: pinTop - stickTop + MID[i] * pinSpan, behavior: motion() ? 'smooth' : 'auto' });
   }));
-  const offTarget = (n, x1) => Math.abs(x1 - n.x) > 1 || Math.abs(n.y) > .5 || n.o < .99;
-  // 집 하나를 지금 자리 n에서 x1로: 왼쪽(위 순위)으로 가는 집은 앞(위) 레인, 오른쪽은 뒤(아래) 레인. 둘 다 원래 크기, 뒤 집은 알파만 조금
-  // 방향은 지금 실제 위치 기준이라 전환 도중 되돌려도 서로 다른 레인을 쓴다
-  const laneMove = (it, n, x1) => {
-    const up = Math.abs(x1 - n.x) > 1 ? x1 < n.x : n.y < 0;
-    it.li.style.zIndex = up ? 3 : 1; it.li.classList.add('move'); // 움직이는 동안 숫자·이름·배지는 바로 감춘다(페이드 없이)
-    const mid = (n.x + x1) / 2;
-    const a = it.li.animate([
-      { transform: `translate(${n.x.toFixed(2)}px, ${n.y.toFixed(2)}px)` },
-      { transform: `translate(${mid.toFixed(2)}px, ${up ? -26 : 10}px)`, offset: .5 },
-      { transform: `translate(${x1.toFixed(2)}px, 0)` },
-    ], { duration: TWEEN, easing: EASE });
-    tw.anims.push(a, it.body.animate([{ opacity: n.o }, { opacity: up ? 1 : .72, offset: .5 }, { opacity: 1 }], { duration: TWEEN, easing: EASE }));
-    return a;
-  };
-  // 쌓기 단계: 스크롤에 맞춰 바로 그린다(전환 없음)
-  function growAt(p) {
-    if (mode !== 'grow') {
-      const now = mode === 'stage' && motion() ? whereNow() : null;
-      stopTween(); mode = 'grow'; shownSt = -1; ol.classList.add('scrub'); shownJ = 'avg'; curRank = { ...RANK.avg }; writeSr('avg');
-      if (now) ORDER.forEach(w => {
-        if (!offTarget(now[w], 0)) return;
-        const it = items[w];
-        homing.add(w);
-        laneMove(it, now[w], 0).onfinish = () => { homing.delete(w); it.li.classList.remove('move'); it.li.style.zIndex = ''; it.name.style.opacity = ''; paintBody(it, it.lastVals || valsOf('avg', w)); };
-      });
-    }
-    const seg = G1 / 4, done = p >= G1 - 1e-6;
-    ORDER.forEach((w, hi) => {
-      const it = items[w];
-      const vals = valsOf('avg', w).map((v, k) => v * (k === 0 ? 1 : clamp01((p - (k - 1) * seg) / seg)));
-      const away = homing.has(w);
-      paintBody(it, vals, null, away ? 0 : 1); it.lastVals = vals;
-      it.li.style.transform = ''; it.body.style.opacity = ''; it.name.style.opacity = away ? '0' : '';
-      if (!away) it.li.style.zIndex = '';
-      setText(it.sc, f1(avgTotal(3, w)));
-      it.sc.style.opacity = done ? '' : '0';
-      setRank(w, RANK.avg[w], false);
-      curX[w] = 0;
-    });
+
+  // 쌓기 단계에 들어감: 평균 값·순위로 놓고, 자리에서 벗어난 집은 레인을 따라 제자리로(animate)
+  function enterGrow(animate) {
+    mode = 'grow'; shownSt = -1; clearTimeout(annT);
+    ol.classList.add('grow'); town.classList.add('grow');
+    show('avg', null, animate);
     if (say.dataset.k !== 'g') { say.dataset.k = 'g'; say.setAttribute('aria-live', 'off'); say.textContent = SAY0; }
     $('#judgePick input[value="avg"]').checked = true; $('#critPick input[value="all"]').checked = true;
+    markStep(0);
+  }
+  const leaveGrow = () => { ol.classList.remove('grow'); town.classList.remove('grow'); };
+  // 스크롤 타임라인이 없을 때만: 스크롤에 맞춰 층을 그린다
+  function growPaint(p) {
+    const seg = G1 / 4;
+    ORDER.forEach(w => paintBody(items[w], valsOf('avg', w).map((v, k) => v * (k === 0 ? 1 : clamp01((p - (k - 1) * seg) / seg)))));
   }
   // 단계 st로: snap이면 바로, 아니면 시간 기반 전환
   function goStage(st, snap) {
-    const j = JSEQ[st];
-    const fromGrow = mode !== 'stage';
-    if (!fromGrow && st === shownSt) return;
-    // 진행 중이던 전환(쌓기 복귀 포함)은 지금 보이는 자리(X·Y)와 투명도에서 이어 간다
-    const now = whereNow();
-    stopTween();
-    mode = 'stage'; ol.classList.remove('scrub');
-    const R1 = RANK[j], prevJ = shownJ;
-    shownSt = st; shownJ = j; curRank = { ...R1 };
+    if (mode === 'stage' && st === shownSt) return;
+    const j = JSEQ[st], prevJ = shownJ;
+    mode = 'stage'; shownSt = st; leaveGrow();
     if (say.dataset.k !== String(st)) { say.dataset.k = String(st); say.setAttribute('aria-live', 'off'); say.textContent = sayStage(st); }
     const radio = $(`#judgePick input[value="${j}"]`); if (radio) radio.checked = true;
     $('#critPick input[value="all"]').checked = true;
-    writeSr(j);
-    const animate = !snap && motion();
-    ol.classList.toggle('tweening', animate);
-    const fj = fmtOf(j);
-    ORDER.forEach((w, hi) => {
-      const it = items[w];
-      const x1 = (R1[w] - hi) * slotW;
-      // 실제로 움직여야 하는 집: 목표 자리와 지금 자리가 다르거나, 레인에서 아직 돌아오지 않았을 때
-      const moving = offTarget(now[w], x1);
-      const val = fj(sum(valsOf(j, w)));
-      paintBody(it, valsOf(j, w), null, animate && moving ? 0 : 1);
-      it.li.style.transform = x1 ? `translateX(${x1.toFixed(2)}px)` : '';
-      it.li.style.zIndex = ''; it.body.style.opacity = '';
-      curX[w] = x1;
-      if (!animate) {
-        setText(it.sc, val); it.sc.style.opacity = ''; it.name.style.opacity = ''; setRank(w, R1[w], false);
-        return;
-      }
-      if (moving) {
-        laneMove(it, now[w], x1);
-        it.sc.style.opacity = '0'; it.name.style.opacity = '0';
-        tw.timers.push(setTimeout(() => {
-          setText(it.sc, val); setRank(w, R1[w], true);
-          it.li.classList.remove('move'); it.sc.style.opacity = ''; it.name.style.opacity = ''; it.li.style.zIndex = '';
-          paintBody(it, valsOf(j, w));
-        }, TWEEN));
-      } else {
-        // 자리가 그대로인 집: 숫자만 짧게 바꿔 끼운다(빈 집이 되지 않게)
-        if (it.sc.textContent !== val) {
-          it.sc.style.opacity = '0';
-          tw.timers.push(setTimeout(() => { setText(it.sc, val); it.sc.style.opacity = ''; }, 160));
-        } else it.sc.style.opacity = '';
-        it.name.style.opacity = '';
-        setRank(w, R1[w], false);
-      }
-    });
-    tw.timers.push(setTimeout(() => { ol.classList.remove('tweening'); }, TWEEN + 40));
     if (prevJ !== j && Object.keys(items).some(w => items[w].li.classList.contains('picked'))) setTags(null);
+    const d = show(j, null, !snap && motion());
+    markStep(st); announce(st, d.moved ? TWEEN : 0);
   }
   function apply(p, snap) {
-    const pv = p.toFixed(3);
-    if (prog.style.getPropertyValue('--p') !== pv) prog.style.setProperty('--p', pv);
-    if (p < G1) { growAt(p); lastP = p; return; }
-    const st = TH.filter(t => p >= t).length;
-    // 처음 들어와 평균 단계면 바로 그리되, 쌓기로 돌아가며 제자리로 가던 집이 있으면 그 자리에서 이어 움직인다
-    goStage(st, snap || (mode !== 'stage' && st === 0 && !homing.size));
-    lastP = p;
+    if (!TL) { const pv = p.toFixed(3); if (prog.style.getPropertyValue('--p') !== pv) prog.style.setProperty('--p', pv); }
+    if (p < G1) {
+      if (mode !== 'grow') enterGrow(!snap && motion());
+      if (!TL) growPaint(p);
+      return;
+    }
+    goStage(TH.filter(t => p >= t).length, snap || (mode !== 'stage' && mode !== 'grow'));
   }
   const stickTopCss = () => (parseFloat(getComputedStyle(root).getPropertyValue('--top')) || 60) + 8;
-  const pinOn = () => motion() && town.offsetHeight <= innerHeight - stickTopCss();
-  // 고정 위치·길이는 크기가 바뀔 때만 재고(measure), 스크롤 때는 scrollY만 쓴다
+  // 고정했을 때의 카드 높이로 판단한다(고정하지 않은 모양은 단계 점이 빠져 더 낮아서 판단이 오락가락함)
+  const pinOn = () => {
+    if (!motion()) return false;
+    const was = town.classList.contains('no-pin');
+    if (was) town.classList.remove('no-pin');
+    const hgt = town.offsetHeight;
+    if (was) town.classList.add('no-pin');
+    return hgt <= innerHeight - stickTopCss();
+  };
+  // 고정 위치·길이는 크기가 바뀔 때만 재고(measure), 스크롤 때는 scrollY만 쓴다.
+  // 같은 값으로 CSS 스크롤 타임라인의 창(위·아래 여백)을 맞춰, CSS 진행률과 JS 진행률이 같게 한다
   let pinTop = 0, pinSpan = 0, stickTop = 0;
-  const measurePin = () => { stickTop = parseFloat(getComputedStyle(town).top) || 0; pinTop = pin.getBoundingClientRect().top + scrollY; pinSpan = pin.offsetHeight - town.offsetHeight; };
+  const measurePin = () => {
+    stickTop = parseFloat(getComputedStyle(town).top) || 0; pinTop = pin.getBoundingClientRect().top + scrollY; pinSpan = pin.offsetHeight - town.offsetHeight;
+    pin.style.setProperty('--tl-a', `${stickTop.toFixed(1)}px`);
+    pin.style.setProperty('--tl-b', `${Math.max(0, innerHeight - stickTop - town.offsetHeight).toFixed(1)}px`);
+  };
   const progress = () => (pinSpan > 0 ? clamp01((scrollY + stickTop - pinTop) / pinSpan) : 0);
   let raf = 0;
   const onScroll = () => {
@@ -558,23 +591,22 @@ safe(() => {
     });
   };
   function resume() {
-    stopFlips(); stopTween();
+    stopMoves();
     manual = false; judge = 'avg'; crit = 'all'; ol.dataset.crit = 'all';
     $('#judgePick input[value="avg"]').checked = true; $('#critPick input[value="all"]').checked = true;
     grid.forEach(g => setText(g, g.style.getPropertyValue('--v').trim()));
-    ORDER.forEach(w => ol.append(items[w].li));
     setTags(null);
     replay.hidden = true; town.classList.remove('manual');
     say.setAttribute('aria-live', 'off'); delete say.dataset.k;
-    measure(); mode = null; curRank = { ...RANK.avg }; apply(progress(), true);
+    measure(); mode = null; apply(progress(), true);
     syncUrl();
   }
   function goManual() {
     if (manual) return;
-    // 진행 중인 전환은 끊지 않는다: 바로 뒤의 render(true)가 지금 보이는 자리를 잰 다음 끊고 이어 간다
+    // 진행 중인 움직임은 끊지 않는다: 바로 뒤의 render(true)가 지금 자리에서 이어 간다
     manual = true; mode = null; leftTop = progress() > .1; replay.hidden = false; town.classList.add('manual');
     say.setAttribute('aria-live', 'polite');
-    ol.classList.remove('scrub');
+    leaveGrow(); markStep(-1); clearTimeout(annT);
   }
   const pick = () => {
     if (pinMode) goManual();
@@ -600,17 +632,18 @@ safe(() => {
       resume();
       addEventListener('scroll', onScroll, { passive: true });
     } else if (!on && pinMode) {
-      cancelAnimationFrame(raf); raf = 0; pinMode = false; removeEventListener('scroll', onScroll); ol.classList.remove('scrub');
+      cancelAnimationFrame(raf); raf = 0; pinMode = false; removeEventListener('scroll', onScroll); leaveGrow();
       manual = false; mode = null; replay.hidden = true; town.classList.remove('manual'); say.setAttribute('aria-live', 'polite');
       judge = $('#judgePick input:checked').value; crit = $('#critPick input:checked').value;
-      render(false);
+      measureSlots(); render(false);
     } else if (on && !manual) { measure(); mode = null; apply(progress(), true); }
-    else if (H() !== Hpx) render(false); // 고정하지 않을 때는 크기가 바뀌면 다시 그린다
+    else if (H() !== Hpx || !slotW || ol.clientWidth !== olW) { measureSlots(); render(false); } // 가로 폭만 바뀌어도 칸 너비가 달라진다 // 고정하지 않거나 직접 고르는 중이면 크기가 바뀔 때 다시 그린다
     if (!on) { town.classList.add('no-pin'); pin.classList.add('unpinned'); }
   };
   // 주소에 채점관·항목이 있으면 그 상태로 시작(직접 고르기). setup이 주소를 지우기 전에 먼저 읽는다
   const q = new URLSearchParams(location.search), qj = q.get('judge'), qc = q.get('crit');
   const ci = qc ? CRIT.findIndex(c => c.k === qc) : -1;
+  measureSlots();
   render(false);
   setup();
   {
@@ -667,7 +700,7 @@ safe(() => {
   const NS = 'http://www.w3.org/2000/svg';
   const keep = [...svg.children].filter(n => n.tagName === 'title' || n.tagName === 'desc');
   const series = [
-    { w: 'gpt', dy: [18, -12], dx1: 9 }, { w: 'opus', dy: [-10, 24] }, { w: 'collab', dy: [0, -14] }, { w: 'opusp', dy: [0, 0] }, { w: 'gptp', dy: [0, 0] },
+    { w: 'gpt', dy: [18, -14] }, { w: 'opus', dy: [-10, 24] }, { w: 'collab', dy: [0, -14] }, { w: 'opusp', dy: [0, 0] }, { w: 'gptp', dy: [0, 0] },
   ].map(s => ({ ...s, v: [1, 2, 3].map(r => (ROUNDS[r].works.includes(s.w) ? +f1(avgTotal(r, s.w)) : null)) }));
   const LINE = 850; // 선 하나를 그리는 시간(ms, CSS와 같게)
   let lastW = 0;
@@ -676,7 +709,7 @@ safe(() => {
     if (W === lastW) return;
     lastW = W;
     const small = W < 480;
-    const labW = small ? 124 : 156, left = small ? 32 : 46;
+    const labW = small ? 162 : 170, left = small ? 30 : 46;
     const H = small ? 300 : 330, top = 22, bot = H - 36;
     const X = [left + 36, left + 36 + (W - labW - left - 50) / 2, W - labW - 14];
     const Y = v => top + (100 - v) / 40 * (bot - top);
@@ -919,7 +952,7 @@ safe(() => {
     const fr = $('.frame', c);
     const [p1, p2] = $$('picture', fr);
     p2.querySelector('img').classList.add('back');
-    const st = { w, fr, layers: [p1, p2], front: 0, scene: $('.cell-scene', c), bug: $('.frame-bug', fr), v: null };
+    const st = { w, fr, layers: [p1, p2], front: 0, scene: $('.cell-scene', c), bug: $('.frame-bug', c), v: null };
     fr.addEventListener('click', () => {
       const f = mode === 'video' ? nearestFR(master()?.currentTime || 0) : FR[shown];
       openPlayer(w, { frame: f.n, frameLabel: frLabel(f, w), fromEl: fr });
@@ -1086,12 +1119,18 @@ safe(() => {
 
 /* ---------------- 등장 ---------------- */
 $$('.reveal').forEach(el => onView(el, t => t.classList.add('in'), { threshold: .05, rootMargin: '0px 0px -5% 0px' }));
-$$('.finds .find, .cautions .caution').forEach((el, i) => el.style.setProperty('--d', i % 2));
-onView($('#gantt'), g => g.classList.add('in'), { threshold: .2 });
+$$('.finds .find, .cautions li').forEach((el, i) => el.style.setProperty('--d', i % 2));
+onView($('#gantt'), g => g.classList.add('in'), { threshold: .05 });
+$$('#gantt .g-seg').forEach(seg => {
+  const on = ms => { const b = seg.getBoundingClientRect(); showTip(seg.dataset.tip, b.left + b.width / 2, b.top, ms); };
+  seg.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') on(); });
+  seg.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') hideTip(); });
+  seg.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') { e.stopPropagation(); on(3000); } });
+});
 $$('#gantt .g-bar').forEach(bar => {
   const on = () => { const b = bar.getBoundingClientRect(); showTip(bar.getAttribute('aria-label'), b.left + Math.min(b.width, 260) / 2, b.top); };
   bar.addEventListener('focus', on); bar.addEventListener('blur', hideTip);
-  bar.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') { on(); tipTimer = setTimeout(hideTip, 3000); } });
+
 });
 // 핵심 숫자는 화면에 들어올 때 0부터 세어 올라간다(움직임 줄이기에서는 그대로)
 $$('[data-count]').forEach(el => {
